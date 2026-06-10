@@ -43,11 +43,26 @@ wss.on("connection", (ws) => {
 
     // Relay the message to all OTHER clients (peers) in the same room
     const clients = rooms.get(room);
+	const playerCount = clients.size;
     for (const client of clients) {
-      // Don't send message back to sender
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
+      
+      if (client !== ws && client.readyState === WebSocket.OPEN) { // Don't send message back to sender
         client.send(JSON.stringify(data));
       }
+	  if (client.readyState === WebSocket.OPEN && data.type === "join"){ // Send player count when new peer joined
+		client.send(JSON.stringify({
+		  room: room,
+		  type: "playerCountUpdate",
+		  count: playerCount
+		}));
+	  }
+	  if (client.readyState === WebSocket.OPEN && playerCount === 2){
+		client.send(JSON.stringify({
+		  room: room,
+		  type: "matchReady",
+		}));
+		console.log(roomName+": is ready");
+	  }
     }
   });
 

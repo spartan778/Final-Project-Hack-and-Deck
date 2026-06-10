@@ -28,10 +28,11 @@ offset_bottom = -720.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NetworkManager" type="Node" parent="." node_paths=PackedStringArray("isHostButton", "connectButton", "infoLabel")]
+[node name="NetworkManager" type="Node" parent="." node_paths=PackedStringArray("isHostButton", "connectButton", "makeOfferButton", "infoLabel")]
 script = ExtResource("1_tspjj")
 isHostButton = NodePath("../MainPanel/InfoLabel/CheckButton")
 connectButton = NodePath("../MainPanel/ConnectButton")
+makeOfferButton = NodePath("../MainPanel/MakeOfferButton")
 infoLabel = NodePath("../MainPanel/InfoLabel")
 
 [node name="MainPanel" type="Panel" parent="."]
@@ -98,11 +99,27 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -88.0
-offset_top = 159.0
-offset_right = 112.0
-offset_bottom = 259.0
+offset_left = -262.0
+offset_top = 166.0
+offset_right = -62.0
+offset_bottom = 266.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_aei5g")
 text = "Connect"
+
+[node name="MakeOfferButton" type="Button" parent="MainPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 48.0
+offset_top = 164.0
+offset_right = 248.0
+offset_bottom = 264.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_aei5g")
+text = "Make Offer"

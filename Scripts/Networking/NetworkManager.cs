@@ -14,7 +14,7 @@ public partial class NetworkManager : Node
 	
 	[Export] private CheckButton isHostButton;
 	private bool isHost;
-	[Export] private Button connectButton;
+	[Export] private Button connectButton, makeOfferButton;
 	[Export] private Label infoLabel;
 	
 	private bool offerHandled;
@@ -26,20 +26,21 @@ public partial class NetworkManager : Node
 
 	public override void _Ready()
 	{
+		makeOfferButton.Disabled = true;
+		
 		ConnectSignals();
 		PrepareConnection();
 	}
-
+	
 	private void ConnectSignals()
 	{
 		connectButton.Pressed += StartSignalingConnection;
+		makeOfferButton.Pressed += StartRtcProcess;
 	}
 
 	private void PrepareConnection()
 	{
 		jsonHelper = new Json();
-		// webSocket.ConnectToUrl("wss://echo.websocket.org"); //free relay service
-		// webSocket.ConnectToUrl("ws://localhost:8080");
 		var config = new Dictionary
 		{
 			{ "iceServers", new Array
@@ -96,7 +97,7 @@ public partial class NetworkManager : Node
 		// GD.Print(webSocket.GetReadyState());
 		if (webSocket.GetReadyState() == WebSocketPeer.State.Open)
 		{
-			GD.Print("webSocket connected");
+			// GD.Print("webSocket connected");
 			while (webSocket.GetAvailablePacketCount() > 0)
 			{
 				GD.Print("WS: message received");
@@ -125,25 +126,50 @@ public partial class NetworkManager : Node
 		if(roomValue.ToString() !=  roomName) return;
 		var type = data["type"].ToString();
 		GD.Print($"HandlingSignal type: {type}");
-		if (type is "offer" or "answer") // handle first stage
+		switch (type)
 		{
-			peerConnection.SetRemoteDescription(type, data["sdp"].ToString());
-			if (type is "offer" or "answer")
+			case "playerCountUpdate":
 			{
-				var sdp = data["sdp"].ToString();
-				GD.Print("Received: ", type);
-				peerConnection.SetRemoteDescription(type, sdp);
-			}else if (type == "ice")
+				var playerCount = (int)data["count"];
+				GD.Print($"PlayerCount: {playerCount}");
+				break;
+			}
+			case "matchReady":
+			{
+				if (isHost)
+				{
+					infoLabel.Text = $"Player Matched, Press Make Offer to start game";
+					connectButton.Disabled = true;
+					makeOfferButton.Disabled = false;
+				}
+				else
+				{
+					infoLabel.Text = $"Player Matched, wait for host to start game";
+					connectButton.Disabled = true;
+					makeOfferButton.Disabled = true;
+				}
+				break;
+			}
+			// handle first stage
+			case "offer" or "answer":
+			{
+				peerConnection.SetRemoteDescription(type, data["sdp"].ToString());
+				// if (type is "offer" or "answer")
+				// {
+				// 	var sdp = data["sdp"].ToString();
+				// 	GD.Print("Received: ", type);
+				// 	peerConnection.SetRemoteDescription(type, sdp);
+				// }
+				break;
+			}
+			case "ice":
 			{
 				peerConnection.AddIceCandidate( // media, index , name
 					data["media"].ToString(),
 					(int)data["index"],
 					data["name"].ToString()
 				);
-			}else if (type == "playerCountUpdate")
-			{
-				var playerCount = (int)data["count"];
-				GD.Print($"PlayerCount: {playerCount}");
+				break;
 			}
 		}
 	}
@@ -176,12 +202,23 @@ public partial class NetworkManager : Node
 		rtcMultiplayerPeer.CreateMesh(deviceId);
 		rtcMultiplayerPeer.AddPeer(peerConnection,peerId);
 		Multiplayer.MultiplayerPeer = rtcMultiplayerPeer; //attach peer to Godot high level API (RPC)
-		if (isHost)
+		if (!isHost)
 		{
-			Co.Delay(2f); //CRITICAL delay to make sure offer is sent when server is ready
-			peerConnection.CreateOffer();
+			infoLabel.Text = $"Waiting for offer as client";
+			connectButton.Disabled = true;
 		}
-		Co.Run(OnDurationRepeat(2f));
+		else
+		{
+			infoLabel.Text = $"Connecting as host";
+			connectButton.Disabled = true;
+			makeOfferButton.Disabled = false;
+		}
+		// Co.Run(OnDurationRepeat(2f));
+	}
+
+	private void StartRtcProcess()
+	{
+		peerConnection.CreateOffer();
 	}
 
 	private IEnumerator OnDurationRepeat(float duration)
@@ -199,7 +236,7 @@ public partial class NetworkManager : Node
 		}
 	}
 	
-	private void SendJoinMsg() //sending dummy message to make sure both player are in the room
+	private void SendJoinMsg() //send joining message to make sure both player are in the room
 	{
 		SendSignal(new Dictionary
 		{
