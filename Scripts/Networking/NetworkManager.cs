@@ -96,7 +96,7 @@ public partial class NetworkManager : Node
 		// GD.Print(webSocket.GetReadyState());
 		if (webSocket.GetReadyState() == WebSocketPeer.State.Open)
 		{
-			// GD.Print("webSocket connected");
+			GD.Print("webSocket connected");
 			while (webSocket.GetAvailablePacketCount() > 0)
 			{
 				GD.Print("WS: message received");
