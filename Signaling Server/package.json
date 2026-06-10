@@ -1,0 +1,15 @@
+{
+  "name": "signaling_server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "SignalServer.js",
+  "dependencies": {
+    "ws": "^7.5.9"
+  },
+  "scripts": {
+    "lint": "eslint SignalServer.js && echo \"Lint OK\" && exit 0",
+    "format": "eslint SignalServer.js --fix && echo \"Lint OK\" && exit 0"
+  },
+  "author": "Fabio Alessandrelli",
+  "license": "MIT"
+} 
