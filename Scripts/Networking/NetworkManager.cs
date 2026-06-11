@@ -95,6 +95,7 @@ public partial class NetworkManager : Node
 		peerConnection.IceCandidateCreated += (media, index, name) => //ICE process
 		{
 			GD.Print("IceCandidateCreated");
+			GD.Print($"ICE: {name}");
 			SendSignal(new Dictionary
 			{
 				{ "room", roomName },
