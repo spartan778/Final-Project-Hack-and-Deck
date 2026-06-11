@@ -61,7 +61,7 @@ wss.on("connection", (ws) => {
 		  room: room,
 		  type: "matchReady",
 		}));
-		console.log(roomName+": is ready");
+		console.log(roomName+": is ready and full");
 	  }
     }
   });

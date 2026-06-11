@@ -36,6 +36,25 @@ public partial class NetworkManager : Node
 	{
 		connectButton.Pressed += StartSignalingConnection;
 		makeOfferButton.Pressed += StartRtcProcess;
+		
+		Multiplayer.PeerConnected += (id) => // inform player about connection status
+		{
+			GD.Print($"Peer connected ID: {id}");
+			if (isHost)
+			{
+				infoLabel.Text = $"Playing as host (ID: {id})";
+			}
+			else
+			{
+				infoLabel.Text = $"Playing as client (ID: {id})";
+			}
+		};
+
+		Multiplayer.PeerDisconnected += (id) => // Debugging with peer id
+		{
+			GD.Print($"Peer disconnected ID: {id}");
+		};
+
 	}
 
 	private void PrepareConnection()
@@ -45,7 +64,7 @@ public partial class NetworkManager : Node
 		{
 			{ "iceServers", new Array
 				{
-					new Dictionary { { "urls", "stun:stun.l.google.com:19302" } }, // fallback free google stun service
+					// new Dictionary { { "urls", "stun:stun.l.google.com:19302" } }, // fallback free google stun service
 					new Dictionary {
 						{ "urls", "turn:global.relay.metered.ca:80" }, //registered (free) TURN service from Metered
 						{ "username", "1268560a6c410cc2b0dee1f3" },
@@ -94,13 +113,10 @@ public partial class NetworkManager : Node
 		webSocket.Poll();
 		peerConnection.Poll();
 		
-		// GD.Print(webSocket.GetReadyState());
 		if (webSocket.GetReadyState() == WebSocketPeer.State.Open)
 		{
-			// GD.Print("webSocket connected");
 			while (webSocket.GetAvailablePacketCount() > 0)
 			{
-				GD.Print("WS: message received");
 				var msg = webSocket.GetPacket().GetStringFromUtf8();
 				HandleSignal(msg);
 			}
@@ -154,12 +170,7 @@ public partial class NetworkManager : Node
 			case "offer" or "answer":
 			{
 				peerConnection.SetRemoteDescription(type, data["sdp"].ToString());
-				// if (type is "offer" or "answer")
-				// {
-				// 	var sdp = data["sdp"].ToString();
-				// 	GD.Print("Received: ", type);
-				// 	peerConnection.SetRemoteDescription(type, sdp);
-				// }
+				GD.Print($"RTC msg type: {type}");
 				break;
 			}
 			case "ice":
@@ -213,7 +224,7 @@ public partial class NetworkManager : Node
 			connectButton.Disabled = true;
 			makeOfferButton.Disabled = false;
 		}
-		// Co.Run(OnDurationRepeat(2f));
+		Co.Run(OnDurationRepeat(2f));
 	}
 
 	private void StartRtcProcess()
@@ -231,8 +242,12 @@ public partial class NetworkManager : Node
 				timer += (float)GetProcessDeltaTime();
 				yield return null;
 			}
-			// GD.Print($"running every: {duration} seconds");
-			// GD.Print("WebSocket State: " +webSocket.GetReadyState());
+
+			var connectionStatus= rtcMultiplayerPeer.GetConnectionStatus();
+			var peerAmount = rtcMultiplayerPeer.GetPeers().Count;
+			
+			GD.Print($"RTC Connection: {connectionStatus}");
+			GD.Print($"RTC Peer Count: {peerAmount}");
 		}
 	}
 	
