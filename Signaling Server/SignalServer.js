@@ -1,8 +1,15 @@
 //Refenced and modified offical Godot Signaling-RTC demo at https://github.com/godotengine/godot-demo-projects under MIT license
 
+const http = require("http"); // adding http service for deployment
 const WebSocket = require("ws"); // Using WebSocket package
-const PORT = 8080;
-const wss = new WebSocket.Server({ port: PORT });
+const PORT = process.env.PORT || 8080; //use default port or service provided port
+
+const httpServer = http.createServer();
+const wss = new WebSocket.Server({ server: httpServer });
+httpServer.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
 const rooms = new Map();
 
 wss.on("connection", (ws) => {
