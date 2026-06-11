@@ -188,7 +188,7 @@ public partial class NetworkManager : Node
 
 	private async void StartSignalingConnection()
 	{
-		webSocket.ConnectToUrl("ws://localhost:8080");
+		webSocket.ConnectToUrl("wss://final-project-hack-and-deck.onrender.com/");
 		GD.Print("webSocket connecting");
 		isHost = isHostButton.ButtonPressed;
 		GD.Print("Is Host: " + isHost);
