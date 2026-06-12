@@ -65,7 +65,7 @@ public partial class NetworkManager : Node
 		{
 			{ "iceServers", new Array
 				{
-					// new Dictionary { { "urls", "stun:stun.l.google.com:19302" } }, // fallback free google stun service
+					new Dictionary { { "urls", "stun:stun.l.google.com:19302" } }, // fallback free google stun service
 					new Dictionary {
 						{ "urls", "turn:global.relay.metered.ca:80" }, //registered (free) TURN service from Metered
 						{ "username", "1268560a6c410cc2b0dee1f3" },
@@ -278,10 +278,8 @@ public partial class NetworkManager : Node
 		if (@event.IsActionPressed("menu_confirm"))
 		{
 			var connectionStatus= rtcMultiplayerPeer.GetConnectionStatus();
-			if (connectionStatus == MultiplayerPeer.ConnectionStatus.Connected)
-			{
-				Rpc(nameof(TestRpc_Add));
-			}
+			if(connectionStatus != MultiplayerPeer.ConnectionStatus.Connected) return;
+			Rpc(nameof(TestRpc_Add));
 		}
 	}
 }

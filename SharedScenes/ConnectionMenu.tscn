@@ -105,6 +105,7 @@ offset_right = -62.0
 offset_bottom = 266.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 0
 theme = SubResource("Theme_aei5g")
 text = "Connect"
 
@@ -121,5 +122,6 @@ offset_right = 248.0
 offset_bottom = 264.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 0
 theme = SubResource("Theme_aei5g")
 text = "Make Offer"
