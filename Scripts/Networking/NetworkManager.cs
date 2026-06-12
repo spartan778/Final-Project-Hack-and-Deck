@@ -10,6 +10,7 @@ public partial class NetworkManager : Node
 	private WebRtcPeerConnection peerConnection;
 	private WebRtcMultiplayerPeer rtcMultiplayerPeer;
 	private WebSocketPeer webSocket = new WebSocketPeer();
+	private int addCount = 0;
 	
 	
 	[Export] private CheckButton isHostButton;
@@ -223,7 +224,7 @@ public partial class NetworkManager : Node
 		{
 			infoLabel.Text = $"Connecting as host";
 			connectButton.Disabled = true;
-			makeOfferButton.Disabled = false;
+			makeOfferButton.Disabled = true;
 		}
 		Co.Run(OnDurationRepeat(2f));
 	}
@@ -247,8 +248,12 @@ public partial class NetworkManager : Node
 			var connectionStatus= rtcMultiplayerPeer.GetConnectionStatus();
 			var peerAmount = rtcMultiplayerPeer.GetPeers().Count;
 			
-			GD.Print($"RTC Connection: {connectionStatus}");
-			GD.Print($"RTC Peer Count: {peerAmount}");
+			// GD.Print($"RTC Connection: {connectionStatus}");
+			// GD.Print($"RTC Peer Count: {peerAmount}");
+			if (connectionStatus == MultiplayerPeer.ConnectionStatus.Connected)
+			{
+				Rpc(nameof(TestRpc_Add));
+			}
 		}
 	}
 	
@@ -259,5 +264,12 @@ public partial class NetworkManager : Node
 			{ "room", roomName },
 			{ "type", "join" }
 		});
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+	private void TestRpc_Add()
+	{
+		addCount++;
+		GD.Print($"RTC running: addCount: {addCount}");
 	}
 }
