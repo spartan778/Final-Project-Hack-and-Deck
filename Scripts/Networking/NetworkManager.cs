@@ -43,11 +43,11 @@ public partial class NetworkManager : Node
 			GD.Print($"Peer connected ID: {id}");
 			if (isHost)
 			{
-				infoLabel.Text = $"Playing as host (ID: {id})";
+				infoLabel.Text = $"Playing as host (ID: {deviceId})";
 			}
 			else
 			{
-				infoLabel.Text = $"Playing as client (ID: {id})";
+				infoLabel.Text = $"Playing as client (ID: {deviceId})";
 			}
 		};
 
@@ -248,8 +248,8 @@ public partial class NetworkManager : Node
 			var connectionStatus= rtcMultiplayerPeer.GetConnectionStatus();
 			var peerAmount = rtcMultiplayerPeer.GetPeers().Count;
 			
-			// GD.Print($"RTC Connection: {connectionStatus}");
-			// GD.Print($"RTC Peer Count: {peerAmount}");
+			GD.Print($"RTC Connection: {connectionStatus}");
+			GD.Print($"RTC Peer Count: {peerAmount}");
 			if (connectionStatus == MultiplayerPeer.ConnectionStatus.Connected)
 			{
 				Rpc(nameof(TestRpc_Add));
@@ -271,5 +271,17 @@ public partial class NetworkManager : Node
 	{
 		addCount++;
 		GD.Print($"RTC running: addCount: {addCount}");
+	}
+	
+	public override void _Input(InputEvent @event)
+	{
+		if (@event.IsActionPressed("menu_confirm"))
+		{
+			var connectionStatus= rtcMultiplayerPeer.GetConnectionStatus();
+			if (connectionStatus == MultiplayerPeer.ConnectionStatus.Connected)
+			{
+				Rpc(nameof(TestRpc_Add));
+			}
+		}
 	}
 }
