@@ -32,59 +32,64 @@ wss.on("connection", (ws) => {
     const room = data.room;
     if (!room) return; // Ignore if no room specified
 
-    // If this is the first message from the client,
-    // assign them to a room
+	// Create room if it doesn't exist
+	if (!rooms.has(room)) {
+		rooms.set(room, {
+			clients: new Set(),
+			matchReadySent: false
+		});
+    }
+	const roomRef = rooms.get(room);
+    // Let client join the room
     if (!roomName) {
-      roomName = room;
-
-      // Create room if it doesn't exist
-      if (!rooms.has(room)) {
-        rooms.set(room, new Set());
-      }
-
-      // Add this client to the room
-      rooms.get(room).add(ws);
-      console.log("Client joined room:", room);
-	  console.log("Room size:", rooms.get(room).size);
-    }
-
-    // Relay the message to all OTHER clients (peers) in the same room
-    const clients = rooms.get(room);
-	const playerCount = clients.size;
-    for (const client of clients) {
-      
-      if (client !== ws && client.readyState === WebSocket.OPEN) { // Don't send message back to sender
-        client.send(JSON.stringify(data));
-      }
-	  if (client.readyState === WebSocket.OPEN && data.type === "join"){ // Send player count when new peer joined
-		client.send(JSON.stringify({
-		  room: room,
-		  type: "playerCountUpdate",
-		  count: playerCount
-		}));
-	  }
-	  if (client.readyState === WebSocket.OPEN && playerCount === 2){
-		client.send(JSON.stringify({
-		  room: room,
-		  type: "matchReady",
-		}));
-		console.log(roomName+": is ready and full");
-	  }
-    }
+		roomName = room; 
+		const clients = roomRef.clients; // Get all clients in that room
+		roomRef.clients.add(ws); // Add this client to the room
+		const playerCount = roomRef.clients.size;
+		console.log("Client joined room:", room);
+		console.log("Room size: ", playerCount);
+		for(const client of clients){ // Send player count update to all players
+			if (client.readyState === WebSocket.OPEN){
+				client.send(JSON.stringify({
+					room: room,
+					type: "playerCountUpdate",
+					count: playerCount
+				}));
+			}
+		}
+		if (playerCount === 2 && !roomRef.matchReadySent){ // Send ready message when both player joined
+			roomRef.matchReadySent = true;
+			for (const client of roomRef.clients) {
+				if (client.readyState === WebSocket.OPEN) {
+					client.send(JSON.stringify({
+					room: room,
+					type: "matchReady"
+					}));
+				}
+			}
+		console.log(room + ": is ready and full");
+		}
+	}
+	for(const client of roomRef.clients) { // Core relay function (excludes sender)
+		if (client !== ws && client.readyState === WebSocket.OPEN) {
+			client.send(JSON.stringify(data));
+		}
+	}
   });
 
   // When the client disconnects
   ws.on("close", () => {
     if (roomName && rooms.has(roomName)) {
       // Remove client from the room
-      rooms.get(roomName).delete(ws);
-
+	  const roomRef = rooms.get(roomName);
+      roomRef.clients.delete(ws);
       // If room is empty, delete it
-      if (rooms.get(roomName).size === 0) {
+      if (roomRef.clients.size === 0) {
         rooms.delete(roomName);
+		console.log(`Room: ${roomName} is now empty and deleted`);
       }
-
       console.log("Client left room:", roomName);
+	  roomRef.matchReadySent = false;
     }
   });
 });

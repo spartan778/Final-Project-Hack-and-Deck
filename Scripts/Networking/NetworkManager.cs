@@ -53,6 +53,7 @@ public partial class NetworkManager : Node
 			{
 				infoLabel.Text = $"Playing as client (ID: {deviceId})";
 			}
+			makeOfferButton.Disabled = true;
 		};
 		Multiplayer.PeerDisconnected += (id) => // Debugging with peer id
 		{
