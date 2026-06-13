@@ -30,6 +30,7 @@ grow_vertical = 2
 
 [node name="NetworkManager" type="Node" parent="." node_paths=PackedStringArray("isHostButton", "connectButton", "makeOfferButton", "infoLabel")]
 script = ExtResource("1_tspjj")
+testLocal = true
 isHostButton = NodePath("../MainPanel/InfoLabel/CheckButton")
 connectButton = NodePath("../MainPanel/ConnectButton")
 makeOfferButton = NodePath("../MainPanel/MakeOfferButton")
@@ -73,7 +74,7 @@ offset_bottom = -50.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 40
-text = "Join as Host"
+text = "Join as Client"
 horizontal_alignment = 1
 autowrap_mode = 2
 

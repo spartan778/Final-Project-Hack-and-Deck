@@ -11,10 +11,13 @@ public partial class NetworkManager : Node
 	private WebRtcMultiplayerPeer rtcMultiplayerPeer;
 	private WebSocketPeer webSocket = new WebSocketPeer();
 	private int addCount = 0;
-	
+	private bool isHost;
+
+	[Export] private string localAddress = "ws://localhost:8080";
+	[Export] private string onlineAddress = "wss://final-project-hack-and-deck.onrender.com/";
+	[Export] private bool testLocal;
 	
 	[Export] private CheckButton isHostButton;
-	private bool isHost;
 	[Export] private Button connectButton, makeOfferButton;
 	[Export] private Label infoLabel;
 	
@@ -37,6 +40,7 @@ public partial class NetworkManager : Node
 	{
 		connectButton.Pressed += StartSignalingConnection;
 		makeOfferButton.Pressed += StartRtcProcess;
+		isHostButton.Pressed += OnIsHostButtonPressed;
 		
 		Multiplayer.PeerConnected += (id) => // inform player about connection status
 		{
@@ -50,12 +54,10 @@ public partial class NetworkManager : Node
 				infoLabel.Text = $"Playing as client (ID: {deviceId})";
 			}
 		};
-
 		Multiplayer.PeerDisconnected += (id) => // Debugging with peer id
 		{
 			GD.Print($"Peer disconnected ID: {id}");
 		};
-
 	}
 
 	private void PrepareConnection()
@@ -186,13 +188,19 @@ public partial class NetworkManager : Node
 			}
 		}
 	}
+	
+	private string GetServerAddress() //return connection address depending on if testing locally
+	{
+		return testLocal ? localAddress : onlineAddress;
+	}
 
 	private async void StartSignalingConnection()
 	{
-		webSocket.ConnectToUrl("wss://final-project-hack-and-deck.onrender.com/");
-		GD.Print("webSocket connecting");
+		 
+		webSocket.ConnectToUrl(GetServerAddress());
+		// GD.Print("webSocket connecting");
 		isHost = isHostButton.ButtonPressed;
-		GD.Print("Is Host: " + isHost);
+		// GD.Print("Is Host: " + isHost);
 		
 		
 		while (webSocket.GetReadyState() != WebSocketPeer.State.Open) //wait until Web Socket is Open
@@ -200,6 +208,7 @@ public partial class NetworkManager : Node
 			await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 		}
 		SendJoinMsg();
+		isHostButton.Disabled = true;
 		if (isHost) //switch ID to match on two peers
 		{
 			deviceId = 1;
@@ -232,6 +241,24 @@ public partial class NetworkManager : Node
 	private void StartRtcProcess()
 	{
 		peerConnection.CreateOffer();
+	}
+
+	private void OnIsHostButtonPressed()
+	{
+		var state= isHostButton.ButtonPressed;
+		SetJoinAsHost(state);
+	}
+	private void SetJoinAsHost(bool value)
+	{
+		isHost = value;
+		if (isHost)
+		{
+			infoLabel.Text = $"Join as Host";
+		}
+		else
+		{
+			infoLabel.Text = $"Join as Client";
+		}
 	}
 
 	private IEnumerator OnDurationRepeat(float duration)
