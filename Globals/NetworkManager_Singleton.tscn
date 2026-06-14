@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://pj2pau6g5v7d"]
+
+[ext_resource type="Script" uid="uid://oydxmb7pd63u" path="res://Scripts/Networking/NetworkManager_Singleton.cs" id="1_2w8rp"]
+
+[node name="NetworkManager" type="Node"]
+script = ExtResource("1_2w8rp")

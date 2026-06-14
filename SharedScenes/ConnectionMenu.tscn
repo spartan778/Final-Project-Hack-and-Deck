@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bcm0cjq03sytx"]
 
-[ext_resource type="Script" uid="uid://j7i2300ryanb" path="res://Scripts/Networking/NetworkManager.cs" id="1_tspjj"]
+[ext_resource type="Script" uid="uid://cslkqx04wp673" path="res://SharedScenes/ConnectionMenu.cs" id="1_tspjj"]
 [ext_resource type="Theme" uid="uid://c2vahx613qbmy" path="res://UI_Themes/BasicColorTheme.tres" id="2_7yh3l"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7yh3l"]
@@ -18,7 +18,7 @@ Button/styles/hover = SubResource("StyleBoxFlat_7yh3l")
 Button/styles/normal = SubResource("StyleBoxFlat_h3gyg")
 Button/styles/pressed = SubResource("StyleBoxFlat_pqov5")
 
-[node name="ConnectionMenu" type="Control"]
+[node name="ConnectionMenu" type="Control" node_paths=PackedStringArray("isHostButton", "connectButton", "makeOfferButton", "infoLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,14 +27,11 @@ offset_right = -1280.0
 offset_bottom = -720.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="NetworkManager" type="Node" parent="." node_paths=PackedStringArray("isHostButton", "connectButton", "makeOfferButton", "infoLabel")]
 script = ExtResource("1_tspjj")
-testLocal = true
-isHostButton = NodePath("../MainPanel/InfoLabel/CheckButton")
-connectButton = NodePath("../MainPanel/ConnectButton")
-makeOfferButton = NodePath("../MainPanel/MakeOfferButton")
-infoLabel = NodePath("../MainPanel/InfoLabel")
+isHostButton = NodePath("MainPanel/InfoLabel/IsHostButtonT")
+connectButton = NodePath("MainPanel/ConnectButton")
+makeOfferButton = NodePath("MainPanel/MakeOfferButton")
+infoLabel = NodePath("MainPanel/InfoLabel")
 
 [node name="MainPanel" type="Panel" parent="."]
 layout_mode = 0
@@ -78,7 +75,7 @@ text = "Join as Client"
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="CheckButton" type="CheckButton" parent="MainPanel/InfoLabel"]
+[node name="IsHostButtonT" type="CheckButton" parent="MainPanel/InfoLabel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
