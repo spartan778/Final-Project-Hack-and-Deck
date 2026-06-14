@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 CoroutineManager="*res://addons/HCoroutines/coroutine_manager.tscn"
 NetworkManagerSingleton="*res://Globals/NetworkManager_Singleton.tscn"
+RpcManager="*res://Globals/RpcManager.tscn"
 
 [display]
 

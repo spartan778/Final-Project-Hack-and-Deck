@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4ns8wefntju"]
+
+[ext_resource type="Script" uid="uid://cuvgnqu1pt8qc" path="res://Scripts/Networking/RpcManager.cs" id="1_krx22"]
+
+[node name="RpcManager" type="Node"]
+script = ExtResource("1_krx22")

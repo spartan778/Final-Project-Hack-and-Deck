@@ -7,6 +7,7 @@ using Array = Godot.Collections.Array;
 
 public partial class NetworkManager : Node
 {
+	// (UNUSED) Left in project for reference
 	private WebRtcPeerConnection peerConnection;
 	private WebRtcMultiplayerPeer rtcMultiplayerPeer;
 	private WebSocketPeer webSocket = new WebSocketPeer();

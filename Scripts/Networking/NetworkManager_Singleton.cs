@@ -7,9 +7,12 @@ using Array = Godot.Collections.Array;
 
 public partial class NetworkManager_Singleton : Node
 {
-	public static NetworkManager_Singleton NetworkManagerSingleton;
+	private static NetworkManager_Singleton _instance;
+	private RpcManager rpcManager;
+	
 	private WebRtcPeerConnection peerConnection;
 	private WebRtcMultiplayerPeer rtcMultiplayerPeer;
+	public WebRtcMultiplayerPeer RtcMultiplayerPeer => rtcMultiplayerPeer;
 	private WebSocketPeer webSocket = new WebSocketPeer();
 	private int addCount = 0;
 	private bool isHost;
@@ -27,11 +30,16 @@ public partial class NetworkManager_Singleton : Node
 
 	private Json jsonHelper;
 
+	public override void _EnterTree()
+	{
+		_instance = this; //set a global (static) reference
+	}
+
 	public override void _Ready()
 	{
-		NetworkManagerSingleton = this; //set a global reference
 		ConnectSignals();
 		PrepareConnection();
+		rpcManager = RpcManager.GetInstance();
 	}
 	
 	private void ConnectSignals()
@@ -137,11 +145,11 @@ public partial class NetworkManager_Singleton : Node
 		}
 		var data = Json.ParseString(msg).AsGodotDictionary(); //convert JSON to Dictionary
 		
-		if(!data.TryGetValue("room", out var roomValue)) return; // Block all message with a "Room"
+		if(!data.TryGetValue("room", out var roomValue)) return; // Block all message without a "Room"
 		if(roomValue.ToString() !=  roomName) return;
 		var type = data["type"].ToString();
 		GD.Print($"HandlingSignal type: {type}");
-		switch (type)
+		switch (type) // Handle message by type
 		{
 			case "playerCountUpdate":
 			{
@@ -163,7 +171,7 @@ public partial class NetworkManager_Singleton : Node
 				PlayerMatched?.Invoke();
 				break;
 			}
-			// handle first stage
+			// handle first stage (depending on host or client)
 			case "offer" or "answer":
 			{
 				peerConnection.SetRemoteDescription(type, data["sdp"].ToString());
@@ -189,12 +197,7 @@ public partial class NetworkManager_Singleton : Node
 
 	public async void StartSignalingConnection()
 	{
-		 
 		webSocket.ConnectToUrl(GetServerAddress());
-		// GD.Print("webSocket connecting");
-		// GD.Print("Is Host: " + isHost);
-		
-		
 		while (webSocket.GetReadyState() != WebSocketPeer.State.Open) //wait until Web Socket is Open
 		{
 			await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
@@ -254,10 +257,6 @@ public partial class NetworkManager_Singleton : Node
 			
 			GD.Print($"RTC Connection: {connectionStatus}");
 			GD.Print($"RTC Peer Count: {peerAmount}");
-			if (connectionStatus == MultiplayerPeer.ConnectionStatus.Connected)
-			{
-				Rpc(nameof(TestRpc_Add));
-			}
 		}
 	}
 	
@@ -270,21 +269,12 @@ public partial class NetworkManager_Singleton : Node
 		});
 	}
 
-	[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-	private void TestRpc_Add()
+	public static NetworkManager_Singleton GetInstance()
 	{
-		addCount++;
-		GD.Print($"RTC running: addCount: {addCount}");
-	}
-	
-	public override void _Input(InputEvent @event)
-	{
-		if (@event.IsActionPressed("menu_confirm"))
+		if (_instance == null)
 		{
-			var connectionStatus = rtcMultiplayerPeer.GetConnectionStatus();
-			if(connectionStatus != MultiplayerPeer.ConnectionStatus.Connected) return;
-			Rpc(nameof(TestRpc_Add));
+			GD.PrintErr("No NetworkManager_Singleton found");
 		}
+		return _instance;
 	}
-	
 }

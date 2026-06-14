@@ -10,12 +10,13 @@ public partial class ConnectionMenu : Control
 
     public override void _EnterTree()
     {
-        networkManagerSingleton = GetNode<NetworkManager_Singleton>("/root/NetworkManagerSingleton");
-        GD.Print($"Node Ref: {networkManagerSingleton.Name}");
+        // networkManagerSingleton = GetNode<NetworkManager_Singleton>("/root/NetworkManagerSingleton");
+        // GD.Print($"Node Ref: {networkManagerSingleton.Name}");
     }
 
     public override void _Ready()
     {
+        networkManagerSingleton = NetworkManager_Singleton.GetInstance();
         makeOfferButton.Disabled = true;
         isHostButton.SetPressedNoSignal(false);
         ConnectSignals();

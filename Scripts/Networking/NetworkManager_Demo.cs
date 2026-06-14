@@ -6,7 +6,7 @@ using Array = Godot.Collections.Array;
 
 public partial class NetworkManager_Demo : Node
 {
-	// referenced official Godot WebRTC tutorial (converted GDScript demo into c# and adding TURN for testing)
+	// (UNUSED) referenced official Godot WebRTC tutorial (converted GDScript demo into c# and adding TURN for testing)
 	private WebRtcPeerConnection p1;
 	private WebRtcPeerConnection p2;
 	private WebRtcDataChannel ch1;
