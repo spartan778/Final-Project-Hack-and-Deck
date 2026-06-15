@@ -4,12 +4,12 @@
   "description": "",
   "main": "SignalServer.js",
   "dependencies": {
-    "http": "^0.0.1-security",
-    "ws": "^7.5.9"
+	"http": "^0.0.1-security",
+	"ws": "^7.5.9"
   },
   "scripts": {
-    "lint": "eslint SignalServer.js && echo \"Lint OK\" && exit 0",
-    "format": "eslint SignalServer.js --fix && echo \"Lint OK\" && exit 0"
+	"lint": "eslint SignalServer.js && echo \"Lint OK\" && exit 0",
+	"format": "eslint SignalServer.js --fix && echo \"Lint OK\" && exit 0"
   },
   "author": "Fabio Alessandrelli",
   "license": "MIT"

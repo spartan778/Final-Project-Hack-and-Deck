@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://b18mj00imbv7"]
+
+[ext_resource type="Script" uid="uid://ds5ea665i8jo4" path="res://Scenes/CardGame/CardGameUIManager.cs" id="1_y7kd2"]
+
+[node name="CardGameBase" type="Node"]
+
+[node name="UI_Base" type="Control" parent="." node_paths=PackedStringArray("testLabel")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1280.0
+offset_bottom = -720.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_y7kd2")
+testLabel = NodePath("Label/Label")
+
+[node name="Label" type="Label" parent="UI_Base"]
+layout_mode = 0
+offset_left = 497.0
+offset_top = 58.0
+offset_right = 832.0
+offset_bottom = 117.0
+theme_override_font_sizes/font_size = 20
+text = "Card Game
+"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="UI_Base/Label"]
+offset_left = 106.0
+offset_top = 49.0
+offset_right = 230.0
+offset_bottom = 108.0
+theme_override_font_sizes/font_size = 20
+text = "Card Game
+"
+horizontal_alignment = 1

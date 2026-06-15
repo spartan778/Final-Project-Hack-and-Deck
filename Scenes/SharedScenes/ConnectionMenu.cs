@@ -71,6 +71,7 @@ public partial class ConnectionMenu : Control
         {
             infoLabel.Text = "Player Matched, wait for Host to start P2P connection";
         }
+        SceneManager.GetInstance().PrepareMainGameScene();
     }
 
     private void OnRtcConnected()
@@ -79,6 +80,7 @@ public partial class ConnectionMenu : Control
         var text = state? "Host" : "Client";
         infoLabel.Text = $"P2P connection established, you are playing as: {text}";
         makeOfferButton.Disabled = true;
+        SceneManager.GetInstance().ChangeToMainGameScene();
     }
 
     private void OnPlayerCountChanged(int playerCount)

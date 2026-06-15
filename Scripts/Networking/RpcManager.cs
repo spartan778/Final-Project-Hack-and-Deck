@@ -7,8 +7,10 @@ public partial class RpcManager : Node
     private static RpcManager _instance;
     private MultiplayerPeer multiplayerPeer;
 
-    private int addCount = 0;
+    public int AddCount { get; private set; } = 0;
     
+    public Action<int> TestNumberChanged;
+
     public override void _EnterTree()
     {
         _instance = this; //set a global (static) reference
@@ -22,8 +24,9 @@ public partial class RpcManager : Node
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
     private void TestRpc_Add()
     {
-        addCount++;
-        GD.Print($"RTC running: addCount: {addCount}");
+        AddCount++;
+        GD.Print($"RTC running: addCount: {AddCount}");
+        TestNumberChanged?.Invoke(AddCount);
     }
 	
     public override void _Input(InputEvent @event)

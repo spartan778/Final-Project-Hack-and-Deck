@@ -1,0 +1,10 @@
+[gd_scene load_steps=4 format=3 uid="uid://crfqe63bhrcli"]
+
+[ext_resource type="Script" uid="uid://cd3kunh5m6vhj" path="res://Globals/SceneManager.cs" id="1_j4rw3"]
+[ext_resource type="PackedScene" uid="uid://dl4rvai7ihkn6" path="res://Scenes/ActionGame/ActionGame_Base.tscn" id="2_w35xb"]
+[ext_resource type="PackedScene" uid="uid://b18mj00imbv7" path="res://Scenes/CardGame/CardGame_Base.tscn" id="3_xn3a4"]
+
+[node name="SceneManager" type="Node"]
+script = ExtResource("1_j4rw3")
+actionGameScene = ExtResource("2_w35xb")
+cardGameScene = ExtResource("3_xn3a4")
