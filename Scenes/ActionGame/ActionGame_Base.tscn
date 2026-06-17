@@ -28,6 +28,7 @@ text = "Action Game
 horizontal_alignment = 1
 
 [node name="Label" type="Label" parent="UI_Base/Label"]
+layout_mode = 0
 offset_left = 106.0
 offset_top = 49.0
 offset_right = 230.0
@@ -36,3 +37,5 @@ theme_override_font_sizes/font_size = 20
 text = "Action Game
 "
 horizontal_alignment = 1
+
+[node name="GameBase" type="Node2D" parent="."]
