@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://dhdu8s5akoesb"]
 
-[ext_resource type="SpriteFrames" uid="uid://6u3iajvhk1s3" path="res://Resources/CardGame/Top-Down-Cards/Cards/HeartCardsStack.tres" id="1_0y7fh"]
+[ext_resource type="SpriteFrames" uid="uid://6u3iajvhk1s3" path="res://Resources/CardGame/Top-Down-Cards/Cards/CardsStack.tres" id="1_0y7fh"]
 
 [node name="CardBase" type="Node2D"]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_0y7fh")
-animation = &"CardSprites"
+animation = &"HeartCardSprites"
