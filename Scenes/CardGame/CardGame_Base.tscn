@@ -1,14 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://b18mj00imbv7"]
+[gd_scene load_steps=6 format=3 uid="uid://b18mj00imbv7"]
 
+[ext_resource type="Script" uid="uid://fkcmkhn8mgr2" path="res://Scenes/CardGame/CardGameBase.cs" id="1_64jno"]
 [ext_resource type="Script" uid="uid://ds5ea665i8jo4" path="res://Scenes/CardGame/CardGameUIManager.cs" id="1_y7kd2"]
 [ext_resource type="PackedScene" uid="uid://dhdu8s5akoesb" path="res://Prefabs/CardGame/PokerBase.tscn" id="2_ai4yh"]
-[ext_resource type="Script" uid="uid://cj2eg6pahkjfe" path="res://Prefabs/CardGame/CardManager.cs" id="3_8pekt"]
+[ext_resource type="Script" uid="uid://cj2eg6pahkjfe" path="res://Prefabs/CardGame/PokerGameManager.cs" id="4_64jno"]
 [ext_resource type="Script" uid="uid://bgjke2o6okd5u" path="res://Prefabs/CardGame/InputManager.cs" id="4_mmq6p"]
 
-[node name="CardGameBase" type="Node"]
+[node name="CardGameBase" type="Node" node_paths=PackedStringArray("PokerGameManager")]
+script = ExtResource("1_64jno")
+PokerGameManager = NodePath("GameBase/CardSystem/PokerGameManager")
 
-[node name="InputManager" type="Node" parent="."]
+[node name="InputManager" type="Node" parent="." node_paths=PackedStringArray("pokerGameManager")]
 script = ExtResource("4_mmq6p")
+pokerGameManager = NodePath("../GameBase/CardSystem/PokerGameManager")
 
 [node name="UI_Base" type="Control" parent="." node_paths=PackedStringArray("testLabel")]
 layout_mode = 3
@@ -44,16 +48,16 @@ text = "Card Game
 "
 horizontal_alignment = 1
 
-[node name="GameBase" type="Node2D" parent="." node_paths=PackedStringArray("inputManager")]
-script = ExtResource("3_8pekt")
-inputManager = NodePath("../InputManager")
+[node name="GameBase" type="Node2D" parent="."]
 
 [node name="GameBackground" type="Sprite2D" parent="GameBase"]
 
 [node name="CardSystem" type="Node" parent="GameBase"]
 
-[node name="CardManager" type="Node2D" parent="GameBase/CardSystem"]
-script = ExtResource("3_8pekt")
+[node name="PokerGameManager" type="Node2D" parent="GameBase/CardSystem" node_paths=PackedStringArray("inputManager", "CardGameBase")]
+script = ExtResource("4_64jno")
+inputManager = NodePath("../../../InputManager")
+CardGameBase = NodePath("../../..")
 
 [node name="Card_Dummy" parent="GameBase" instance=ExtResource("2_ai4yh")]
 position = Vector2(697, 490)

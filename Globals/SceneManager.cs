@@ -3,22 +3,14 @@ using System;
 
 public partial class SceneManager : Node
 {
-    private static SceneManager instance;
+    public static SceneManager Instance { get; private set; }
     [Export] private PackedScene actionGameScene, cardGameScene;
     private PackedScene preparedScene;
 
 
     public override void _EnterTree()
     {
-        instance = this;
-    }
-    public static SceneManager GetInstance()
-    {
-        if (instance == null)
-        {
-            GD.PrintErr("No SceneManager instance found");
-        }
-        return instance;
+        Instance = this;
     }
 
     public void PrepareMainGameScene()

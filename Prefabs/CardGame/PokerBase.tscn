@@ -2,7 +2,7 @@
 
 [ext_resource type="SpriteFrames" uid="uid://6u3iajvhk1s3" path="res://Resources/CardGame/Top-Down-Cards/Cards/CardsStack.tres" id="1_0y7fh"]
 [ext_resource type="Script" uid="uid://bxy438totfnvr" path="res://Prefabs/CardGame/PokerBase.cs" id="1_gjmgp"]
-[ext_resource type="Script" uid="uid://bjvmn0xmubatw" path="res://Prefabs/CardGame/PokerPhysics.cs" id="3_0huga"]
+[ext_resource type="Script" uid="uid://6qtd6f4nqnsb" path="res://Prefabs/CardGame/PokerDragging.cs" id="3_0huga"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d824c"]
 size = Vector2(88, 124)

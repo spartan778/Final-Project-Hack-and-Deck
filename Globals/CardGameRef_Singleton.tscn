@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://chajhnkt1saw5"]
+
+[ext_resource type="Script" uid="uid://1iu2veqdhv2s" path="res://Globals/CardGameRefSingleton.cs" id="1_i38r2"]
+
+[node name="CardGameRefSingleton" type="Node"]
+script = ExtResource("1_i38r2")
