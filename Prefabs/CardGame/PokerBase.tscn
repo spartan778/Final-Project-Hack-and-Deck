@@ -1,9 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://dhdu8s5akoesb"]
+[gd_scene load_steps=5 format=3 uid="uid://dhdu8s5akoesb"]
 
 [ext_resource type="SpriteFrames" uid="uid://6u3iajvhk1s3" path="res://Resources/CardGame/Top-Down-Cards/Cards/CardsStack.tres" id="1_0y7fh"]
+[ext_resource type="Script" uid="uid://bxy438totfnvr" path="res://Prefabs/CardGame/PokerBase.cs" id="1_gjmgp"]
+[ext_resource type="Script" uid="uid://bjvmn0xmubatw" path="res://Prefabs/CardGame/PokerPhysics.cs" id="3_0huga"]
 
-[node name="CardBase" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d824c"]
+size = Vector2(88, 124)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="PokerBase" type="Node2D"]
+script = ExtResource("1_gjmgp")
+
+[node name="CardDisplay" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_0y7fh")
 animation = &"HeartCardSprites"
+
+[node name="DetectionArea" type="Area2D" parent="." node_paths=PackedStringArray("pokerBaseRef")]
+script = ExtResource("3_0huga")
+pokerBaseRef = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("RectangleShape2D_d824c")
