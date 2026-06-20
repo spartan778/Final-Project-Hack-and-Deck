@@ -21,7 +21,7 @@ CoroutineManager="*res://addons/HCoroutines/coroutine_manager.tscn"
 NetworkManagerSingleton="*res://Globals/NetworkManager_Singleton.tscn"
 RpcManager="*res://Globals/RpcManager.tscn"
 SceneManager="*res://Globals/SceneManager.tscn"
-CardGameRefSingleton="*res://Globals/CardGameRefSingleton.cs"
+CardGameHelperSingleton="*res://Globals/CardGameHelperSingleton.tscn"
 
 [display]
 

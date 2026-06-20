@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://chajhnkt1saw5"]
+
+[ext_resource type="Script" uid="uid://1iu2veqdhv2s" path="res://Globals/CardGameHelperSingleton.cs" id="1_jvu6x"]
+
+[node name="CardGameHelperSingleton" type="Node"]
+script = ExtResource("1_jvu6x")
+pokerBoundaries = Vector2(50, 50)

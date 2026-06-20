@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dhdu8s5akoesb"]
+[gd_scene load_steps=6 format=3 uid="uid://dhdu8s5akoesb"]
 
 [ext_resource type="SpriteFrames" uid="uid://6u3iajvhk1s3" path="res://Resources/CardGame/Top-Down-Cards/Cards/CardsStack.tres" id="1_0y7fh"]
 [ext_resource type="Script" uid="uid://bxy438totfnvr" path="res://Prefabs/CardGame/PokerBase.cs" id="1_gjmgp"]
 [ext_resource type="Script" uid="uid://6qtd6f4nqnsb" path="res://Prefabs/CardGame/PokerDragging.cs" id="3_0huga"]
+[ext_resource type="Script" uid="uid://c0788twooco6p" path="res://Prefabs/CardGame/HoverInteraction.cs" id="4_56yac"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d824c"]
 size = Vector2(88, 124)
@@ -20,3 +21,8 @@ pokerBaseRef = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource("RectangleShape2D_d824c")
+
+[node name="HoverInteraction" type="Node" parent="DetectionArea" node_paths=PackedStringArray("pokerArea", "pokerBase")]
+script = ExtResource("4_56yac")
+pokerArea = NodePath("..")
+pokerBase = NodePath("../..")

@@ -6,16 +6,18 @@ public partial class PokerGameManager : Node2D
 {
     [Export] private InputManager inputManager;
     [Export] public CardGameBase CardGameBase { get; private set; }
+    [Export] public Node2D GameBase2D { get; private set; }
     
-    private PokerBase holdingPoker;
-    
+    public PokerBase HeldPoker {get; private set;}
+    public bool IsDragging {get; private set;}
+    private Vector2 originalScale;
     
     public Action<PokerBase> HoldingPoker, ReleasingPoker;
 
 
     public override void _EnterTree()
     {
-        CardGameRefSingleton.Instance.SetPokerGameManager(this);
+        CardGameHelperSingleton.Instance.SetPokerGameManager(this);
     }
 
     public override void _Ready()
@@ -31,15 +33,21 @@ public partial class PokerGameManager : Node2D
 
     private void OnHoldingPoker(PokerBase poker)
     {
-        holdingPoker = poker;
-        GetParent().GetParent().MoveChild(holdingPoker,-1);
-        GD.Print($"Holding: {holdingPoker.Name}");
+        HeldPoker = poker;
+        // GetParent().GetParent().MoveChild(holdingPoker,-1);
+        GameBase2D.MoveChild(HeldPoker,-1); // Moving the picked card to top
+        IsDragging = true;
+        originalScale = poker.Scale;
+        poker.Scale *= 1.1f;
+        GD.Print($"Holding: {HeldPoker.Name}");
     }
 
     private void OnReleasingPoker(PokerBase poker)
     {
         GD.Print($"Releasing: {poker.Name}");
-        holdingPoker = null;
+        IsDragging = false;
+        poker.Scale = originalScale;
+        HeldPoker = null;
     }
     
 
@@ -62,4 +70,5 @@ public partial class PokerGameManager : Node2D
         GD.Print(node.Name);
         return node as PokerBase; // will return null if not a poker
     }
+    
 }

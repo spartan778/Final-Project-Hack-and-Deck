@@ -6,13 +6,14 @@
 [ext_resource type="Script" uid="uid://cj2eg6pahkjfe" path="res://Prefabs/CardGame/PokerGameManager.cs" id="4_64jno"]
 [ext_resource type="Script" uid="uid://bgjke2o6okd5u" path="res://Prefabs/CardGame/InputManager.cs" id="4_mmq6p"]
 
-[node name="CardGameBase" type="Node" node_paths=PackedStringArray("PokerGameManager")]
+[node name="CardGameBase" type="Node" node_paths=PackedStringArray("PokerGameManager", "GameBase2D")]
 script = ExtResource("1_64jno")
-PokerGameManager = NodePath("GameBase/CardSystem/PokerGameManager")
+PokerGameManager = NodePath("GameBase2D/CardSystem/PokerGameManager")
+GameBase2D = NodePath("GameBase2D")
 
 [node name="InputManager" type="Node" parent="." node_paths=PackedStringArray("pokerGameManager")]
 script = ExtResource("4_mmq6p")
-pokerGameManager = NodePath("../GameBase/CardSystem/PokerGameManager")
+pokerGameManager = NodePath("../GameBase2D/CardSystem/PokerGameManager")
 
 [node name="UI_Base" type="Control" parent="." node_paths=PackedStringArray("testLabel")]
 layout_mode = 3
@@ -48,32 +49,34 @@ text = "Card Game
 "
 horizontal_alignment = 1
 
-[node name="GameBase" type="Node2D" parent="."]
+[node name="GameBase2D" type="Node2D" parent="."]
 
-[node name="GameBackground" type="Sprite2D" parent="GameBase"]
+[node name="GameBackground" type="Sprite2D" parent="GameBase2D"]
+modulate = Color(1, 0.862745, 1, 1)
 
-[node name="CardSystem" type="Node" parent="GameBase"]
+[node name="CardSystem" type="Node" parent="GameBase2D"]
 
-[node name="PokerGameManager" type="Node2D" parent="GameBase/CardSystem" node_paths=PackedStringArray("inputManager", "CardGameBase")]
+[node name="PokerGameManager" type="Node2D" parent="GameBase2D/CardSystem" node_paths=PackedStringArray("inputManager", "CardGameBase", "GameBase2D")]
 script = ExtResource("4_64jno")
 inputManager = NodePath("../../../InputManager")
 CardGameBase = NodePath("../../..")
+GameBase2D = NodePath("../..")
 
-[node name="Card_Dummy" parent="GameBase" instance=ExtResource("2_ai4yh")]
+[node name="Card_Dummy" parent="GameBase2D" instance=ExtResource("2_ai4yh")]
 position = Vector2(697, 490)
 
-[node name="CardDisplay" parent="GameBase/Card_Dummy" index="0"]
+[node name="CardDisplay" parent="GameBase2D/Card_Dummy" index="0"]
 frame = 7
 
-[node name="Card_Dummy2" parent="GameBase" instance=ExtResource("2_ai4yh")]
+[node name="Card_Dummy2" parent="GameBase2D" instance=ExtResource("2_ai4yh")]
 position = Vector2(1034, 271)
 
-[node name="CardDisplay" parent="GameBase/Card_Dummy2" index="0"]
+[node name="CardDisplay" parent="GameBase2D/Card_Dummy2" index="0"]
 animation = &"ClubCardSprites"
 frame = 4
 
-[node name="Card_Dummy3" parent="GameBase" instance=ExtResource("2_ai4yh")]
-position = Vector2(346, 352)
+[node name="Card_Dummy3" parent="GameBase2D" instance=ExtResource("2_ai4yh")]
+position = Vector2(537, 299)
 
-[editable path="GameBase/Card_Dummy"]
-[editable path="GameBase/Card_Dummy2"]
+[editable path="GameBase2D/Card_Dummy"]
+[editable path="GameBase2D/Card_Dummy2"]
