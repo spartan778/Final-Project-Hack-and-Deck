@@ -9,10 +9,11 @@ public partial class PokerGameManager : Node2D
     [Export] public Node2D GameBase2D { get; private set; }
     
     public PokerBase HeldPoker {get; private set;}
+    public PokerBase HoveredPoker {get; private set;}
     public bool IsDragging {get; private set;}
     private Vector2 originalScale;
     
-    public Action<PokerBase> HoldingPoker, ReleasingPoker;
+    public Action<PokerBase> HoldingPoker, ReleasingPoker, HoveringPoker, UnHoveringPoker;
 
 
     public override void _EnterTree()
@@ -29,13 +30,16 @@ public partial class PokerGameManager : Node2D
     {
         HoldingPoker += OnHoldingPoker;
         ReleasingPoker += OnReleasingPoker;
+        HoveringPoker += OnHoveringPoker;
+        UnHoveringPoker += OnUnHoveringPoker;
     }
 
     private void OnHoldingPoker(PokerBase poker)
     {
         HeldPoker = poker;
         // GetParent().GetParent().MoveChild(holdingPoker,-1);
-        GameBase2D.MoveChild(HeldPoker,-1); // Moving the picked card to top
+        // GameBase2D.MoveChild(HeldPoker,-1); // Moving the picked card to top
+        HeldPoker.GetParent()?.MoveChild(HeldPoker, -1);
         IsDragging = true;
         originalScale = poker.Scale;
         poker.Scale *= 1.1f;
@@ -49,7 +53,16 @@ public partial class PokerGameManager : Node2D
         poker.Scale = originalScale;
         HeldPoker = null;
     }
-    
+
+    private void OnHoveringPoker(PokerBase poker)
+    {
+        HoveredPoker = poker;
+    }
+
+    private void OnUnHoveringPoker(PokerBase poker)
+    {
+        HoveredPoker = null;
+    }
 
     public PokerBase DetectPokerRayCast() // referenced from Godot official document 4.4 - Ray casting (not in use)
     {

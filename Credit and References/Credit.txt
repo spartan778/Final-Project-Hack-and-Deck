@@ -1,2 +1,5 @@
 2D Poker Pack by Screaming Brain Studios - License(s): CC0
 https://opengameart.org/content/2d-poker-pack
+
+"Green mat texture", by Vircon32 (Carra). Published at OpenGameArt under license CC-BY 4.0.
+https://opengameart.org/content/green-mat-texture
