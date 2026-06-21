@@ -37,9 +37,7 @@ public partial class PokerGameManager : Node2D
     private void OnHoldingPoker(PokerBase poker)
     {
         HeldPoker = poker;
-        // GetParent().GetParent().MoveChild(holdingPoker,-1);
-        // GameBase2D.MoveChild(HeldPoker,-1); // Moving the picked card to top
-        HeldPoker.GetParent()?.MoveChild(HeldPoker, -1);
+        HeldPoker.GetParent()?.MoveChild(HeldPoker, -1); // Moving the picked card to top
         IsDragging = true;
         originalScale = poker.Scale;
         poker.Scale *= 1.1f;

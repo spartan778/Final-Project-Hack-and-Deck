@@ -17,9 +17,9 @@ PokerContent = NodePath("PokerContent")
 sprite_frames = ExtResource("1_0y7fh")
 animation = &"ClubCardSprites"
 
-[node name="DetectionArea" type="Area2D" parent="." node_paths=PackedStringArray("pokerBaseRef")]
+[node name="DetectionArea" type="Area2D" parent="." node_paths=PackedStringArray("PokerBaseRef")]
 script = ExtResource("3_0huga")
-pokerBaseRef = NodePath("..")
+PokerBaseRef = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource("RectangleShape2D_d824c")

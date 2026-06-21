@@ -4,10 +4,17 @@ using System;
 public partial class PokerContent : Node
 {
     [Export] private AnimatedSprite2D cardDisplay;
+    [Export] private CardSuit cardSuit;
+    [Export] private int cardValue;
     public PokerInfo PokerInfo;
     public override void _EnterTree()
     {
-        PokerInfo = new PokerInfo();
+        PokerInfo = new PokerInfo(cardSuit, cardValue);
+    }
+
+    public override void _Ready()
+    {
+        UpdatePokerDisplay();
     }
     
     public void UpdatePokerDisplay()

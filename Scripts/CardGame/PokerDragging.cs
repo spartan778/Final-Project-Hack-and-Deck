@@ -3,7 +3,7 @@ using System;
 
 public partial class PokerDragging : Area2D
 {
-	[Export] private PokerBase pokerBaseRef;
+	[Export] public PokerBase PokerBaseRef;
 	private PokerGameManager pokerGameManager;
 	
 	private bool isDragging = false;
@@ -11,8 +11,8 @@ public partial class PokerDragging : Area2D
 
 	public override void _Ready()
 	{
-		
 		pokerGameManager = CardGameHelperSingleton.Instance.PokerGameManager;
+		GD.Print("PokerDragging");
 	}
 
 	public override void _InputEvent(Viewport viewport, InputEvent @event, int shapeIdx)
@@ -22,9 +22,9 @@ public partial class PokerDragging : Area2D
 			if (@event.IsPressed())
 			{
 				isDragging = true;
-				pickUpOffset = pokerBaseRef.GlobalPosition - GetGlobalMousePosition(); // store the offset between mouse and center point of card
+				pickUpOffset = PokerBaseRef.GlobalPosition - GetGlobalMousePosition(); // store the offset between mouse and center point of card
 				// GetParent().GetParent().MoveChild(this, -1);
-				pokerGameManager.HoldingPoker?.Invoke(pokerBaseRef);
+				pokerGameManager.HoldingPoker?.Invoke(PokerBaseRef);
 				GetViewport().SetInputAsHandled(); // avoid event fallthrough
 			}
 		}
@@ -38,7 +38,7 @@ public partial class PokerDragging : Area2D
 			case InputEventMouseMotion: // triggered everytime(frame) when there is mouse motion
 			{
 				var finalMousePosition = CardGameHelperSingleton.Instance.CheckPokerBoundaries(GetGlobalMousePosition());
-				pokerBaseRef.GlobalPosition = finalMousePosition + pickUpOffset; // offset the card to avoid snapping to card center
+				PokerBaseRef.GlobalPosition = finalMousePosition + pickUpOffset; // offset the card to avoid snapping to card center
 				break;
 			}
 			case InputEventMouseButton { ButtonIndex: MouseButton.Left }:
@@ -46,7 +46,7 @@ public partial class PokerDragging : Area2D
 				if (!@event.IsPressed() || @event.IsReleased())
 				{
 					isDragging = false;
-					pokerGameManager.ReleasingPoker?.Invoke(pokerBaseRef);
+					pokerGameManager.ReleasingPoker?.Invoke(PokerBaseRef);
 				}
 				GetViewport().SetInputAsHandled();
 				break;
