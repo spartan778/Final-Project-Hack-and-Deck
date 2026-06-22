@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b18mj00imbv7"]
+[gd_scene load_steps=17 format=3 uid="uid://b18mj00imbv7"]
 
 [ext_resource type="Script" uid="uid://fkcmkhn8mgr2" path="res://Scripts/CardGame/CardGameBase.cs" id="1_64jno"]
 [ext_resource type="Script" uid="uid://ds5ea665i8jo4" path="res://Scripts/CardGame/CardGameUIManager.cs" id="1_y7kd2"]
@@ -6,7 +6,43 @@
 [ext_resource type="Script" uid="uid://cj2eg6pahkjfe" path="res://Scripts/CardGame/PokerGameManager.cs" id="4_64jno"]
 [ext_resource type="Script" uid="uid://bgjke2o6okd5u" path="res://Scripts/CardGame/InputManager.cs" id="4_mmq6p"]
 [ext_resource type="Texture2D" uid="uid://d3tmnel32vlk0" path="res://Resources/CardGame/green_mat_texture_-_base_texture.png" id="4_oyi1v"]
+[ext_resource type="Script" uid="uid://boyyg3jjrl28a" path="res://Scenes/CardGame/DrawPile.cs" id="6_8hseb"]
+[ext_resource type="Texture2D" uid="uid://b4lxy8von0qev" path="res://Resources/CardGame/Top-Down-Cards/Cards/PokerSlot_Image.png" id="6_of8xl"]
+[ext_resource type="Texture2D" uid="uid://dpdtt42uonp7d" path="res://Resources/CardGame/Top-Down-Cards/Cards/Card Deck - Top Down 88x140.png" id="7_0n1s0"]
+[ext_resource type="Script" uid="uid://c0135dftraqg6" path="res://Scenes/CardGame/CardSlots.cs" id="7_6mt5e"]
 [ext_resource type="PackedScene" uid="uid://4spdyrwd1t8h" path="res://Prefabs/CardGame/CardSlot.tscn" id="7_7nhsq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8hseb"]
+atlas = ExtResource("7_0n1s0")
+region = Rect2(0, 0, 88, 140)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k0eva"]
+atlas = ExtResource("7_0n1s0")
+region = Rect2(88, 0, 88, 140)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cxedt"]
+atlas = ExtResource("7_0n1s0")
+region = Rect2(176, 0, 88, 140)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0n1s0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8hseb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k0eva")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cxedt")
+}],
+"loop": true,
+"name": &"Color",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0n1s0"]
+size = Vector2(90, 130)
 
 [node name="CardGameBase" type="Node" node_paths=PackedStringArray("PokerGameManager", "GameBase2D")]
 script = ExtResource("1_64jno")
@@ -61,10 +97,6 @@ horizontal_alignment = 1
 
 [node name="GameBase2D" type="Node2D" parent="."]
 
-[node name="GameBackground" type="Sprite2D" parent="GameBase2D"]
-modulate = Color(1, 0.862745, 1, 1)
-centered = false
-
 [node name="CardSystem" type="Node" parent="GameBase2D"]
 
 [node name="PokerGameManager" type="Node2D" parent="GameBase2D/CardSystem" node_paths=PackedStringArray("inputManager", "CardGameBase", "GameBase2D")]
@@ -73,36 +105,68 @@ inputManager = NodePath("../../../InputManager")
 CardGameBase = NodePath("../../..")
 GameBase2D = NodePath("../..")
 
-[node name="PokerDeck" type="Node2D" parent="GameBase2D/CardSystem"]
-position = Vector2(-40, -442)
+[node name="PokerDeck" type="Node" parent="GameBase2D/CardSystem"]
+
+[node name="DrawPile" type="Node2D" parent="GameBase2D/CardSystem/PokerDeck"]
+position = Vector2(1150, 607)
+script = ExtResource("6_8hseb")
+
+[node name="PokerSlotImage" type="Sprite2D" parent="GameBase2D/CardSystem/PokerDeck/DrawPile"]
+texture = ExtResource("6_of8xl")
+
+[node name="DeckSlotImage" type="AnimatedSprite2D" parent="GameBase2D/CardSystem/PokerDeck/DrawPile/PokerSlotImage"]
+sprite_frames = SubResource("SpriteFrames_0n1s0")
+animation = &"Color"
+
+[node name="SlotArea" type="Area2D" parent="GameBase2D/CardSystem/PokerDeck/DrawPile"]
+collision_layer = 2
+collision_mask = 3
+
+[node name="Collider" type="CollisionShape2D" parent="GameBase2D/CardSystem/PokerDeck/DrawPile/SlotArea"]
+shape = SubResource("RectangleShape2D_0n1s0")
+
+[node name="DiscardPile" type="Node2D" parent="GameBase2D/CardSystem/PokerDeck"]
+position = Vector2(117, 606)
+
+[node name="PokerSlotImage" type="Sprite2D" parent="GameBase2D/CardSystem/PokerDeck/DiscardPile"]
+texture = ExtResource("6_of8xl")
+
+[node name="SlotArea" type="Area2D" parent="GameBase2D/CardSystem/PokerDeck/DiscardPile"]
+collision_layer = 2
+collision_mask = 3
+
+[node name="Collider" type="CollisionShape2D" parent="GameBase2D/CardSystem/PokerDeck/DiscardPile/SlotArea"]
+shape = SubResource("RectangleShape2D_0n1s0")
 
 [node name="Card_Dummy1" parent="GameBase2D/CardSystem" instance=ExtResource("2_ai4yh")]
-position = Vector2(782, 422)
+position = Vector2(511, 582)
 
 [node name="PokerContent" parent="GameBase2D/CardSystem/Card_Dummy1" index="2"]
 cardValue = 10
 
 [node name="Card_Dummy2" parent="GameBase2D/CardSystem" instance=ExtResource("2_ai4yh")]
-position = Vector2(419, 418)
+position = Vector2(655, 583)
 
 [node name="PokerContent" parent="GameBase2D/CardSystem/Card_Dummy2" index="2"]
 cardSuit = 1
 cardValue = 11
 
 [node name="Card_Dummy3" parent="GameBase2D/CardSystem" instance=ExtResource("2_ai4yh")]
-position = Vector2(597, 418)
+position = Vector2(815, 583)
 
 [node name="PokerContent" parent="GameBase2D/CardSystem/Card_Dummy3" index="2"]
 cardSuit = 2
 cardValue = 8
 
-[node name="CardSlots" type="Node2D" parent="GameBase2D"]
+[node name="CardSlots" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("CardSlotControls")]
+script = ExtResource("7_6mt5e")
+CardSlotControls = [NodePath("CardSlotsContainer/CardSlotControl"), NodePath("CardSlotsContainer/CardSlotControl2"), NodePath("CardSlotsContainer/CardSlotControl3"), NodePath("CardSlotsContainer/CardSlotControl4"), NodePath("CardSlotsContainer/CardSlotControl5")]
 
 [node name="CardSlotsContainer" type="HBoxContainer" parent="GameBase2D/CardSlots"]
 offset_left = 356.0
-offset_top = 577.0
+offset_top = 316.0
 offset_right = 956.0
-offset_bottom = 617.0
+offset_bottom = 356.0
 mouse_filter = 2
 theme_override_constants/separation = 150
 alignment = 1
@@ -114,6 +178,12 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="CardSlotControl3" parent="GameBase2D/CardSlots/CardSlotsContainer" instance=ExtResource("7_7nhsq")]
+layout_mode = 2
+
+[node name="CardSlotControl4" parent="GameBase2D/CardSlots/CardSlotsContainer" instance=ExtResource("7_7nhsq")]
+layout_mode = 2
+
+[node name="CardSlotControl5" parent="GameBase2D/CardSlots/CardSlotsContainer" instance=ExtResource("7_7nhsq")]
 layout_mode = 2
 
 [editable path="GameBase2D/CardSystem/Card_Dummy1"]

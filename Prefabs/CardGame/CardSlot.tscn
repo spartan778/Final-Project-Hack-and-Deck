@@ -1,14 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://4spdyrwd1t8h"]
+[gd_scene load_steps=5 format=3 uid="uid://4spdyrwd1t8h"]
 
+[ext_resource type="Script" uid="uid://dn3my5vkj40sf" path="res://Prefabs/CardGame/CardSlotControl.cs" id="1_f4jdp"]
 [ext_resource type="Script" uid="uid://d0biawvx2werp" path="res://Scripts/CardGame/CardSlotBase.cs" id="1_km50l"]
 [ext_resource type="Texture2D" uid="uid://b4lxy8von0qev" path="res://Resources/CardGame/Top-Down-Cards/Cards/PokerSlot_Image.png" id="2_f4jdp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7nhsq"]
-size = Vector2(95, 128)
+size = Vector2(60, 80)
 
-[node name="CardSlotControl" type="Control"]
+[node name="CardSlotControl" type="Control" node_paths=PackedStringArray("CardSlotBase")]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_f4jdp")
+CardSlotBase = NodePath("CardSlotBase")
 
 [node name="CardSlotBase" type="Node2D" parent="." node_paths=PackedStringArray("slotArea")]
 script = ExtResource("1_km50l")
@@ -22,5 +25,4 @@ collision_layer = 2
 collision_mask = 3
 
 [node name="Collider" type="CollisionShape2D" parent="CardSlotBase/SlotArea"]
-position = Vector2(-0.5, 1)
 shape = SubResource("RectangleShape2D_7nhsq")

@@ -28,6 +28,16 @@ public partial class RpcManager : Node
         GD.Print($"RTC running: addCount: {AddCount}");
         TestNumberChanged?.Invoke(AddCount);
     }
+    
+    private void SlotPoker_Send()
+    {
+        
+    }
+
+    private void SlotPoker_Receive()
+    {
+        
+    }
 	
     public override void _Input(InputEvent @event)
     {
