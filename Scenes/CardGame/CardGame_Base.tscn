@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b18mj00imbv7"]
+[gd_scene load_steps=25 format=3 uid="uid://b18mj00imbv7"]
 
 [ext_resource type="Script" uid="uid://fkcmkhn8mgr2" path="res://Scripts/CardGame/CardGameBase.cs" id="1_64jno"]
 [ext_resource type="Script" uid="uid://ds5ea665i8jo4" path="res://Scripts/CardGame/CardGameUIManager.cs" id="1_y7kd2"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://d3751tqllbblu" path="res://Scenes/CardGame/DeckArea.cs" id="9_3ocyd"]
 [ext_resource type="Script" uid="uid://cf465j5jowb8e" path="res://Prefabs/CardGame/ICardStorage.cs" id="9_k0eva"]
 [ext_resource type="Script" uid="uid://cc2l3v8r565lb" path="res://Prefabs/CardGame/PokerInfo.cs" id="10_cxedt"]
+[ext_resource type="Texture2D" uid="uid://rkvi4aam481o" path="res://Resources/UI/Vector_UI_Pack_dobo_ui/Panels/panel_cream.png" id="15_s74xb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8hseb"]
 atlas = ExtResource("7_0n1s0")
@@ -65,6 +66,9 @@ Suit = 2
 Rank = 9
 metadata/_custom_type_script = "uid://cc2l3v8r565lb"
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_acdag"]
+size = Vector2(802, 200)
+
 [node name="CardGameBase" type="Node" node_paths=PackedStringArray("PokerGameManager", "GameBase2D")]
 script = ExtResource("1_64jno")
 PokerGameManager = NodePath("GameBase2D/CardSystem/PokerGameManager")
@@ -96,10 +100,10 @@ texture = ExtResource("4_oyi1v")
 
 [node name="Main Label" type="Label" parent="UI_Base"]
 layout_mode = 0
-offset_left = 497.0
+offset_left = 480.0
 offset_top = 58.0
-offset_right = 832.0
-offset_bottom = 117.0
+offset_right = 830.0
+offset_bottom = 118.0
 theme_override_font_sizes/font_size = 20
 text = "Card Game
 "
@@ -107,9 +111,9 @@ horizontal_alignment = 1
 
 [node name="Sub Label" type="Label" parent="UI_Base/Main Label"]
 layout_mode = 0
-offset_left = 106.0
+offset_left = 115.0
 offset_top = 49.0
-offset_right = 230.0
+offset_right = 239.0
 offset_bottom = 108.0
 theme_override_font_sizes/font_size = 20
 text = "Card Game
@@ -167,19 +171,19 @@ collision_mask = 3
 shape = SubResource("RectangleShape2D_0n1s0")
 
 [node name="Card_Dummy1" parent="GameBase2D/CardSystem" instance=ExtResource("2_ai4yh")]
-position = Vector2(511, 582)
+position = Vector2(399, 643)
 
 [node name="PokerContent" parent="GameBase2D/CardSystem/Card_Dummy1" index="2"]
 PokerInfo = SubResource("Resource_cxedt")
 
 [node name="Card_Dummy2" parent="GameBase2D/CardSystem" instance=ExtResource("2_ai4yh")]
-position = Vector2(655, 583)
+position = Vector2(509, 641)
 
 [node name="PokerContent" parent="GameBase2D/CardSystem/Card_Dummy2" index="2"]
 PokerInfo = SubResource("Resource_0f7mf")
 
 [node name="Card_Dummy3" parent="GameBase2D/CardSystem" instance=ExtResource("2_ai4yh")]
-position = Vector2(815, 583)
+position = Vector2(619, 638)
 
 [node name="PokerContent" parent="GameBase2D/CardSystem/Card_Dummy3" index="2"]
 PokerInfo = SubResource("Resource_y2t1j")
@@ -193,9 +197,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = 360.0
-offset_top = 390.0
+offset_top = 310.0
 offset_right = 960.0
-offset_bottom = 390.0
+offset_bottom = 310.0
 grow_horizontal = 2
 mouse_filter = 2
 theme_override_constants/separation = 150
@@ -215,6 +219,21 @@ layout_mode = 2
 
 [node name="CardSlotControl5" parent="GameBase2D/CardSlots/CardSlotsContainer" instance=ExtResource("7_7nhsq")]
 layout_mode = 2
+
+[node name="HandSlots" type="Node2D" parent="GameBase2D"]
+position = Vector2(643, 684)
+
+[node name="PanelCream" type="Sprite2D" parent="GameBase2D/HandSlots"]
+position = Vector2(-17, -66)
+texture = ExtResource("15_s74xb")
+region_enabled = true
+region_rect = Rect2(30, 0, 800, 200)
+
+[node name="Area2D" type="Area2D" parent="GameBase2D/HandSlots/PanelCream"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameBase2D/HandSlots/PanelCream/Area2D"]
+position = Vector2(-1, 4)
+shape = SubResource("RectangleShape2D_acdag")
 
 [editable path="GameBase2D/CardSystem/Card_Dummy1"]
 [editable path="GameBase2D/CardSystem/Card_Dummy2"]

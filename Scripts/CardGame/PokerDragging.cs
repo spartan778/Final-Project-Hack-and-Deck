@@ -14,7 +14,7 @@ public partial class PokerDragging : Area2D
 		pokerGameManager = CardGameHelperSingleton.Instance.PokerGameManager;
 	}
 
-	/*public override void _InputEvent(Viewport viewport, InputEvent @event, int shapeIdx)
+	/*public override void _InputEvent(Viewport viewport, InputEvent @event, int shapeIdx) // refactored with raycast
 	{
 		if (@event is InputEventMouseButton { ButtonIndex: MouseButton.Left }) // specifically check for left mouse button changes
 		{

@@ -87,7 +87,7 @@ public partial class PokerGameManager : Node2D
         parameters.CollideWithAreas = true;
         parameters.CollisionMask = 1;
         var results = spaceState.IntersectPoint(parameters);
-        GD.Print(results);
+        /*GD.Print(results);
         if (results != null)
         {
             foreach (var result in results)
@@ -96,7 +96,7 @@ public partial class PokerGameManager : Node2D
                 var tempNode = temp.As<Node2D>().GetParent();
                 GD.Print($"Debugging: {tempNode.Name}");
             }
-        }
+        }*/
         var firstResult = results.FirstOrDefault();
         if (firstResult == null)
         {
