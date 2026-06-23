@@ -1,7 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://chajhnkt1saw5"]
+[gd_scene load_steps=4 format=3 uid="uid://chajhnkt1saw5"]
 
 [ext_resource type="Script" uid="uid://1iu2veqdhv2s" path="res://Globals/CardGameHelperSingleton.cs" id="1_jvu6x"]
+[ext_resource type="Resource" uid="uid://dx61o6lval4g5" path="res://Prefabs/CardGame/StartingCards/StartingHands.tres" id="2_jdank"]
+[ext_resource type="PackedScene" uid="uid://dhdu8s5akoesb" path="res://Prefabs/CardGame/PokerBase.tscn" id="3_ht8no"]
 
 [node name="CardGameHelperSingleton" type="Node"]
 script = ExtResource("1_jvu6x")
 pokerBoundaries = Vector2(50, 50)
+StartingDeck = ExtResource("2_jdank")
+PokerPrefab = ExtResource("3_ht8no")

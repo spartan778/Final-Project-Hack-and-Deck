@@ -37,7 +37,7 @@ public partial class PokerDragging : Area2D
 		{
 			case InputEventMouseMotion: // triggered everytime(frame) when there is mouse motion
 			{
-				var finalMousePosition = CardGameHelperSingleton.Instance.CheckPokerBoundaries(GetGlobalMousePosition());
+				var finalMousePosition = CardGameHelperSingleton.Instance.CheckScreenBoundaries(GetGlobalMousePosition());
 				PokerBaseRef.GlobalPosition = finalMousePosition + pickUpOffset; // offset the card to avoid snapping to card center
 				break;
 			}

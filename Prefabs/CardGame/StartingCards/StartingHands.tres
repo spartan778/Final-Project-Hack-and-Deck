@@ -1,0 +1,69 @@
+[gd_resource type="Resource" script_class="PokerArray" load_steps=13 format=3 uid="uid://dx61o6lval4g5"]
+
+[ext_resource type="Script" uid="uid://cc2l3v8r565lb" path="res://Prefabs/CardGame/PokerInfo.cs" id="1_3f381"]
+[ext_resource type="Script" uid="uid://d0328a6ur2nux" path="res://Prefabs/CardGame/StartingCards/PokerArray.cs" id="2_yw57j"]
+
+[sub_resource type="Resource" id="Resource_3f381"]
+script = ExtResource("1_3f381")
+Suit = 0
+Rank = 0
+metadata/_custom_type_script = "uid://cc2l3v8r565lb"
+
+[sub_resource type="Resource" id="Resource_yw57j"]
+script = ExtResource("1_3f381")
+Suit = 0
+Rank = 1
+metadata/_custom_type_script = "uid://cc2l3v8r565lb"
+
+[sub_resource type="Resource" id="Resource_lfgxu"]
+script = ExtResource("1_3f381")
+Suit = 0
+Rank = 2
+metadata/_custom_type_script = "uid://cc2l3v8r565lb"
+
+[sub_resource type="Resource" id="Resource_naj2u"]
+script = ExtResource("1_3f381")
+Suit = 0
+Rank = 3
+metadata/_custom_type_script = "uid://cc2l3v8r565lb"
+
+[sub_resource type="Resource" id="Resource_bnn2j"]
+script = ExtResource("1_3f381")
+Suit = 0
+Rank = 4
+metadata/_custom_type_script = "uid://cc2l3v8r565lb"
+
+[sub_resource type="Resource" id="Resource_mg08t"]
+script = ExtResource("1_3f381")
+Suit = 1
+Rank = 0
+metadata/_custom_type_script = "uid://cc2l3v8r565lb"
+
+[sub_resource type="Resource" id="Resource_b4pnq"]
+script = ExtResource("1_3f381")
+Suit = 1
+Rank = 0
+metadata/_custom_type_script = "uid://cc2l3v8r565lb"
+
+[sub_resource type="Resource" id="Resource_lhwxp"]
+script = ExtResource("1_3f381")
+Suit = 1
+Rank = 2
+metadata/_custom_type_script = "uid://cc2l3v8r565lb"
+
+[sub_resource type="Resource" id="Resource_g2ovi"]
+script = ExtResource("1_3f381")
+Suit = 1
+Rank = 3
+metadata/_custom_type_script = "uid://cc2l3v8r565lb"
+
+[sub_resource type="Resource" id="Resource_y22wd"]
+script = ExtResource("1_3f381")
+Suit = 1
+Rank = 4
+metadata/_custom_type_script = "uid://cc2l3v8r565lb"
+
+[resource]
+script = ExtResource("2_yw57j")
+SavedPokers = Array[Object]([SubResource("Resource_3f381"), SubResource("Resource_yw57j"), SubResource("Resource_lfgxu"), SubResource("Resource_naj2u"), SubResource("Resource_bnn2j"), SubResource("Resource_mg08t"), SubResource("Resource_b4pnq"), SubResource("Resource_lhwxp"), SubResource("Resource_g2ovi"), SubResource("Resource_y22wd")])
+metadata/_custom_type_script = "uid://d0328a6ur2nux"

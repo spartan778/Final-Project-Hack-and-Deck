@@ -4,12 +4,13 @@ using System;
 public partial class PokerContent : Node
 {
     [Export] private AnimatedSprite2D cardDisplay;
-    [Export] private CardSuit cardSuit;
-    [Export] private int cardValue;
-    public PokerInfo PokerInfo;
+    [Export] public PokerInfo PokerInfo;
     public override void _EnterTree()
     {
-        PokerInfo = new PokerInfo(cardSuit, cardValue);
+        if (PokerInfo == null)
+        {
+            GD.Print("PokerInfo not set");
+        }
     }
 
     public override void _Ready()
@@ -31,17 +32,18 @@ public partial class PokerContent : Node
     public void ChangePokerInfo(int suit, int value)
     {
         var suitEnum = (CardSuit)suit;
-        var newPokerInfo = new PokerInfo(suitEnum, value);
+        // var newPokerInfo = new PokerInfo(suitEnum, value);
+        
         UpdateDisplayInfo();
     }
     
     private void UpdateDisplayInfo()
     {
-        var suitName = GetCardAnimationName(PokerInfo.CardSuit);
+        var suitName = GetCardAnimationName(PokerInfo.Suit);
         if (suitName != null)
         {
             cardDisplay.SetAnimation(suitName);
-            cardDisplay.SetFrame(PokerInfo.CardValue);
+            cardDisplay.SetFrame(PokerInfo.Rank);
         }
         
     }
@@ -71,21 +73,6 @@ public partial class PokerContent : Node
     }
 }
 
-public struct PokerInfo
-{
-	public CardSuit CardSuit;
-    public int CardValue;
-
-    public PokerInfo()
-    {
-    }
-
-    public PokerInfo(CardSuit cardSuit, int cardValue)
-    {
-        CardSuit = cardSuit;
-        CardValue = cardValue;
-    }
-}
 public enum CardSuit 
 {
     Diamonds,

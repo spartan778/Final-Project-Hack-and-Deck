@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PokerInfo" load_steps=2 format=3 uid="uid://bpxqxmm7xnma0"]
+
+[ext_resource type="Script" uid="uid://cc2l3v8r565lb" path="res://Prefabs/CardGame/PokerInfo.cs" id="1_1t1oc"]
+
+[resource]
+script = ExtResource("1_1t1oc")
+Suit = 1
+Rank = 10

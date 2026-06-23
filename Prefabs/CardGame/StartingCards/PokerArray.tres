@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="PokerArray" load_steps=2 format=3 uid="uid://c7j7in8tphrde"]
+
+[ext_resource type="Script" uid="uid://d0328a6ur2nux" path="res://Prefabs/CardGame/StartingCards/PokerArray.cs" id="1_r3qh2"]
+
+[resource]
+script = ExtResource("1_r3qh2")
+Pokers = null

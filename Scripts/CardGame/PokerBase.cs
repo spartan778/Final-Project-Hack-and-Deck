@@ -18,5 +18,10 @@ public partial class PokerBase : Node2D
 		}
 		PokerGameManager = cardGameBase.PokerGameManager;
 	}
+
+	public void InitPoker(PokerInfo pokerInfo)
+	{
+		PokerContent.ChangePokerInfo(pokerInfo);
+	}
 	
 }

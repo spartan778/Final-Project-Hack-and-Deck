@@ -33,7 +33,7 @@ public partial class RpcManager : Node
 
     public void SlotPokerRpc(PokerInfo pokerInfo, Array modifiers = null)
     {
-        var pokerVector = new Vector2((int)pokerInfo.CardSuit, pokerInfo.CardValue);
+        var pokerVector = new Vector2((int)pokerInfo.Suit, pokerInfo.Rank);
         SlotPoker_Send(pokerVector, modifiers);
         GD.Print($"Sending Poker: {pokerVector}");
     }
