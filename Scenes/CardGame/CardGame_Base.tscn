@@ -163,10 +163,14 @@ script = ExtResource("7_6mt5e")
 CardSlotControls = [NodePath("CardSlotsContainer/CardSlotControl"), NodePath("CardSlotsContainer/CardSlotControl2"), NodePath("CardSlotsContainer/CardSlotControl3"), NodePath("CardSlotsContainer/CardSlotControl4"), NodePath("CardSlotsContainer/CardSlotControl5")]
 
 [node name="CardSlotsContainer" type="HBoxContainer" parent="GameBase2D/CardSlots"]
-offset_left = 356.0
-offset_top = 316.0
-offset_right = 956.0
-offset_bottom = 356.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 360.0
+offset_top = 390.0
+offset_right = 960.0
+offset_bottom = 390.0
+grow_horizontal = 2
 mouse_filter = 2
 theme_override_constants/separation = 150
 alignment = 1

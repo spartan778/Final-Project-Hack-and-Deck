@@ -1,10 +1,12 @@
 using Godot;
 using System;
+using static Godot.MultiplayerApi;
+using Array = Godot.Collections.Array;
 
 public partial class RpcManager : Node
 {
     private NetworkManager_Singleton networkManagerSingleton;
-    private static RpcManager _instance;
+    public static RpcManager Instance {get; private set;}
     private MultiplayerPeer multiplayerPeer;
 
     public int AddCount { get; private set; } = 0;
@@ -13,7 +15,7 @@ public partial class RpcManager : Node
 
     public override void _EnterTree()
     {
-        _instance = this; //set a global (static) reference
+        Instance = this; //set a global (static) reference
     }
     public override void _Ready()
     {
@@ -21,22 +23,36 @@ public partial class RpcManager : Node
         multiplayerPeer = Multiplayer.GetMultiplayerPeer();
     }
     
-    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+    [Rpc(RpcMode.AnyPeer)]
     private void TestRpc_Add()
     {
         AddCount++;
         GD.Print($"RTC running: addCount: {AddCount}");
         TestNumberChanged?.Invoke(AddCount);
     }
-    
-    private void SlotPoker_Send()
+
+    public void SlotPokerRpc(PokerInfo pokerInfo, Array modifiers = null)
     {
-        
+        var pokerVector = new Vector2((int)pokerInfo.CardSuit, pokerInfo.CardValue);
+        SlotPoker_Send(pokerVector, modifiers);
+        GD.Print($"Sending Poker: {pokerVector}");
+    }
+    
+    [Rpc(RpcMode.AnyPeer)]
+    private void SlotPoker_Send(Vector2 pokerInfo, Array modifiers = null)
+    {
+        if (pokerInfo.X < 0 || pokerInfo.X > 3 || pokerInfo.Y < 0 || pokerInfo.Y > 12)
+        {
+            GD.PrintErr("Invalid poker info");
+            return;
+        }
+        Rpc(nameof(SlotPoker_Receive), pokerInfo);
     }
 
-    private void SlotPoker_Receive()
+    [Rpc(RpcMode.AnyPeer)]
+    private void SlotPoker_Receive(Vector2 pokerInfo)
     {
-        
+        GD.Print($"Normal Poker received: {pokerInfo}");
     }
 	
     public override void _Input(InputEvent @event)
@@ -52,10 +68,10 @@ public partial class RpcManager : Node
     
     public static RpcManager GetInstance()
     {
-        if (_instance == null)
+        if (Instance == null)
         {
             GD.PrintErr("No RpcManager found");
         }
-        return _instance;
+        return Instance;
     }
 }

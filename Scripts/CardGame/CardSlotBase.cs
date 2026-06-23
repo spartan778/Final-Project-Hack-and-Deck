@@ -6,6 +6,7 @@ public partial class CardSlotBase : Node2D
     [Export] Area2D slotArea;
     public PokerBase SlottedPoker {get; private set;}
     private PokerGameManager pokerGameManagerRef;
+    private RpcManager rpcManager;
 
     public override void _Ready()
     {
@@ -13,6 +14,7 @@ public partial class CardSlotBase : Node2D
         pokerGameManagerRef = CardGameHelperSingleton.Instance.PokerGameManager;
         pokerGameManagerRef.ReleasingPoker += OnPokerReleased;
         pokerGameManagerRef.HoldingPoker += OnHoldingPoker;
+        rpcManager = RpcManager.Instance;
     }
 
     private void OnHoldingPoker(PokerBase poker)
@@ -40,6 +42,7 @@ public partial class CardSlotBase : Node2D
         SlottedPoker = poker.PokerBaseRef;
         GD.Print($"Slotted: {poker.PokerBaseRef.Name} at {GetParent().Name}");
         SlottedPoker.Position = GlobalPosition;
+        rpcManager.SlotPokerRpc(poker.PokerBaseRef.PokerContent.PokerInfo);
     }
     
 }
