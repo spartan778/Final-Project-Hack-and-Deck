@@ -41,12 +41,10 @@ public partial class PokerGameManager : Node2D
         IsDragging = true;
         originalScale = poker.Scale;
         poker.Scale *= 1.1f;
-        GD.Print($"Holding: {HeldPoker.Name}");
     }
 
     private void OnReleasingPoker(PokerBase poker)
     {
-        GD.Print($"Releasing: {poker.Name}");
         IsDragging = false;
         poker.Scale = originalScale;
         HeldPoker = null;
@@ -62,7 +60,26 @@ public partial class PokerGameManager : Node2D
         HoveredPoker = null;
     }
 
-    public PokerBase DetectPokerRayCast() // referenced from Godot official document 4.4 - Ray casting (not in use)
+    public override void _Input(InputEvent @event)
+    {
+        switch (@event)
+        {
+            case InputEventMouseButton {ButtonIndex: MouseButton.Left}:
+            {
+                if(@event.IsPressed())
+                {
+                    var draggedPoker = DetectPokerRayCast();
+                    if(draggedPoker == null) return;
+                    draggedPoker.PokerDraggingRef.IsDragging = true;
+                    draggedPoker.PokerDraggingRef.PickUpOffset = draggedPoker.GlobalPosition - GetGlobalMousePosition();
+                    HoldingPoker?.Invoke(draggedPoker);
+                }
+                break;
+            }
+        }
+    }
+
+    public PokerBase DetectPokerRayCast() // referenced from Godot official document 4.4 - Ray casting
     {
         var spaceState = GetWorld2D().DirectSpaceState;
         var parameters = new PhysicsPointQueryParameters2D(); // setup detection parameters
@@ -70,6 +87,16 @@ public partial class PokerGameManager : Node2D
         parameters.CollideWithAreas = true;
         parameters.CollisionMask = 1;
         var results = spaceState.IntersectPoint(parameters);
+        GD.Print(results);
+        if (results != null)
+        {
+            foreach (var result in results)
+            {
+                var temp = result["collider"];
+                var tempNode = temp.As<Node2D>().GetParent();
+                GD.Print($"Debugging: {tempNode.Name}");
+            }
+        }
         var firstResult = results.FirstOrDefault();
         if (firstResult == null)
         {

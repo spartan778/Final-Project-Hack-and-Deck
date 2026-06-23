@@ -20,7 +20,7 @@ public partial class ICardStorage : Node
     {
         for (var i = 0; i < StoredPokers.Count; i++)
         {
-            var j = GD.RandRange(0, StoredPokers.Count);
+            var j = GD.RandRange(0, StoredPokers.Count-1);
             (StoredPokers[i], StoredPokers[j]) = (StoredPokers[j], StoredPokers[i]); //swap the two pokers
         }
     }

@@ -24,6 +24,6 @@ public partial class DrawPile : Node2D
         newPoker.InitPoker(drawnPokerInfo);
         CardSystemRef.AddChild(newPoker);
         newPoker.GlobalPosition = new Vector2(500,500);
-        GD.Print($"DrawPoker: {drawnPokerInfo}");
+        // GD.Print($"DrawPoker: {drawnPokerInfo}");
     }
 }

@@ -9,9 +9,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d824c"]
 size = Vector2(88, 124)
 
-[node name="PokerBase" type="Node2D" node_paths=PackedStringArray("PokerContent")]
+[node name="PokerBase" type="Node2D" node_paths=PackedStringArray("PokerContent", "PokerDraggingRef")]
 script = ExtResource("1_gjmgp")
 PokerContent = NodePath("PokerContent")
+PokerDraggingRef = NodePath("DetectionArea")
 
 [node name="CardDisplay" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_0y7fh")

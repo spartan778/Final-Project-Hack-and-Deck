@@ -17,13 +17,11 @@ public partial class DeckArea : Area2D
     private void OnMouseEntered()
     {
         isHovered = true;
-        GD.Print("Mouse Entered");
     }
 
     private void OnMouseExited()
     {
         isHovered = false;
-        GD.Print("Mouse Exited");
     }
     
     public override void _Input(InputEvent @event)
