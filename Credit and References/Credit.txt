@@ -3,3 +3,7 @@ https://opengameart.org/content/2d-poker-pack
 
 "Green mat texture", by Vircon32 (Carra). Published at OpenGameArt under license CC-BY 4.0.
 https://opengameart.org/content/green-mat-texture
+
+Casual UI Pack - by dobo License: CC0 1.0 Universal
+itch.io - dobo_ui
+https://store.godotengine.org/asset/dobo/casual-ui-pack/

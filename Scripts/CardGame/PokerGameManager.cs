@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 public partial class PokerGameManager : Node2D
@@ -37,7 +38,7 @@ public partial class PokerGameManager : Node2D
     private void OnHoldingPoker(PokerBase poker)
     {
         HeldPoker = poker;
-        HeldPoker.GetParent()?.MoveChild(HeldPoker, -1); // Moving the picked card to top
+        HeldPoker.GetParent()?.MoveChild(HeldPoker, -1); // Moving the picked card to top (in hierarchy)
         IsDragging = true;
         originalScale = poker.Scale;
         poker.Scale *= 1.1f;
@@ -81,6 +82,7 @@ public partial class PokerGameManager : Node2D
 
     public PokerBase DetectPokerRayCast() // referenced from Godot official document 4.4 - Ray casting
     {
+        GD.Print("Detecting poker ray cast");
         var spaceState = GetWorld2D().DirectSpaceState;
         var parameters = new PhysicsPointQueryParameters2D(); // setup detection parameters
         parameters.Position = GetGlobalMousePosition(); // using mouse position as raycast source
@@ -97,16 +99,31 @@ public partial class PokerGameManager : Node2D
                 GD.Print($"Debugging: {tempNode.Name}");
             }
         }*/
-        var firstResult = results.FirstOrDefault();
-        if (firstResult == null)
+        // var firstResult = results.FirstOrDefault();
+        if (results == null)
         {
             GD.Print("No card found");
             return null;
         };
-        var collider = firstResult["collider"];
-        var node = collider.As<Area2D>().GetParent();
-        GD.Print(node.Name);
-        return node as PokerBase; // will return null if not a poker
+        List<PokerBase> detectedPokers = new List<PokerBase>(); //temp list to filter out all pokers
+        foreach (var result in results)
+        {
+            var collider = (Node)result["collider"];
+            var tempNode = collider.GetParent();
+            if (tempNode is PokerBase)
+            {
+                detectedPokers.Add(tempNode as PokerBase);
+            }
+        }
+        
+        if (detectedPokers.Count > 0)
+        {
+            var topCard = detectedPokers.OrderByDescending(card => card.GetIndex()).First(); // get the card with the lowest index
+            GD.Print($"{detectedPokers.Count} cards detected");
+            GD.Print($"picking with index: {topCard.GetIndex()}");
+            return topCard;
+        }
+        return null;
     }
     
 }
