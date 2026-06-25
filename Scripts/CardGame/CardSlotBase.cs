@@ -32,6 +32,11 @@ public partial class CardSlotBase : Node2D
         {
             if (area is not PokerDragging draggedPoker) continue; // filter out all non-pokers
             if (draggedPoker.PokerBaseRef != poker) continue; // filter out  all pokers not being dragged
+            if (SlottedPoker != null && SlottedPoker != draggedPoker.PokerBaseRef)
+            {
+                RejectPoker(draggedPoker.PokerBaseRef);
+                break;
+            };
             SlotPoker(draggedPoker);
             break; // stop once a poker is slotted
         }
@@ -44,5 +49,9 @@ public partial class CardSlotBase : Node2D
         SlottedPoker.Position = GlobalPosition;
         rpcManager.SlotPokerRpc(poker.PokerBaseRef.PokerContent.PokerInfo);
     }
-    
+
+    private void RejectPoker(PokerBase poker)
+    {
+        GD.Print($"{GetParent().Name} already has {SlottedPoker.PokerContent.PokerInfo}, rejecting poker {poker.PokerContent.PokerInfo}");
+    }
 }
