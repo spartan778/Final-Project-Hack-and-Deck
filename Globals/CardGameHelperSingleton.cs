@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using Godot.Collections;
+using Array = System.Array;
 
 public partial class CardGameHelperSingleton : Node
 {
@@ -12,6 +14,7 @@ public partial class CardGameHelperSingleton : Node
     public override void _EnterTree()
     {
         Instance = this;
+        
     }
 
     public void SetPokerGameManager(PokerGameManager pokerGameManager)
@@ -25,5 +28,26 @@ public partial class CardGameHelperSingleton : Node
         Vector2 minBounds = pokerBoundaries;
         Vector2 maxBounds = size - pokerBoundaries;
         return mousePosition.Clamp(minBounds, maxBounds);
+    }
+
+    public static bool TryFilterPokerBases(Array<Area2D> areas, out Array<PokerBase> pokerBaseArray)
+    {
+        pokerBaseArray = new Array<PokerBase>();
+        foreach (var area in areas)
+        {
+            if (area.GetParent() is PokerBase)
+            {
+                pokerBaseArray.Add(area.GetParent() as PokerBase);
+            }
+        }
+        if (pokerBaseArray.Count != 0) return true;
+        GD.Print("No Pokers found");
+        return false;
+    }
+
+    public static bool TryCheckForPokerBase(Area2D area2D, out PokerBase pokerBase)
+    {
+        pokerBase = area2D?.GetParent() as PokerBase;
+        return pokerBase != null;
     }
 }

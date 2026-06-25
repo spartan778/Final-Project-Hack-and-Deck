@@ -6,15 +6,15 @@
 [ext_resource type="Script" uid="uid://cj2eg6pahkjfe" path="res://Scripts/CardGame/PokerGameManager.cs" id="4_64jno"]
 [ext_resource type="Script" uid="uid://bgjke2o6okd5u" path="res://Scripts/CardGame/InputManager.cs" id="4_mmq6p"]
 [ext_resource type="Texture2D" uid="uid://d3tmnel32vlk0" path="res://Resources/CardGame/green_mat_texture_-_base_texture.png" id="4_oyi1v"]
-[ext_resource type="Script" uid="uid://boyyg3jjrl28a" path="res://Scenes/CardGame/DrawPile.cs" id="6_8hseb"]
+[ext_resource type="Script" uid="uid://boyyg3jjrl28a" path="res://Scripts/CardGame/DrawPile.cs" id="6_8hseb"]
 [ext_resource type="Texture2D" uid="uid://b4lxy8von0qev" path="res://Resources/CardGame/Top-Down-Cards/Cards/PokerSlot_Image.png" id="6_of8xl"]
 [ext_resource type="Texture2D" uid="uid://dpdtt42uonp7d" path="res://Resources/CardGame/Top-Down-Cards/Cards/Card Deck - Top Down 88x140.png" id="7_0n1s0"]
-[ext_resource type="Script" uid="uid://c0135dftraqg6" path="res://Scenes/CardGame/CardSlots.cs" id="7_6mt5e"]
+[ext_resource type="Script" uid="uid://c0135dftraqg6" path="res://Scripts/CardGame/CardSlots.cs" id="7_6mt5e"]
 [ext_resource type="PackedScene" uid="uid://4spdyrwd1t8h" path="res://Prefabs/CardGame/CardSlot.tscn" id="7_7nhsq"]
-[ext_resource type="Script" uid="uid://d3751tqllbblu" path="res://Scenes/CardGame/DeckArea.cs" id="9_3ocyd"]
+[ext_resource type="Script" uid="uid://d3751tqllbblu" path="res://Scripts/CardGame/DeckArea.cs" id="9_3ocyd"]
 [ext_resource type="Script" uid="uid://cf465j5jowb8e" path="res://Prefabs/CardGame/ICardStorage.cs" id="9_k0eva"]
 [ext_resource type="Script" uid="uid://cc2l3v8r565lb" path="res://Prefabs/CardGame/PokerInfo.cs" id="10_cxedt"]
-[ext_resource type="Script" uid="uid://bysj3u51ehhl8" path="res://Scenes/CardGame/HandSlots.cs" id="15_acdag"]
+[ext_resource type="Script" uid="uid://bysj3u51ehhl8" path="res://Scripts/CardGame/HandSlots.cs" id="15_acdag"]
 [ext_resource type="Texture2D" uid="uid://rkvi4aam481o" path="res://Resources/UI/Vector_UI_Pack_dobo_ui/Panels/panel_cream.png" id="15_s74xb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8hseb"]
@@ -221,12 +221,14 @@ layout_mode = 2
 [node name="CardSlotControl5" parent="GameBase2D/CardSlots/CardSlotsContainer" instance=ExtResource("7_7nhsq")]
 layout_mode = 2
 
-[node name="HandSlots" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("PanelArea", "Pokers")]
+[node name="HandSlots" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("PanelArea", "Pokers", "PokerGameManager")]
 z_index = -1000
 position = Vector2(643, 684)
 script = ExtResource("15_acdag")
+MaxHandCount = 7
 PanelArea = NodePath("HandPanel/HandDetectionArea")
-Pokers = []
+Pokers = [NodePath("../CardSystem/Card_Dummy1"), NodePath("../CardSystem/Card_Dummy2"), NodePath("../CardSystem/Card_Dummy3")]
+PokerGameManager = NodePath("../CardSystem/PokerGameManager")
 
 [node name="HandPanel" type="Sprite2D" parent="GameBase2D/HandSlots"]
 position = Vector2(-17, -66)
