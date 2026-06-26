@@ -18,7 +18,7 @@ Button/styles/hover = SubResource("StyleBoxFlat_7yh3l")
 Button/styles/normal = SubResource("StyleBoxFlat_h3gyg")
 Button/styles/pressed = SubResource("StyleBoxFlat_pqov5")
 
-[node name="ConnectionMenu" type="Control" node_paths=PackedStringArray("isHostButton", "connectButton", "makeOfferButton", "infoLabel")]
+[node name="ConnectionMenu" type="Control" node_paths=PackedStringArray("isHostButton", "connectButton", "makeOfferButton", "testOfflineButton", "infoLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,6 +31,7 @@ script = ExtResource("1_tspjj")
 isHostButton = NodePath("MainPanel/InfoLabel/IsHostButtonT")
 connectButton = NodePath("MainPanel/ConnectButton")
 makeOfferButton = NodePath("MainPanel/MakeOfferButton")
+testOfflineButton = NodePath("MainPanel/TestOffline")
 infoLabel = NodePath("MainPanel/InfoLabel")
 
 [node name="MainPanel" type="Panel" parent="."]
@@ -123,3 +124,20 @@ grow_vertical = 2
 focus_mode = 0
 theme = SubResource("Theme_aei5g")
 text = "Make Offer"
+
+[node name="TestOffline" type="Button" parent="MainPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 406.0
+offset_top = -318.0
+offset_right = 606.0
+offset_bottom = -218.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = SubResource("Theme_aei5g")
+text = "Test Offline"

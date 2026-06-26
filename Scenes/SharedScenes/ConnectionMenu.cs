@@ -5,7 +5,7 @@ public partial class ConnectionMenu : Control
 {
     private NetworkManager_Singleton networkManagerSingleton;
     [Export] private CheckButton isHostButton;
-    [Export] private Button connectButton, makeOfferButton;
+    [Export] private Button connectButton, makeOfferButton, testOfflineButton;
     [Export] private Label infoLabel;
 
     public override void _EnterTree()
@@ -31,8 +31,14 @@ public partial class ConnectionMenu : Control
         networkManagerSingleton.PlayerMatched += OnPlayerMatched;
         networkManagerSingleton.PlayerCountChanged += OnPlayerCountChanged;
         networkManagerSingleton.RtcConnected += OnRtcConnected;
+        testOfflineButton.Pressed += OnTestOfflinePressed;
     }
-
+    
+    private void OnTestOfflinePressed()
+    {
+        SceneManager.Instance.PrepareMainGameScene();
+        SceneManager.Instance.ChangeToMainGameScene();
+    }
     private void OnMakeOfferButtonPressed()
     {
         networkManagerSingleton.StartRtcProcess();
