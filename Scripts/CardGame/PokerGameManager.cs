@@ -105,6 +105,7 @@ public partial class PokerGameManager : Node2D
             GD.Print("No card found");
             return null;
         };
+        // GD.Print(results.ToString());
         List<PokerBase> detectedPokers = new List<PokerBase>(); //temp list to filter out all pokers
         foreach (var result in results)
         {
@@ -119,8 +120,8 @@ public partial class PokerGameManager : Node2D
         if (detectedPokers.Count > 0)
         {
             var topCard = detectedPokers.OrderByDescending(card => card.GetIndex()).First(); // get the card with the lowest index
-            GD.Print($"{detectedPokers.Count} cards detected");
-            GD.Print($"picking with index: {topCard.GetIndex()}");
+            // GD.Print($"{detectedPokers.Count} cards detected");
+            // GD.Print($"picking with index: {topCard.GetIndex()}");
             return topCard;
         }
         return null;

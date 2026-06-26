@@ -19,6 +19,7 @@ sprite_frames = ExtResource("1_0y7fh")
 animation = &"ClubCardSprites"
 
 [node name="DetectionArea" type="Area2D" parent="." node_paths=PackedStringArray("PokerBaseRef")]
+collision_mask = 129
 script = ExtResource("3_0huga")
 PokerBaseRef = NodePath("..")
 

@@ -191,7 +191,7 @@ PokerInfo = SubResource("Resource_y2t1j")
 
 [node name="CardSlots" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("CardSlotControls")]
 script = ExtResource("7_6mt5e")
-CardSlotControls = [NodePath("CardSlotsContainer/CardSlotControl"), NodePath("CardSlotsContainer/CardSlotControl2"), NodePath("CardSlotsContainer/CardSlotControl3"), NodePath("CardSlotsContainer/CardSlotControl4"), NodePath("CardSlotsContainer/CardSlotControl5")]
+CardSlotControls = []
 
 [node name="CardSlotsContainer" type="HBoxContainer" parent="GameBase2D/CardSlots"]
 anchors_preset = 5
@@ -221,7 +221,7 @@ layout_mode = 2
 [node name="CardSlotControl5" parent="GameBase2D/CardSlots/CardSlotsContainer" instance=ExtResource("7_7nhsq")]
 layout_mode = 2
 
-[node name="HandSlots" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("PanelArea", "Pokers", "PokerGameManager")]
+[node name="HandSlots" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("PanelArea", "Pokers", "PokerGameManager", "handPanel")]
 z_index = -1000
 position = Vector2(643, 684)
 script = ExtResource("15_acdag")
@@ -229,6 +229,8 @@ MaxHandCount = 7
 PanelArea = NodePath("HandPanel/HandDetectionArea")
 Pokers = [NodePath("../CardSystem/Card_Dummy1"), NodePath("../CardSystem/Card_Dummy2"), NodePath("../CardSystem/Card_Dummy3")]
 PokerGameManager = NodePath("../CardSystem/PokerGameManager")
+handPanel = NodePath("HandPanel")
+pokerSpacing = 30.0
 
 [node name="HandPanel" type="Sprite2D" parent="GameBase2D/HandSlots"]
 position = Vector2(-17, -66)
@@ -237,11 +239,11 @@ region_enabled = true
 region_rect = Rect2(30, 0, 800, 200)
 
 [node name="HandDetectionArea" type="Area2D" parent="GameBase2D/HandSlots/HandPanel"]
-z_index = -100
 collision_layer = 128
+collision_mask = 129
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GameBase2D/HandSlots/HandPanel/HandDetectionArea"]
-position = Vector2(-1, 4)
+position = Vector2(3, -2)
 shape = SubResource("RectangleShape2D_acdag")
 
 [editable path="GameBase2D/CardSystem/Card_Dummy1"]
