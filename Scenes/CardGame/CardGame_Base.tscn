@@ -1,8 +1,7 @@
-[gd_scene load_steps=27 format=3 uid="uid://b18mj00imbv7"]
+[gd_scene load_steps=22 format=3 uid="uid://b18mj00imbv7"]
 
 [ext_resource type="Script" uid="uid://fkcmkhn8mgr2" path="res://Scripts/CardGame/CardGameBase.cs" id="1_64jno"]
 [ext_resource type="Script" uid="uid://ds5ea665i8jo4" path="res://Scripts/CardGame/CardGameUIManager.cs" id="1_y7kd2"]
-[ext_resource type="PackedScene" uid="uid://dhdu8s5akoesb" path="res://Prefabs/CardGame/PokerBase.tscn" id="2_ai4yh"]
 [ext_resource type="Script" uid="uid://cj2eg6pahkjfe" path="res://Scripts/CardGame/PokerGameManager.cs" id="4_64jno"]
 [ext_resource type="Script" uid="uid://bgjke2o6okd5u" path="res://Scripts/CardGame/InputManager.cs" id="4_mmq6p"]
 [ext_resource type="Texture2D" uid="uid://d3tmnel32vlk0" path="res://Resources/CardGame/green_mat_texture_-_base_texture.png" id="4_oyi1v"]
@@ -13,7 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://4spdyrwd1t8h" path="res://Prefabs/CardGame/CardSlot.tscn" id="7_7nhsq"]
 [ext_resource type="Script" uid="uid://d3751tqllbblu" path="res://Scripts/CardGame/DeckArea.cs" id="9_3ocyd"]
 [ext_resource type="Script" uid="uid://cf465j5jowb8e" path="res://Prefabs/CardGame/ICardStorage.cs" id="9_k0eva"]
-[ext_resource type="Script" uid="uid://cc2l3v8r565lb" path="res://Prefabs/CardGame/PokerInfo.cs" id="10_cxedt"]
 [ext_resource type="Script" uid="uid://bysj3u51ehhl8" path="res://Scripts/CardGame/HandSlots.cs" id="15_acdag"]
 [ext_resource type="Texture2D" uid="uid://rkvi4aam481o" path="res://Resources/UI/Vector_UI_Pack_dobo_ui/Panels/panel_cream.png" id="15_s74xb"]
 [ext_resource type="Script" uid="uid://cxvgulsekr1c" path="res://Scenes/CardGame/ICardOrganizer.cs" id="17_oakbt"]
@@ -50,26 +48,8 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0n1s0"]
 size = Vector2(90, 130)
 
-[sub_resource type="Resource" id="Resource_cxedt"]
-script = ExtResource("10_cxedt")
-Suit = 0
-Rank = 3
-metadata/_custom_type_script = "uid://cc2l3v8r565lb"
-
-[sub_resource type="Resource" id="Resource_0f7mf"]
-script = ExtResource("10_cxedt")
-Suit = 1
-Rank = 6
-metadata/_custom_type_script = "uid://cc2l3v8r565lb"
-
-[sub_resource type="Resource" id="Resource_y2t1j"]
-script = ExtResource("10_cxedt")
-Suit = 2
-Rank = 9
-metadata/_custom_type_script = "uid://cc2l3v8r565lb"
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_acdag"]
-size = Vector2(802, 200)
+size = Vector2(800, 200)
 
 [node name="CardGameBase" type="Node" node_paths=PackedStringArray("PokerGameManager", "GameBase2D")]
 script = ExtResource("1_64jno")
@@ -158,6 +138,7 @@ shape = SubResource("RectangleShape2D_0n1s0")
 
 [node name="CardStorage" type="Node" parent="GameBase2D/CardSystem/PokerDeck/DrawPile"]
 script = ExtResource("9_k0eva")
+StoredPokers = Array[Object]([])
 
 [node name="DiscardPile" type="Node2D" parent="GameBase2D/CardSystem/PokerDeck"]
 position = Vector2(117, 606)
@@ -172,27 +153,9 @@ collision_mask = 3
 [node name="Collider" type="CollisionShape2D" parent="GameBase2D/CardSystem/PokerDeck/DiscardPile/SlotArea"]
 shape = SubResource("RectangleShape2D_0n1s0")
 
-[node name="Card_Dummy1" parent="GameBase2D/CardSystem" instance=ExtResource("2_ai4yh")]
-position = Vector2(399, 643)
-
-[node name="PokerContent" parent="GameBase2D/CardSystem/Card_Dummy1" index="2"]
-PokerInfo = SubResource("Resource_cxedt")
-
-[node name="Card_Dummy2" parent="GameBase2D/CardSystem" instance=ExtResource("2_ai4yh")]
-position = Vector2(509, 641)
-
-[node name="PokerContent" parent="GameBase2D/CardSystem/Card_Dummy2" index="2"]
-PokerInfo = SubResource("Resource_0f7mf")
-
-[node name="Card_Dummy3" parent="GameBase2D/CardSystem" instance=ExtResource("2_ai4yh")]
-position = Vector2(619, 638)
-
-[node name="PokerContent" parent="GameBase2D/CardSystem/Card_Dummy3" index="2"]
-PokerInfo = SubResource("Resource_y2t1j")
-
 [node name="CardSlots" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("CardSlotControls")]
 script = ExtResource("7_6mt5e")
-CardSlotControls = []
+CardSlotControls = Array[Object]([])
 
 [node name="CardSlotsContainer" type="HBoxContainer" parent="GameBase2D/CardSlots"]
 anchors_preset = 5
@@ -222,14 +185,17 @@ layout_mode = 2
 [node name="CardSlotControl5" parent="GameBase2D/CardSlots/CardSlotsContainer" instance=ExtResource("7_7nhsq")]
 layout_mode = 2
 
-[node name="HandSlots" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("PanelArea", "Pokers", "PokerGameManager")]
+[node name="HandSlots" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("PanelArea", "Pokers", "PokerGameManager", "DrawPile", "cardOrganizer")]
 z_index = -1000
 position = Vector2(643, 684)
 script = ExtResource("15_acdag")
 MaxHandCount = 7
+startHandCount = 5
 PanelArea = NodePath("HandPanel/HandDetectionArea")
-Pokers = [NodePath("../CardSystem/Card_Dummy1"), NodePath("../CardSystem/Card_Dummy2"), NodePath("../CardSystem/Card_Dummy3")]
+Pokers = Array[Object]([])
 PokerGameManager = NodePath("../CardSystem/PokerGameManager")
+DrawPile = NodePath("../CardSystem/PokerDeck/DrawPile")
+cardOrganizer = NodePath("ICardOrganizer")
 
 [node name="HandPanel" type="Sprite2D" parent="GameBase2D/HandSlots"]
 position = Vector2(-17, -66)
@@ -242,14 +208,11 @@ collision_layer = 128
 collision_mask = 129
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GameBase2D/HandSlots/HandPanel/HandDetectionArea"]
-position = Vector2(3, -2)
+position = Vector2(1, -1)
 shape = SubResource("RectangleShape2D_acdag")
 
 [node name="ICardOrganizer" type="Node" parent="GameBase2D/HandSlots" node_paths=PackedStringArray("organizeArea", "handSlots")]
 script = ExtResource("17_oakbt")
 organizeArea = NodePath("../HandPanel")
 handSlots = NodePath("..")
-
-[editable path="GameBase2D/CardSystem/Card_Dummy1"]
-[editable path="GameBase2D/CardSystem/Card_Dummy2"]
-[editable path="GameBase2D/CardSystem/Card_Dummy3"]
+pokerSpacing = 100.0

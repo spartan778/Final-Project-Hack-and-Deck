@@ -9,12 +9,13 @@ public partial class PokerGameManager : Node2D
     [Export] public CardGameBase CardGameBase { get; private set; }
     [Export] public Node2D GameBase2D { get; private set; }
     
+    
     public PokerBase HeldPoker {get; private set;}
     public PokerBase HoveredPoker {get; private set;}
     public bool IsDragging {get; private set;}
     private Vector2 originalScale;
     
-    public Action<PokerBase> HoldingPoker, ReleasingPoker, HoveringPoker, UnHoveringPoker;
+    public Action<PokerBase> HoldingPoker, ReleasingPoker, DrawingPoker, HoveringPoker, UnHoveringPoker;
 
 
     public override void _EnterTree()
@@ -25,6 +26,7 @@ public partial class PokerGameManager : Node2D
     public override void _Ready()
     {
         ConnectSignals();
+        GameStartProcess();
     }
 
     private void ConnectSignals()
@@ -35,6 +37,10 @@ public partial class PokerGameManager : Node2D
         UnHoveringPoker += OnUnHoveringPoker;
     }
 
+    private void GameStartProcess()
+    {
+        
+    }
     private void OnHoldingPoker(PokerBase poker)
     {
         HeldPoker = poker;
