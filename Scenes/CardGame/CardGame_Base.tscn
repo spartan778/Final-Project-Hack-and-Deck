@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://b18mj00imbv7"]
+[gd_scene load_steps=27 format=3 uid="uid://b18mj00imbv7"]
 
 [ext_resource type="Script" uid="uid://fkcmkhn8mgr2" path="res://Scripts/CardGame/CardGameBase.cs" id="1_64jno"]
 [ext_resource type="Script" uid="uid://ds5ea665i8jo4" path="res://Scripts/CardGame/CardGameUIManager.cs" id="1_y7kd2"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://cc2l3v8r565lb" path="res://Prefabs/CardGame/PokerInfo.cs" id="10_cxedt"]
 [ext_resource type="Script" uid="uid://bysj3u51ehhl8" path="res://Scripts/CardGame/HandSlots.cs" id="15_acdag"]
 [ext_resource type="Texture2D" uid="uid://rkvi4aam481o" path="res://Resources/UI/Vector_UI_Pack_dobo_ui/Panels/panel_cream.png" id="15_s74xb"]
+[ext_resource type="Script" uid="uid://cxvgulsekr1c" path="res://Scenes/CardGame/ICardOrganizer.cs" id="17_oakbt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8hseb"]
 atlas = ExtResource("7_0n1s0")
@@ -221,7 +222,7 @@ layout_mode = 2
 [node name="CardSlotControl5" parent="GameBase2D/CardSlots/CardSlotsContainer" instance=ExtResource("7_7nhsq")]
 layout_mode = 2
 
-[node name="HandSlots" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("PanelArea", "Pokers", "PokerGameManager", "handPanel")]
+[node name="HandSlots" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("PanelArea", "Pokers", "PokerGameManager")]
 z_index = -1000
 position = Vector2(643, 684)
 script = ExtResource("15_acdag")
@@ -229,8 +230,6 @@ MaxHandCount = 7
 PanelArea = NodePath("HandPanel/HandDetectionArea")
 Pokers = [NodePath("../CardSystem/Card_Dummy1"), NodePath("../CardSystem/Card_Dummy2"), NodePath("../CardSystem/Card_Dummy3")]
 PokerGameManager = NodePath("../CardSystem/PokerGameManager")
-handPanel = NodePath("HandPanel")
-pokerSpacing = 30.0
 
 [node name="HandPanel" type="Sprite2D" parent="GameBase2D/HandSlots"]
 position = Vector2(-17, -66)
@@ -245,6 +244,11 @@ collision_mask = 129
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GameBase2D/HandSlots/HandPanel/HandDetectionArea"]
 position = Vector2(3, -2)
 shape = SubResource("RectangleShape2D_acdag")
+
+[node name="ICardOrganizer" type="Node" parent="GameBase2D/HandSlots" node_paths=PackedStringArray("organizeArea", "handSlots")]
+script = ExtResource("17_oakbt")
+organizeArea = NodePath("../HandPanel")
+handSlots = NodePath("..")
 
 [editable path="GameBase2D/CardSystem/Card_Dummy1"]
 [editable path="GameBase2D/CardSystem/Card_Dummy2"]

@@ -8,11 +8,12 @@ public partial class HandSlots : Node2D
     [Export] public Area2D PanelArea { get; private set; }
     [Export] public Array<PokerBase> Pokers { get; private set; }
     [Export] public PokerGameManager PokerGameManager { get; private set; }
-    [Export] private Sprite2D handPanel;
-    [Export] private float pokerSpacing;
+    
+    [Export] private ICardOrganizer cardOrganizer;
+    
     
     public int HandCount => Pokers.Count;
-    private Vector2 PanelAreaSize => handPanel.RegionRect.Size;
+    
     private float maxWidth;
     
 
@@ -20,7 +21,7 @@ public partial class HandSlots : Node2D
     {
         PanelArea.AreaEntered += OnPanelAreaEntered;
         PokerGameManager.ReleasingPoker += OnReleasingPoker;
-        maxWidth = PanelAreaSize.X;
+        
     }
 
     public void AddToHand(PokerBase poker)
@@ -33,7 +34,7 @@ public partial class HandSlots : Node2D
         if (!Pokers.Contains(poker))
         {
             Pokers.Add(poker);
-            OrganizePokers();
+            cardOrganizer.OrganizePokers();
         }
     }
 
@@ -45,26 +46,25 @@ public partial class HandSlots : Node2D
 
     private void OnHoldingPoker(PokerBase heldPoker)
     {
-        
+        if (!Pokers.Contains(heldPoker))
+        {
+            GD.Print($"Not in hand: {heldPoker.PokerContent.PokerInfo}");
+            return;
+        }
+        Pokers.Remove(heldPoker);
     }
 
     private void OnReleasingPoker(PokerBase releasedPoker)
     {
-        // if (!PanelArea.OverlapsArea(releasedPoker))
-        // {
-        //     GD.Print($"{releasedPoker.PokerContent.PokerInfo} is out of hand panel");
-        //     return;
-        // }
-        var overlappingAreas = PanelArea.GetOverlappingAreas();
-        // GD.Print($"{overlappingAreas}");
-        CardGameHelperSingleton.TryFilterPokerBases(overlappingAreas, out var pokerBaseArray);
-        GD.Print($"Filtered Pokers: {pokerBaseArray}");
-        if (!pokerBaseArray.Contains(releasedPoker)) return;
-        
+        if (!PanelArea.OverlapsArea(releasedPoker.PokerDraggingRef))
+        {
+            GD.Print($"{releasedPoker.PokerContent.PokerInfo} is out of hand panel");
+            return;
+        }
         GD.Print($"{releasedPoker.PokerContent.PokerInfo} is inside Hand Panel");
         if (Pokers.Contains(releasedPoker))
         {
-            GD.Print($"Poker: {releasedPoker} already in hand panel");
+            GD.Print($"Poker: {releasedPoker.PokerContent.PokerInfo} already in hand");
         }
         else
         {
@@ -78,11 +78,5 @@ public partial class HandSlots : Node2D
         {
             GD.Print($"Poker detected: {poker.PokerContent.PokerInfo}");
         }
-    }
-
-    public void OrganizePokers() // Arrange pokers' position into a line
-    {
-        GD.Print($"Hand Panel size: {PanelAreaSize}");
-        
     }
 }
