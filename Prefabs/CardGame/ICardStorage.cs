@@ -26,6 +26,11 @@ public partial class ICardStorage : Node
     }
     public PokerInfo DrawPoker()
     {
+        if (StoredPokers.Count == 0)
+        {
+            GD.Print("DrawDeck is empty");
+            return null;
+        }
         var poker = StoredPokers[0];
         StoredPokers.RemoveAt(0);
         GD.Print($"Remaining cards: {StoredPokers.Count}");

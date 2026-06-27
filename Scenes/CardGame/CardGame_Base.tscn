@@ -14,7 +14,7 @@
 [ext_resource type="Script" uid="uid://cf465j5jowb8e" path="res://Prefabs/CardGame/ICardStorage.cs" id="9_k0eva"]
 [ext_resource type="Script" uid="uid://bysj3u51ehhl8" path="res://Scripts/CardGame/HandSlots.cs" id="15_acdag"]
 [ext_resource type="Texture2D" uid="uid://rkvi4aam481o" path="res://Resources/UI/Vector_UI_Pack_dobo_ui/Panels/panel_cream.png" id="15_s74xb"]
-[ext_resource type="Script" uid="uid://cxvgulsekr1c" path="res://Scenes/CardGame/ICardOrganizer.cs" id="17_oakbt"]
+[ext_resource type="Script" uid="uid://cxvgulsekr1c" path="res://Scripts/CardGame/ICardOrganizer.cs" id="17_oakbt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8hseb"]
 atlas = ExtResource("7_0n1s0")
@@ -153,9 +153,12 @@ collision_mask = 3
 [node name="Collider" type="CollisionShape2D" parent="GameBase2D/CardSystem/PokerDeck/DiscardPile/SlotArea"]
 shape = SubResource("RectangleShape2D_0n1s0")
 
-[node name="CardSlots" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("CardSlotControls")]
+[node name="CardSlots" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("cardSlotContainer", "SlotCheckTimer")]
 script = ExtResource("7_6mt5e")
-CardSlotControls = Array[Object]([])
+cardSlotContainer = NodePath("CardSlotsContainer")
+SlotCheckTimer = NodePath("SlotCheckTimer")
+SlotCheckInterval = 7.5
+PokerTriggerInterval = 1.0
 
 [node name="CardSlotsContainer" type="HBoxContainer" parent="GameBase2D/CardSlots"]
 anchors_preset = 5
@@ -185,9 +188,12 @@ layout_mode = 2
 [node name="CardSlotControl5" parent="GameBase2D/CardSlots/CardSlotsContainer" instance=ExtResource("7_7nhsq")]
 layout_mode = 2
 
+[node name="SlotCheckTimer" type="Timer" parent="GameBase2D/CardSlots"]
+process_callback = 0
+
 [node name="HandSlots" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("PanelArea", "Pokers", "PokerGameManager", "DrawPile", "cardOrganizer")]
 z_index = -1000
-position = Vector2(643, 684)
+position = Vector2(640, 620)
 script = ExtResource("15_acdag")
 MaxHandCount = 7
 startHandCount = 5
@@ -198,7 +204,6 @@ DrawPile = NodePath("../CardSystem/PokerDeck/DrawPile")
 cardOrganizer = NodePath("ICardOrganizer")
 
 [node name="HandPanel" type="Sprite2D" parent="GameBase2D/HandSlots"]
-position = Vector2(-17, -66)
 texture = ExtResource("15_s74xb")
 region_enabled = true
 region_rect = Rect2(30, 0, 800, 200)

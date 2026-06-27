@@ -7,6 +7,7 @@ public partial class PokerBase : Node2D
 	public PokerGameManager PokerGameManager { get; private set; }
 	[Export] public PokerContent PokerContent { get; private set; }
 	[Export] public PokerDragging PokerDraggingRef{ get; private set; }
+	public bool IsLocked { get; private set; }
 
 
 	public override void _Ready()
@@ -25,4 +26,8 @@ public partial class PokerBase : Node2D
 		PokerContent.ChangePokerInfo(pokerInfo);
 	}
 	
+	public void SetPokerLock(bool isLocked)
+	{
+		IsLocked = isLocked;
+	}
 }

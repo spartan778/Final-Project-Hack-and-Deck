@@ -220,7 +220,7 @@ public partial class NetworkManager_Singleton : Node
 		Multiplayer.MultiplayerPeer = rtcMultiplayerPeer; //attach peer to Godot high level API (RPC)
 		GD.Print("Signal Server connected");
 		SignalServerConnected?.Invoke();
-		Co.Run(OnDurationRepeat(2f));
+		// Co.Run(OnDurationRepeat(2f));
 	}
 
 	public void StartRtcProcess()

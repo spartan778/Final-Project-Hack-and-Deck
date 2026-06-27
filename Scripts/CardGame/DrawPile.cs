@@ -22,6 +22,10 @@ public partial class DrawPile : Node2D
     public void DrawPoker()
     {
         var drawnPokerInfo = CardStorage.DrawPoker();
+        if (drawnPokerInfo == null)
+        {
+            return;
+        }
         var newPoker = pokerPrefab.Instantiate<PokerBase>();
         newPoker.InitPoker(drawnPokerInfo);
         CardSystemRef.AddChild(newPoker);
@@ -33,6 +37,11 @@ public partial class DrawPile : Node2D
     public PokerBase DrawPokerInit() // special init method to avoid race condition with card array
     {
         var drawnPokerInfo = CardStorage.DrawPoker();
+        if (drawnPokerInfo == null)
+        {
+            GD.PrintErr("DrawPoker init failed");
+            return null;
+        }
         var newPoker = pokerPrefab.Instantiate<PokerBase>();
         newPoker.InitPoker(drawnPokerInfo);
         GD.Print($"Draw Starting Poker: {drawnPokerInfo}");

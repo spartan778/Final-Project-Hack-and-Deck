@@ -31,9 +31,10 @@ public partial class RpcManager : Node
         TestNumberChanged?.Invoke(AddCount);
     }
 
+    #region SlotPoker
     public void SlotPokerRpc(PokerInfo pokerInfo, Array modifiers = null)
     {
-        var pokerVector = new Vector2((int)pokerInfo.Suit, pokerInfo.Rank);
+        var pokerVector = new Vector2((int)pokerInfo.Suit, pokerInfo.Rank); //convert to Vector2 for safe data transfer
         SlotPoker_Send(pokerVector, modifiers);
         GD.Print($"Sending Poker: {pokerVector}");
     }
@@ -41,7 +42,7 @@ public partial class RpcManager : Node
     [Rpc(RpcMode.AnyPeer)]
     private void SlotPoker_Send(Vector2 pokerInfo, Array modifiers = null)
     {
-        if (pokerInfo.X < 0 || pokerInfo.X > 3 || pokerInfo.Y < 0 || pokerInfo.Y > 12)
+        if (!CardGameHelperSingleton.IsPokerValid(pokerInfo))
         {
             GD.PrintErr("Invalid poker info");
             return;
@@ -54,7 +55,26 @@ public partial class RpcManager : Node
     {
         GD.Print($"Normal Poker received: {pokerInfo}");
     }
-	
+    #endregion
+
+    #region TriggerPoker
+
+    public void TriggerPokerRpc(PokerInfo pokerInfo, Array modifiers = null)
+    {
+        var pokerVector = new Vector2((int)pokerInfo.Suit, pokerInfo.Rank);
+        TriggerPoker_Send(pokerVector, modifiers);
+    }
+    [Rpc(RpcMode.AnyPeer)]
+    private void TriggerPoker_Send(Vector2 pokerInfo, Array modifiers = null){
+        if (!CardGameHelperSingleton.IsPokerValid(pokerInfo)) return;
+        Rpc(nameof(TriggerPoker_Receive), pokerInfo);
+    }
+    [Rpc(RpcMode.AnyPeer)]
+    private void TriggerPoker_Receive(Vector2 pokerInfo)
+    {
+        GD.Print($"Normal Poker Triggered: {pokerInfo}");
+    }
+    #endregion
     public override void _Input(InputEvent @event)
     {
         if (@event.IsActionPressed("menu_confirm"))

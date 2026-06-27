@@ -77,6 +77,11 @@ public partial class PokerGameManager : Node2D
                 {
                     var draggedPoker = DetectPokerRayCast();
                     if(draggedPoker == null) return;
+                    if(draggedPoker.IsLocked)
+                    {
+                        GD.Print($"Poker:{draggedPoker.PokerContent.PokerInfo} is locked");
+                        return;
+                    }
                     draggedPoker.PokerDraggingRef.IsDragging = true;
                     draggedPoker.PokerDraggingRef.PickUpOffset = draggedPoker.GlobalPosition - GetGlobalMousePosition();
                     HoldingPoker?.Invoke(draggedPoker);

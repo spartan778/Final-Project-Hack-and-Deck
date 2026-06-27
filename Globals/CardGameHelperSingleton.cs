@@ -50,4 +50,16 @@ public partial class CardGameHelperSingleton : Node
         pokerBase = area2D?.GetParent() as PokerBase;
         return pokerBase != null;
     }
+
+    public static bool IsPokerValid(PokerInfo poker)
+    {
+        if (poker.Suit < 0 || (int)poker.Suit > 3 || poker.Rank < 0 || poker.Rank > 12) return false;
+        return true;
+    }
+
+    public static bool IsPokerValid(Vector2 pokerVector)
+    {
+        if (pokerVector.X < 0 || pokerVector.X > 3 || pokerVector.Y < 0 || pokerVector.Y > 12) return false;
+        return true;
+    }
 }
