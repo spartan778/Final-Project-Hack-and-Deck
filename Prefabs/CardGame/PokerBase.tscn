@@ -1,18 +1,20 @@
-[gd_scene load_steps=7 format=3 uid="uid://dhdu8s5akoesb"]
+[gd_scene load_steps=8 format=3 uid="uid://dhdu8s5akoesb"]
 
 [ext_resource type="SpriteFrames" uid="uid://6u3iajvhk1s3" path="res://Resources/CardGame/Top-Down-Cards/Cards/CardsStack.tres" id="1_0y7fh"]
 [ext_resource type="Script" uid="uid://bxy438totfnvr" path="res://Scripts/CardGame/PokerBase.cs" id="1_gjmgp"]
 [ext_resource type="Script" uid="uid://6qtd6f4nqnsb" path="res://Scripts/CardGame/PokerDragging.cs" id="3_0huga"]
 [ext_resource type="Script" uid="uid://c0788twooco6p" path="res://Scripts/CardGame/HoverInteraction.cs" id="4_56yac"]
 [ext_resource type="Script" uid="uid://cmg15ajyo4qhg" path="res://Scripts/CardGame/PokerContent.cs" id="5_4fd7q"]
+[ext_resource type="Script" uid="uid://bb6jx2drb0q06" path="res://Scripts/CardGame/PokerModifiersManager.cs" id="6_c3ud2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d824c"]
 size = Vector2(88, 124)
 
-[node name="PokerBase" type="Node2D" node_paths=PackedStringArray("PokerContent", "PokerDraggingRef")]
+[node name="PokerBase" type="Node2D" node_paths=PackedStringArray("PokerContent", "PokerDraggingRef", "PokerModifiersManager")]
 script = ExtResource("1_gjmgp")
 PokerContent = NodePath("PokerContent")
 PokerDraggingRef = NodePath("DetectionArea")
+PokerModifiersManager = NodePath("PokerModifiersManager")
 
 [node name="CardDisplay" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_0y7fh")
@@ -34,3 +36,6 @@ pokerBase = NodePath("../..")
 [node name="PokerContent" type="Node" parent="." node_paths=PackedStringArray("cardDisplay")]
 script = ExtResource("5_4fd7q")
 cardDisplay = NodePath("../CardDisplay")
+
+[node name="PokerModifiersManager" type="Node" parent="."]
+script = ExtResource("6_c3ud2")

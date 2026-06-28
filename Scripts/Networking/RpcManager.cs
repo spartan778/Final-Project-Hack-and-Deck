@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Godot.Collections;
 using static Godot.MultiplayerApi;
 using Array = Godot.Collections.Array;
 
@@ -32,15 +33,19 @@ public partial class RpcManager : Node
     }
 
     #region SlotPoker
-    public void SlotPokerRpc(PokerInfo pokerInfo, Array modifiers = null)
+    public void SlotPokerRpc(PokerInfo pokerInfo, Dictionary modifiers = null)
     {
         var pokerVector = new Vector2((int)pokerInfo.Suit, pokerInfo.Rank); //convert to Vector2 for safe data transfer
+        if (modifiers != null)
+        {
+            SlotPokerMod_Send(pokerVector, modifiers);
+        }
         SlotPoker_Send(pokerVector, modifiers);
         GD.Print($"Sending Poker: {pokerVector}");
     }
     
     [Rpc(RpcMode.AnyPeer)]
-    private void SlotPoker_Send(Vector2 pokerInfo, Array modifiers = null)
+    private void SlotPoker_Send(Vector2 pokerInfo, Dictionary modifiers = null)
     {
         if (!CardGameHelperSingleton.IsPokerValid(pokerInfo))
         {
@@ -49,6 +54,25 @@ public partial class RpcManager : Node
         }
         Rpc(nameof(SlotPoker_Receive), pokerInfo);
     }
+
+    [Rpc(RpcMode.AnyPeer)]
+    private void SlotPokerMod_Send(Vector2 pokerInfo, Dictionary modifiers)
+    {
+        if (!CardGameHelperSingleton.IsPokerValid(pokerInfo))
+        {
+            GD.PrintErr("Invalid poker info");
+            return;
+        }
+        Rpc(nameof(SlotPokerMod_Receive), pokerInfo, modifiers);
+    }
+
+    [Rpc(RpcMode.AnyPeer)]
+    private void SlotPokerMod_Receive(Vector2 pokerInfo, Dictionary modifiers)
+    {
+        GD.Print($"Receiving Poker: {pokerInfo}");
+        GD.Print($"Modifiers: {modifiers}");
+    }
+    
 
     [Rpc(RpcMode.AnyPeer)]
     private void SlotPoker_Receive(Vector2 pokerInfo)

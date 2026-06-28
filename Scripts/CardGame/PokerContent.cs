@@ -82,3 +82,15 @@ public enum CardSuit
     Spades 
 }
 
+public enum PokerState // all cards are assumed as Normal
+{
+    Normal,
+    Inversed
+}
+
+public enum PokerType // all cards are assumed as Basic
+{
+    Basic,
+    OneOff
+}
+

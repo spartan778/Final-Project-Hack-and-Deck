@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://c0135dftraqg6" path="res://Scripts/CardGame/CardSlots.cs" id="7_6mt5e"]
 [ext_resource type="PackedScene" uid="uid://4spdyrwd1t8h" path="res://Prefabs/CardGame/CardSlot.tscn" id="7_7nhsq"]
 [ext_resource type="Script" uid="uid://d3751tqllbblu" path="res://Scripts/CardGame/DeckArea.cs" id="9_3ocyd"]
-[ext_resource type="Script" uid="uid://cf465j5jowb8e" path="res://Prefabs/CardGame/ICardStorage.cs" id="9_k0eva"]
+[ext_resource type="Script" uid="uid://cf465j5jowb8e" path="res://Scripts/CardGame/ICardStorage.cs" id="9_k0eva"]
 [ext_resource type="Script" uid="uid://bysj3u51ehhl8" path="res://Scripts/CardGame/HandSlots.cs" id="15_acdag"]
 [ext_resource type="Texture2D" uid="uid://rkvi4aam481o" path="res://Resources/UI/Vector_UI_Pack_dobo_ui/Panels/panel_cream.png" id="15_s74xb"]
 [ext_resource type="Script" uid="uid://cxvgulsekr1c" path="res://Scripts/CardGame/ICardOrganizer.cs" id="17_oakbt"]

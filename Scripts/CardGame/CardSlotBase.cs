@@ -55,6 +55,8 @@ public partial class CardSlotBase : Node2D
         GD.Print($"Slotted: {poker.PokerBaseRef.Name} at {GetParent().Name}");
         SlottedPoker.Position = GlobalPosition;
         rpcManager.SlotPokerRpc(poker.PokerBaseRef.PokerContent.PokerInfo);
+        rpcManager.SlotPokerRpc(poker.PokerBaseRef.PokerContent.PokerInfo,
+            poker.PokerBaseRef.PokerModifiersManager.ToDictionary());
         if (IsLockingPoker) // lock poker to slot by default
         {
             poker.PokerBaseRef.SetPokerLock(IsLockingPoker);

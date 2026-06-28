@@ -7,6 +7,7 @@ public partial class PokerBase : Node2D
 	public PokerGameManager PokerGameManager { get; private set; }
 	[Export] public PokerContent PokerContent { get; private set; }
 	[Export] public PokerDragging PokerDraggingRef{ get; private set; }
+	[Export] public PokerModifiersManager PokerModifiersManager { get; private set; }
 	public bool IsLocked { get; private set; }
 
 
