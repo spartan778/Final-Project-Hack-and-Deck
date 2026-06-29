@@ -94,7 +94,7 @@ public partial class HandSlots : Node2D
     {
         if (CardGameHelperSingleton.TryCheckForPokerBase(area, out var poker))
         {
-            GD.Print($"Poker detected: {poker.PokerContent.PokerInfo}");
+            // GD.Print($"Poker detected: {poker.PokerContent.PokerInfo}");
         }
     }
 }

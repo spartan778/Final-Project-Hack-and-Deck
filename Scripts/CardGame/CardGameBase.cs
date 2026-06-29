@@ -5,5 +5,6 @@ public partial class CardGameBase : Node
 {
     [Export] public PokerGameManager PokerGameManager { get; private set; }
     [Export] public Node2D GameBase2D { get; private set; }
+    [Export] public Timer NetworkTickTimer { get; private set; }
     
 }

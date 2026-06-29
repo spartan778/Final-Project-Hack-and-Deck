@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HCoroutines;
 
 public partial class PokerGameManager : Node2D
 {
@@ -9,11 +10,15 @@ public partial class PokerGameManager : Node2D
     [Export] public CardGameBase CardGameBase { get; private set; }
     [Export] public Node2D GameBase2D { get; private set; }
     
+    public RpcManager RpcManager { get; private set; }
+    
     
     public PokerBase HeldPoker {get; private set;}
     public PokerBase HoveredPoker {get; private set;}
     public bool IsDragging {get; private set;}
     private Vector2 originalScale;
+
+    private Vector2 phyMousePos, visualMousePos;
     
     public Action<PokerBase> HoldingPoker, ReleasingPoker, DrawingPoker, HoveringPoker, UnHoveringPoker;
 
@@ -26,7 +31,7 @@ public partial class PokerGameManager : Node2D
     public override void _Ready()
     {
         ConnectSignals();
-        GameStartProcess();
+        GameStartSetup();
     }
 
     private void ConnectSignals()
@@ -35,9 +40,10 @@ public partial class PokerGameManager : Node2D
         ReleasingPoker += OnReleasingPoker;
         HoveringPoker += OnHoveringPoker;
         UnHoveringPoker += OnUnHoveringPoker;
+        // CardGameBase.NetworkTickTimer.Timeout += MouseTrackingProcess;
     }
-
-    private void GameStartProcess()
+    
+    private void GameStartSetup()
     {
         
     }
@@ -48,6 +54,7 @@ public partial class PokerGameManager : Node2D
         IsDragging = true;
         originalScale = poker.Scale;
         poker.Scale *= 1.1f;
+        CardGameBase.NetworkTickTimer.Start();
     }
 
     private void OnReleasingPoker(PokerBase poker)
@@ -55,6 +62,7 @@ public partial class PokerGameManager : Node2D
         IsDragging = false;
         poker.Scale = originalScale;
         HeldPoker = null;
+        CardGameBase.NetworkTickTimer.Stop();
     }
 
     private void OnHoveringPoker(PokerBase poker)
@@ -65,6 +73,12 @@ public partial class PokerGameManager : Node2D
     private void OnUnHoveringPoker(PokerBase poker)
     {
         HoveredPoker = null;
+    }
+
+    private void MouseTrackingProcess() // Testing RPC network strength with continuous calls
+    {
+        phyMousePos = GetGlobalMousePosition();
+        RpcManager.Instance.MouseSyncTestRpc(phyMousePos);
     }
 
     public override void _Input(InputEvent @event)

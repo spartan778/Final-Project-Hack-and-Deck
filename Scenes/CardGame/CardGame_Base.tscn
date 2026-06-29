@@ -51,10 +51,11 @@ size = Vector2(90, 130)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_acdag"]
 size = Vector2(800, 200)
 
-[node name="CardGameBase" type="Node" node_paths=PackedStringArray("PokerGameManager", "GameBase2D")]
+[node name="CardGameBase" type="Node" node_paths=PackedStringArray("PokerGameManager", "GameBase2D", "NetworkTickTimer")]
 script = ExtResource("1_64jno")
 PokerGameManager = NodePath("GameBase2D/CardSystem/PokerGameManager")
 GameBase2D = NodePath("GameBase2D")
+NetworkTickTimer = NodePath("GameTimers/NetworkTickTimer")
 
 [node name="InputManager" type="Node" parent="." node_paths=PackedStringArray("pokerGameManager")]
 script = ExtResource("4_mmq6p")
@@ -221,3 +222,8 @@ script = ExtResource("17_oakbt")
 organizeArea = NodePath("../HandPanel")
 handSlots = NodePath("..")
 pokerSpacing = 100.0
+
+[node name="GameTimers" type="Node" parent="."]
+
+[node name="NetworkTickTimer" type="Timer" parent="GameTimers"]
+wait_time = 0.05

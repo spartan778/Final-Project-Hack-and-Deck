@@ -44,7 +44,7 @@ public partial class DrawPile : Node2D
         }
         var newPoker = pokerPrefab.Instantiate<PokerBase>();
         newPoker.InitPoker(drawnPokerInfo);
-        GD.Print($"Draw Starting Poker: {drawnPokerInfo}");
+        // GD.Print($"Draw Starting Poker: {drawnPokerInfo}");
         CardSystemRef.AddChild(newPoker);
         return newPoker;
     } 

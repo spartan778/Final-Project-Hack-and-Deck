@@ -31,6 +31,16 @@ public partial class RpcManager : Node
         GD.Print($"RTC running: addCount: {AddCount}");
         TestNumberChanged?.Invoke(AddCount);
     }
+    public void MouseSyncTestRpc(Vector2 pokerPlacement)
+    {
+        Rpc(nameof(MouseSyncTest_Receive), pokerPlacement);
+    }
+
+    [Rpc(RpcMode.AnyPeer)]
+    private void MouseSyncTest_Receive(Vector2 pokerPlacement)
+    {
+        GD.Print($"Mouse Pos: {pokerPlacement}");
+    }
 
     #region SlotPoker
     public void SlotPokerRpc(PokerInfo pokerInfo, Dictionary modifiers = null)
