@@ -40,7 +40,7 @@ public partial class PokerGameManager : Node2D
         ReleasingPoker += OnReleasingPoker;
         HoveringPoker += OnHoveringPoker;
         UnHoveringPoker += OnUnHoveringPoker;
-        // CardGameBase.NetworkTickTimer.Timeout += MouseTrackingProcess;
+        CardGameBase.NetworkTickTimer.Timeout += MouseTrackingProcess;
     }
     
     private void GameStartSetup()
