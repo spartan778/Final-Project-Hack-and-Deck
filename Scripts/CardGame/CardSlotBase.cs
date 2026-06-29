@@ -54,7 +54,7 @@ public partial class CardSlotBase : Node2D
         SlottedPoker = poker.PokerBaseRef;
         GD.Print($"Slotted: {poker.PokerBaseRef.Name} at {GetParent().Name}");
         SlottedPoker.Position = GlobalPosition;
-        rpcManager.SlotPokerRpc(poker.PokerBaseRef.PokerContent.PokerInfo);
+        // rpcManager.SlotPokerRpc(poker.PokerBaseRef.PokerContent.PokerInfo);
         rpcManager.SlotPokerRpc(poker.PokerBaseRef.PokerContent.PokerInfo,
             poker.PokerBaseRef.PokerModifiersManager.ToDictionary());
         if (IsLockingPoker) // lock poker to slot by default
@@ -72,6 +72,7 @@ public partial class CardSlotBase : Node2D
     {
         if(SlottedPoker is null) return;
         GD.Print($"{SlottedPoker.PokerContent.PokerInfo} is Triggered");
-        rpcManager.TriggerPokerRpc(SlottedPoker.PokerContent.PokerInfo);
+        rpcManager.TriggerPokerRpc(SlottedPoker.PokerContent.PokerInfo,
+            SlottedPoker.PokerModifiersManager.ToDictionary());
     }
 }

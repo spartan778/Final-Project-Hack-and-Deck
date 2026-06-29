@@ -40,8 +40,11 @@ public partial class RpcManager : Node
         {
             SlotPokerMod_Send(pokerVector, modifiers);
         }
-        SlotPoker_Send(pokerVector, modifiers);
-        GD.Print($"Sending Poker: {pokerVector}");
+        else
+        {
+            SlotPoker_Send(pokerVector, modifiers);
+            GD.Print($"Sending Poker without modifiers: {pokerVector}");
+        }
     }
     
     [Rpc(RpcMode.AnyPeer)]
@@ -55,7 +58,7 @@ public partial class RpcManager : Node
         Rpc(nameof(SlotPoker_Receive), pokerInfo);
     }
 
-    [Rpc(RpcMode.AnyPeer)]
+    // [Rpc(RpcMode.AnyPeer)]
     private void SlotPokerMod_Send(Vector2 pokerInfo, Dictionary modifiers)
     {
         if (!CardGameHelperSingleton.IsPokerValid(pokerInfo))
@@ -83,21 +86,32 @@ public partial class RpcManager : Node
 
     #region TriggerPoker
 
-    public void TriggerPokerRpc(PokerInfo pokerInfo, Array modifiers = null)
+    public void TriggerPokerRpc(PokerInfo pokerInfo, Dictionary modifiers = null)
     {
         var pokerVector = new Vector2((int)pokerInfo.Suit, pokerInfo.Rank);
         TriggerPoker_Send(pokerVector, modifiers);
     }
-    [Rpc(RpcMode.AnyPeer)]
-    private void TriggerPoker_Send(Vector2 pokerInfo, Array modifiers = null){
+    private void TriggerPoker_Send(Vector2 pokerInfo, Dictionary modifiers = null){
         if (!CardGameHelperSingleton.IsPokerValid(pokerInfo)) return;
         Rpc(nameof(TriggerPoker_Receive), pokerInfo);
     }
     [Rpc(RpcMode.AnyPeer)]
-    private void TriggerPoker_Receive(Vector2 pokerInfo)
+    private void TriggerPoker_Receive(Vector2 pokerInfo, Dictionary modifiers)
     {
         GD.Print($"Normal Poker Triggered: {pokerInfo}");
+        GD.Print($"Modifiers: {modifiers}");
     }
+    #endregion
+    
+    #region SummonPoker
+
+    public void TriggerPokerSummonRpc(PokerInfo pokerInfo, Dictionary modifiers, Vector2 pokerPlacement)
+    {
+        
+    }
+    // public void SyncPokerSummonRpc(PokerInfo pokerInfo, Dictionary modifiers)
+    
+    
     #endregion
     public override void _Input(InputEvent @event)
     {

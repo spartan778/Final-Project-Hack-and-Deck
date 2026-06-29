@@ -102,7 +102,7 @@ public partial class NetworkManager_Singleton : Node
 		peerConnection.IceCandidateCreated += (media, index, name) => //ICE process
 		{
 			GD.Print("IceCandidateCreated");
-			GD.Print($"ICE: {name}");
+			// GD.Print($"ICE: {name}");
 			SendSignal(new Dictionary
 			{
 				{ "room", roomName },
@@ -148,7 +148,7 @@ public partial class NetworkManager_Singleton : Node
 		if(!data.TryGetValue("room", out var roomValue)) return; // Block all message without a "Room"
 		if(roomValue.ToString() !=  roomName) return;
 		var type = data["type"].ToString();
-		GD.Print($"HandlingSignal type: {type}");
+		// GD.Print($"HandlingSignal type: {type}");
 		switch (type) // Handle message by type
 		{
 			case "playerCountUpdate":
@@ -175,7 +175,7 @@ public partial class NetworkManager_Singleton : Node
 			case "offer" or "answer":
 			{
 				peerConnection.SetRemoteDescription(type, data["sdp"].ToString());
-				GD.Print($"RTC msg type: {type}");
+				// GD.Print($"RTC msg type: {type}");
 				break;
 			}
 			case "ice":
