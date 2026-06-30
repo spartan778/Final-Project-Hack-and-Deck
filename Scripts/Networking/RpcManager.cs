@@ -36,7 +36,7 @@ public partial class RpcManager : Node
         Rpc(nameof(MouseSyncTest_Receive), pokerPlacement);
     }
 
-    [Rpc(RpcMode.AnyPeer)]
+    [Rpc(RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.UnreliableOrdered)]
     private void MouseSyncTest_Receive(Vector2 pokerPlacement)
     {
         GD.Print($"Mouse Pos: {pokerPlacement}");
