@@ -43,7 +43,7 @@ public partial class CardSlotBase : Node2D
             {
                 RejectPoker(draggedPoker.PokerBaseRef);
                 break;
-            };
+            } ;
             SlotPoker(draggedPoker);
             break; // stop once a poker is slotted
         }

@@ -14,15 +14,17 @@ public partial class CardSlots : Node2D
     
     [Export] public float SlotCheckInterval { get; private set;}
     [Export] public float PokerTriggerInterval { get; private set;}
+    
+    
 
 
     public override void _Ready()
     {
         CardSlotControls = new Array<CardSlotControl>();
         var children = cardSlotContainer.GetChildren();
-        foreach (var child in children)
+        foreach (var child in children) 
         {
-            if (child is CardSlotControl cardSlotControl)
+            if (child is CardSlotControl cardSlotControl) // add all CardSlotControl node to array at runtime
             {
                 CardSlotControls.Add(cardSlotControl);
             }
@@ -46,7 +48,7 @@ public partial class CardSlots : Node2D
     {
         Co.Run(TriggerAllSlotsCoroutine);
     }
-    private IEnumerator TriggerAllSlotsCoroutine()
+    private IEnumerator TriggerAllSlotsCoroutine() // same pattern as Unity Coroutine using HCoroutine plugin
     {
         foreach (var cardSlotControl in CardSlotControls)
         {
@@ -55,4 +57,24 @@ public partial class CardSlots : Node2D
         }
         yield return null;
     }
+}
+
+public enum PokerHandType
+{
+    HighCard,
+    OnePair,
+    TwoPairs,
+    ThreeOfAKind,
+    Straight,
+    Flush,
+    FullHouse,
+    FourOfAKind,
+    StraightFlush,
+    RoyalFlush,
+}
+
+public enum ReleaseMode
+{
+    Charged,
+    Burst
 }

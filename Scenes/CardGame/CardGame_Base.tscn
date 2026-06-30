@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://b18mj00imbv7"]
+[gd_scene load_steps=24 format=3 uid="uid://b18mj00imbv7"]
 
 [ext_resource type="Script" uid="uid://fkcmkhn8mgr2" path="res://Scripts/CardGame/CardGameBase.cs" id="1_64jno"]
 [ext_resource type="Script" uid="uid://ds5ea665i8jo4" path="res://Scripts/CardGame/CardGameUIManager.cs" id="1_y7kd2"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://4spdyrwd1t8h" path="res://Prefabs/CardGame/CardSlot.tscn" id="7_7nhsq"]
 [ext_resource type="Script" uid="uid://d3751tqllbblu" path="res://Scripts/CardGame/DeckArea.cs" id="9_3ocyd"]
 [ext_resource type="Script" uid="uid://cf465j5jowb8e" path="res://Scripts/CardGame/ICardStorage.cs" id="9_k0eva"]
+[ext_resource type="Script" uid="uid://ds3xpniv7dblm" path="res://Scripts/CardGame/MotionDetectionArea.cs" id="13_acdag"]
 [ext_resource type="Script" uid="uid://bysj3u51ehhl8" path="res://Scripts/CardGame/HandSlots.cs" id="15_acdag"]
 [ext_resource type="Texture2D" uid="uid://rkvi4aam481o" path="res://Resources/UI/Vector_UI_Pack_dobo_ui/Panels/panel_cream.png" id="15_s74xb"]
 [ext_resource type="Script" uid="uid://cxvgulsekr1c" path="res://Scripts/CardGame/ICardOrganizer.cs" id="17_oakbt"]
@@ -48,6 +49,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0n1s0"]
 size = Vector2(90, 130)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s74xb"]
+size = Vector2(800, 200)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_acdag"]
 size = Vector2(800, 200)
 
@@ -83,10 +87,10 @@ texture = ExtResource("4_oyi1v")
 
 [node name="Main Label" type="Label" parent="UI_Base"]
 layout_mode = 0
-offset_left = 480.0
-offset_top = 58.0
-offset_right = 830.0
-offset_bottom = 118.0
+offset_left = 449.0
+offset_top = 43.0
+offset_right = 799.0
+offset_bottom = 103.0
 theme_override_font_sizes/font_size = 20
 text = "Card Game
 "
@@ -165,11 +169,12 @@ PokerTriggerInterval = 1.0
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 360.0
-offset_top = 310.0
-offset_right = 960.0
-offset_bottom = 310.0
+offset_left = 339.0
+offset_top = 313.0
+offset_right = 939.0
+offset_bottom = 313.0
 grow_horizontal = 2
+pivot_offset = Vector2(300, 0)
 mouse_filter = 2
 theme_override_constants/separation = 150
 alignment = 1
@@ -191,6 +196,16 @@ layout_mode = 2
 
 [node name="SlotCheckTimer" type="Timer" parent="GameBase2D/CardSlots"]
 process_callback = 0
+
+[node name="MotionDetectionArea" type="Area2D" parent="GameBase2D/CardSlots" node_paths=PackedStringArray("CardSlots", "PokerGameManagerRef")]
+position = Vector2(640, 300)
+script = ExtResource("13_acdag")
+CardSlots = NodePath("..")
+PokerGameManagerRef = NodePath("../../CardSystem/PokerGameManager")
+swipeDistance = 100.0
+
+[node name="DetectionShape" type="CollisionShape2D" parent="GameBase2D/CardSlots/MotionDetectionArea"]
+shape = SubResource("RectangleShape2D_s74xb")
 
 [node name="HandSlots" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("PanelArea", "Pokers", "PokerGameManager", "DrawPile", "cardOrganizer")]
 z_index = -1000

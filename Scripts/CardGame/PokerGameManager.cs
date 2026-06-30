@@ -21,6 +21,7 @@ public partial class PokerGameManager : Node2D
     private Vector2 phyMousePos, visualMousePos;
     
     public Action<PokerBase> HoldingPoker, ReleasingPoker, DrawingPoker, HoveringPoker, UnHoveringPoker;
+    
 
 
     public override void _EnterTree()

@@ -23,7 +23,6 @@ public partial class DeckArea : Area2D
     {
         isHovered = false;
     }
-    
     public override void _Input(InputEvent @event)
     {
         if (!isHovered) return;

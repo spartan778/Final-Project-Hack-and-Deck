@@ -123,6 +123,27 @@ public partial class RpcManager : Node
     
     
     #endregion
+    
+    #region ReleaseHandSlots
+
+    public void ReleaseHandSlotsRpc(PokerHandType pokerHandType, ReleaseMode releaseMode)
+    {
+        ReleaseHandSlots_Send(pokerHandType, releaseMode);
+    }
+
+    private void ReleaseHandSlots_Send(PokerHandType pokerHandType, ReleaseMode releaseMode)
+    {
+        var packedVector = new Vector2((int)pokerHandType, (int)releaseMode);
+        Rpc(nameof(ReleaseHandSlots_Receive), packedVector);
+    }
+
+    [Rpc(RpcMode.AnyPeer)]
+    private void ReleaseHandSlots_Receive(Vector2 packedVector)
+    {
+        GD.Print($"Receiving Poker hand type: {(PokerHandType)packedVector.X})");
+        GD.Print($"Release Mode: {(ReleaseMode)packedVector.Y}");
+    }
+    #endregion
     public override void _Input(InputEvent @event)
     {
         if (@event.IsActionPressed("menu_confirm"))
