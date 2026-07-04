@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://co3xbd58bu0lc"
+path="res://.godot/imported/tornado.ogg-e50c9623ebbc0489c7cab2ffe9bb53f8.oggvorbisstr"
+
+[deps]
+
+source_file="res://Credit and References/Survivors_Clone/Audio/SoundEffect/tornado.ogg"
+dest_files=["res://.godot/imported/tornado.ogg-e50c9623ebbc0489c7cab2ffe9bb53f8.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

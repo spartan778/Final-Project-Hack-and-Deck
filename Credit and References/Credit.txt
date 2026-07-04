@@ -7,3 +7,7 @@ https://opengameart.org/content/green-mat-texture
 Casual UI Pack - by dobo License: CC0 1.0 Universal
 itch.io - dobo_ui
 https://store.godotengine.org/asset/dobo/casual-ui-pack/
+
+Survivors Clone - by brannotaylor License: CC0 1.0 Universal
+Youtube Tutorial: https://www.youtube.com/playlist?list=PLtosjGHWDab682nfZ1f6JSQ1cjap7Ieeb
+Project Source: https://github.com/brannotaylor/SurvivorsClone_Base/tree/mains

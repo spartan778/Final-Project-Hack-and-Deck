@@ -1,10 +1,35 @@
-[gd_scene load_steps=2 format=3 uid="uid://dl4rvai7ihkn6"]
+[gd_scene load_steps=10 format=3 uid="uid://dl4rvai7ihkn6"]
 
 [ext_resource type="Script" uid="uid://bu2g4ba2ix2bl" path="res://Scenes/ActionGame/ActionGameUIManager.cs" id="1_01emv"]
+[ext_resource type="Script" uid="uid://cinsmbvs132yd" path="res://Scripts/ActionGame/ActionGameBase.cs" id="1_f66vs"]
+[ext_resource type="Texture2D" uid="uid://dkgye2j37jyvi" path="res://Credit and References/Survivors_Clone/Textures/dirt_full_new.png" id="2_idopy"]
+[ext_resource type="PackedScene" uid="uid://0s7odp1g51tv" path="res://Scenes/ActionGame/player.tscn" id="3_8mwp0"]
+[ext_resource type="Script" uid="uid://bec2evl3tjxcp" path="res://Prefabs/ActionGame/BulletBase.cs" id="5_8kvql"]
+[ext_resource type="Texture2D" uid="uid://cuxeie36cc21j" path="res://Resources/ActionGame/Kinetic_Bullet_V2.png" id="5_gmcek"]
+[ext_resource type="Script" uid="uid://dphi18xxcrn8b" path="res://Scripts/ActionGame/BulletManager.cs" id="5_okh2y"]
 
-[node name="ActionGameBase" type="Node"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_f66vs"]
+radius = 13.0
 
-[node name="UI_Base" type="Control" parent="." node_paths=PackedStringArray("testLabel")]
+[sub_resource type="SpriteFrames" id="SpriteFrames_okh2y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_gmcek")
+}],
+"loop": true,
+"name": &"BasicBullet",
+"speed": 5.0
+}]
+
+[node name="ActionGameBase" type="Node" node_paths=PackedStringArray("PlayerManagerRef", "BulletManagerRef")]
+script = ExtResource("1_f66vs")
+PlayerManagerRef = NodePath("2DGameBase/Player")
+BulletManagerRef = NodePath("BulletManager")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="UI_Base" type="Control" parent="HUD" node_paths=PackedStringArray("testLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,20 +39,20 @@ offset_bottom = -720.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_01emv")
-testLabel = NodePath("Label/Label")
+testLabel = NodePath("TopHUD/Label")
 
-[node name="Label" type="Label" parent="UI_Base"]
+[node name="TopHUD" type="Label" parent="HUD/UI_Base"]
 layout_mode = 0
-offset_left = 497.0
-offset_top = 58.0
-offset_right = 832.0
-offset_bottom = 117.0
+offset_left = 475.0
+offset_top = 37.0
+offset_right = 810.0
+offset_bottom = 96.0
 theme_override_font_sizes/font_size = 20
 text = "Action Game
 "
 horizontal_alignment = 1
 
-[node name="Label" type="Label" parent="UI_Base/Label"]
+[node name="Label" type="Label" parent="HUD/UI_Base/TopHUD"]
 layout_mode = 0
 offset_left = 106.0
 offset_top = 49.0
@@ -38,4 +63,31 @@ text = "Action Game
 "
 horizontal_alignment = 1
 
-[node name="GameBase" type="Node2D" parent="."]
+[node name="2DGameBase" type="Node2D" parent="."]
+
+[node name="GameBackground" type="Sprite2D" parent="2DGameBase"]
+z_index = -1000
+texture_filter = 2
+texture_repeat = 2
+position = Vector2(640, 360)
+texture = ExtResource("2_idopy")
+region_enabled = true
+region_rect = Rect2(0, 0, 1280, 720)
+
+[node name="Player" parent="2DGameBase" instance=ExtResource("3_8mwp0")]
+position = Vector2(640, 450)
+
+[node name="Bullet_Base" type="Area2D" parent="2DGameBase"]
+position = Vector2(532, 447)
+script = ExtResource("5_8kvql")
+
+[node name="Hitbox" type="CollisionShape2D" parent="2DGameBase/Bullet_Base"]
+shape = SubResource("CircleShape2D_f66vs")
+
+[node name="BulletSprite" type="AnimatedSprite2D" parent="2DGameBase/Bullet_Base"]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_okh2y")
+animation = &"BasicBullet"
+
+[node name="BulletManager" type="Node" parent="."]
+script = ExtResource("5_okh2y")

@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://0s7odp1g51tv"]
+
+[ext_resource type="Texture2D" uid="uid://c4eglj7rf3os3" path="res://icon.svg" id="1_0mflq"]
+[ext_resource type="Script" uid="uid://cv62dao6bnc30" path="res://Scripts/ActionGame/PlayerManager.cs" id="1_mhocx"]
+[ext_resource type="Script" uid="uid://cwska52asj5ib" path="res://Scenes/ActionGame/PlayerMovement.cs" id="2_sw6lw"]
+[ext_resource type="Script" uid="uid://denm3u3n8au4d" path="res://Scripts/ActionGame/BasicAttack.cs" id="3_25hhx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0mflq"]
+size = Vector2(64, 64)
+
+[node name="PlayerManager" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("1_mhocx")
+
+[node name="PlayerHitbox" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_0mflq")
+
+[node name="MovementSystem" type="Node" parent="."]
+
+[node name="PlayerMovement" type="Node" parent="MovementSystem" node_paths=PackedStringArray("playerManagerRef")]
+script = ExtResource("2_sw6lw")
+playerManagerRef = NodePath("../..")
+Speed = 100.0
+DashSpeed = 300.0
+
+[node name="AttackSystem" type="Node" parent="."]
+
+[node name="BasicAttack" type="Node" parent="AttackSystem" node_paths=PackedStringArray("playerManagerRef")]
+script = ExtResource("3_25hhx")
+playerManagerRef = NodePath("../..")
+
+[node name="CharacterSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_0mflq")
+
+[node name="MainCamera" type="Camera2D" parent="."]
