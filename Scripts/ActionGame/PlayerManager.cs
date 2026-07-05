@@ -14,7 +14,7 @@ public partial class PlayerManager : CharacterBody2D
 
     public override void _Ready()
     {
-        SettingAllowPlayerInput?.Invoke(true); // make sure input is allowed when game is ready
+        SettingAllowPlayerInput?.Invoke(true); // making sure input is allowed when game is ready
         actionGameBase = ActionGameBase.Instance;
         bulletManager = actionGameBase.BulletManagerRef;
     }

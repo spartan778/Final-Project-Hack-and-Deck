@@ -11,6 +11,7 @@ public partial class BasicAttack : Node
     [Export] public float BasicAttackFrequency, TimeBetweenShots;
     [Export] private Timer basicAttackTimer;
     private BulletManager bulletManagerRef;
+    private ActionRpcHandler actionRpcHandler;
     
     private PlayerForm playerForm;
     private bool isAllowPlayerInput, isAllowAttack;
@@ -19,6 +20,7 @@ public partial class BasicAttack : Node
     {
         playerForm = playerManagerRef.PlayerForm;
         bulletManagerRef = ActionGameBase.Instance.BulletManagerRef;
+        actionRpcHandler = ActionRpcHandler.Instance;
         basicAttackTimer.WaitTime = BasicAttackFrequency;
         basicAttackTimer.Start();
         ConnectSignals();
@@ -28,7 +30,12 @@ public partial class BasicAttack : Node
         playerManagerRef.PlayerFormChanged += OnPlayerFormChange;
         playerManagerRef.SettingAllowPlayerInput += OnSettingAllowPlayerInput;
         basicAttackTimer.Timeout += MakeBasicAttack;
-
+        actionRpcHandler.SlotPokerAction += (info, dictionary) => //temp lamda for testing
+        {
+            var bulletCount = info.Rank + 1; // +1 because poker index start a 0
+            MakeBasicAttack(bulletCount);
+            GD.Print($"Making poker triggered attack, strength: {bulletCount}");
+        };
     }
 
     public void MakeBasicAttack() //normal version

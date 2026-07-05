@@ -9,9 +9,9 @@ public partial class RpcManager : Node
     private NetworkManager_Singleton networkManagerSingleton;
     public static RpcManager Instance {get; private set;}
     private MultiplayerPeer multiplayerPeer;
-
-    public int AddCount { get; private set; } = 0;
+    private ActionRpcHandler actionRpcHandler;
     
+    public int AddCount { get; private set; } = 0;
     public Action<int> TestNumberChanged;
 
     public override void _EnterTree()
@@ -23,7 +23,11 @@ public partial class RpcManager : Node
         networkManagerSingleton = NetworkManager_Singleton.GetInstance();
         multiplayerPeer = Multiplayer.GetMultiplayerPeer();
     }
-    
+
+    public void SetActionRpcHandler(ActionRpcHandler handler)
+    {
+        actionRpcHandler = handler;
+    }
     [Rpc(RpcMode.AnyPeer)]
     private void TestRpc_Add()
     {
@@ -76,7 +80,7 @@ public partial class RpcManager : Node
             GD.PrintErr("Invalid poker info");
             return;
         }
-        Rpc(nameof(SlotPokerMod_Receive), pokerInfo, modifiers);
+        RpcId(1,nameof(SlotPokerMod_Receive), pokerInfo, modifiers);
     }
 
     [Rpc(RpcMode.AnyPeer)]
@@ -84,6 +88,7 @@ public partial class RpcManager : Node
     {
         GD.Print($"Receiving Poker: {pokerInfo}");
         GD.Print($"Modifiers: {modifiers}");
+        actionRpcHandler?.HandlePokerSlotted(pokerInfo, modifiers);
     }
     
 
@@ -103,7 +108,7 @@ public partial class RpcManager : Node
     }
     private void TriggerPoker_Send(Vector2 pokerInfo, Dictionary modifiers = null){
         if (!CardGameHelperSingleton.IsPokerValid(pokerInfo)) return;
-        Rpc(nameof(TriggerPoker_Receive), pokerInfo);
+        Rpc(nameof(TriggerPoker_Receive), pokerInfo, modifiers);
     }
     [Rpc(RpcMode.AnyPeer)]
     private void TriggerPoker_Receive(Vector2 pokerInfo, Dictionary modifiers)
