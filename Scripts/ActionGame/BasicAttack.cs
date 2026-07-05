@@ -1,11 +1,15 @@
 using Godot;
 using System;
+using System.Collections;
+using HCoroutines;
 
 public partial class BasicAttack : Node
 {
     [Export] private PlayerManager playerManagerRef;
     [Export] private PackedScene basicBulletPrefab;
-    [Export] public int BasicAttackFrequency;
+    [Export] public int BulletCount;
+    [Export] public float BasicAttackFrequency, TimeBetweenShots;
+    [Export] private Timer basicAttackTimer;
     private BulletManager bulletManagerRef;
     
     private PlayerForm playerForm;
@@ -13,31 +17,50 @@ public partial class BasicAttack : Node
     
     public override void _Ready()
     {
-        ConnectSignals();
         playerForm = playerManagerRef.PlayerForm;
         bulletManagerRef = ActionGameBase.Instance.BulletManagerRef;
+        basicAttackTimer.WaitTime = BasicAttackFrequency;
+        basicAttackTimer.Start();
+        ConnectSignals();
+    }
+    private void ConnectSignals()
+    {
+        playerManagerRef.PlayerFormChanged += OnPlayerFormChange;
+        playerManagerRef.SettingAllowPlayerInput += OnSettingAllowPlayerInput;
+        basicAttackTimer.Timeout += MakeBasicAttack;
+
     }
 
     public void MakeBasicAttack() //normal version
     {
-        
+        Co.Run(ShootBullets(BulletCount));
     }
 
     public void MakeBasicAttack(int shots) //frequency override version
     {
-        
+        Co.Run(ShootBullets(shots));
     }
 
-    private void ShootBasicBullet()
+    private IEnumerator ShootBullets(int count) //Coroutine to shoot bullets
     {
-        
+        for (var i = 0; i < count; i++)
+        {
+            ShootBasicBullet();
+            yield return Co.Wait(TimeBetweenShots);
+        }
+    }
+    
+    private void ShootBasicBullet() //base function for shooting each bullet
+    {
+        var bullet = basicBulletPrefab.Instantiate<BasicBullet>();
+        bullet.GlobalPosition = playerManagerRef.GlobalPosition;
+        bullet.InitBullet(playerManagerRef.GetMouseToPlayerVector());
+        AddChild(bullet); // temp AddChild function to make sure node is not orphaned.
+        bulletManagerRef.BulletSpawned?.Invoke(bullet);
+        GD.Print("Bullet Spawned");
     }
 
-    public void ConnectSignals()
-    {
-        playerManagerRef.PlayerFormChanged += OnPlayerFormChange;
-        playerManagerRef.SettingAllowPlayerInput += OnSettingAllowPlayerInput;
-    }
+    
 
     private void OnPlayerFormChange(PlayerForm form)
     {

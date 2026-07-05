@@ -1,10 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://dl4rvai7ihkn6"]
+[gd_scene load_steps=8 format=3 uid="uid://dl4rvai7ihkn6"]
 
 [ext_resource type="Script" uid="uid://bu2g4ba2ix2bl" path="res://Scenes/ActionGame/ActionGameUIManager.cs" id="1_01emv"]
 [ext_resource type="Script" uid="uid://cinsmbvs132yd" path="res://Scripts/ActionGame/ActionGameBase.cs" id="1_f66vs"]
 [ext_resource type="Texture2D" uid="uid://dkgye2j37jyvi" path="res://Credit and References/Survivors_Clone/Textures/dirt_full_new.png" id="2_idopy"]
 [ext_resource type="PackedScene" uid="uid://0s7odp1g51tv" path="res://Scenes/ActionGame/player.tscn" id="3_8mwp0"]
-[ext_resource type="PackedScene" uid="uid://dw62403pk1am3" path="res://Prefabs/ActionGame/Bullets/basic_bullet.tscn" id="5_gmcek"]
 [ext_resource type="Script" uid="uid://dphi18xxcrn8b" path="res://Scripts/ActionGame/BulletManager.cs" id="5_okh2y"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gmcek"]
@@ -86,9 +85,6 @@ shape = SubResource("WorldBoundaryShape2D_8kvql")
 position = Vector2(669, 0)
 rotation = 4.71239
 shape = SubResource("WorldBoundaryShape2D_8kvql")
-
-[node name="BasicBullet" parent="2DGameBase" instance=ExtResource("5_gmcek")]
-position = Vector2(532, 447)
 
 [node name="BulletManager" type="Node" parent="." node_paths=PackedStringArray("bulletCleanerArea")]
 script = ExtResource("5_okh2y")

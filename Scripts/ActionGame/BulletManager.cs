@@ -11,7 +11,13 @@ public partial class BulletManager : Node
 
     public override void _Ready()
     {
+        
+    }
+
+    private void ConnectSignals()
+    {
         bulletCleanerArea.AreaEntered += OnAreaOutOfBound;
+        BulletSpawned += OnBulletSpawned;
     }
 
     private void OnAreaOutOfBound(Area2D area)
@@ -28,5 +34,6 @@ public partial class BulletManager : Node
     {
         BulletList.Add(bullet);
         AddChild(bullet);
+        GD.Print($"Bullet Spawned: {bullet.GetType().Name}");
     }
 }

@@ -41,10 +41,16 @@ DashSpeed = 300.0
 
 [node name="AttackSystem" type="Node" parent="."]
 
-[node name="BasicAttack" type="Node" parent="AttackSystem" node_paths=PackedStringArray("playerManagerRef")]
+[node name="BasicAttack" type="Node" parent="AttackSystem" node_paths=PackedStringArray("playerManagerRef", "basicAttackTimer")]
 script = ExtResource("3_25hhx")
 playerManagerRef = NodePath("../..")
 basicBulletPrefab = ExtResource("6_rq88u")
+BulletCount = 3
+BasicAttackFrequency = 3.0
+TimeBetweenShots = 0.33
+basicAttackTimer = NodePath("BasicAttackTimer")
+
+[node name="BasicAttackTimer" type="Timer" parent="AttackSystem/BasicAttack"]
 
 [node name="CharacterSprite" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
