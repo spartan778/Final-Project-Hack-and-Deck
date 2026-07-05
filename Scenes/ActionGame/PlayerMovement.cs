@@ -90,9 +90,9 @@ public partial class PlayerMovement : Node //testing for component style coding
         isAllowPlayerInput = false;
         isDashing = true;
         var dashVector = playerManagerRef.GetMouseToPlayerVector();
-        GD.Print(dashVector);
+        // GD.Print(dashVector);
         playerManagerRef.Velocity = dashVector * DashSpeed;
-        GD.Print(playerManagerRef.Velocity);
+        // GD.Print(playerManagerRef.Velocity);
         // playerManagerRef.MoveAndSlide();
         yield return Co.Wait(duration);
         isAllowPlayerInput = true;

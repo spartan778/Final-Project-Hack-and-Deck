@@ -1,19 +1,35 @@
-[gd_scene load_steps=6 format=3 uid="uid://0s7odp1g51tv"]
+[gd_scene load_steps=10 format=3 uid="uid://0s7odp1g51tv"]
 
 [ext_resource type="Texture2D" uid="uid://c4eglj7rf3os3" path="res://icon.svg" id="1_0mflq"]
 [ext_resource type="Script" uid="uid://cv62dao6bnc30" path="res://Scripts/ActionGame/PlayerManager.cs" id="1_mhocx"]
+[ext_resource type="Script" uid="uid://bhm867opqujus" path="res://Scripts/ActionGame/PlayerHitbox.cs" id="2_g7csx"]
 [ext_resource type="Script" uid="uid://cwska52asj5ib" path="res://Scenes/ActionGame/PlayerMovement.cs" id="2_sw6lw"]
+[ext_resource type="Script" uid="uid://c6vpdedrg6rh1" path="res://Scripts/ActionGame/HealthSystem.cs" id="2_thk0v"]
 [ext_resource type="Script" uid="uid://denm3u3n8au4d" path="res://Scripts/ActionGame/BasicAttack.cs" id="3_25hhx"]
+[ext_resource type="PackedScene" uid="uid://dw62403pk1am3" path="res://Prefabs/ActionGame/Bullets/basic_bullet.tscn" id="6_rq88u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0mflq"]
+size = Vector2(40, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g7csx"]
 size = Vector2(64, 64)
 
 [node name="PlayerManager" type="CharacterBody2D"]
 motion_mode = 1
 script = ExtResource("1_mhocx")
 
-[node name="PlayerHitbox" type="CollisionShape2D" parent="."]
+[node name="PlayerCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_0mflq")
+
+[node name="PlayerHitbox" type="Area2D" parent="." node_paths=PackedStringArray("HealthSystem")]
+script = ExtResource("2_g7csx")
+HealthSystem = NodePath("../HealthSystem")
+
+[node name="HitBoxArea" type="CollisionShape2D" parent="PlayerHitbox"]
+shape = SubResource("RectangleShape2D_g7csx")
+
+[node name="HealthSystem" type="Node" parent="."]
+script = ExtResource("2_thk0v")
 
 [node name="MovementSystem" type="Node" parent="."]
 
@@ -28,6 +44,7 @@ DashSpeed = 300.0
 [node name="BasicAttack" type="Node" parent="AttackSystem" node_paths=PackedStringArray("playerManagerRef")]
 script = ExtResource("3_25hhx")
 playerManagerRef = NodePath("../..")
+basicBulletPrefab = ExtResource("6_rq88u")
 
 [node name="CharacterSprite" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)

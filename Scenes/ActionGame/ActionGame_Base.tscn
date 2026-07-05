@@ -1,26 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://dl4rvai7ihkn6"]
+[gd_scene load_steps=9 format=3 uid="uid://dl4rvai7ihkn6"]
 
 [ext_resource type="Script" uid="uid://bu2g4ba2ix2bl" path="res://Scenes/ActionGame/ActionGameUIManager.cs" id="1_01emv"]
 [ext_resource type="Script" uid="uid://cinsmbvs132yd" path="res://Scripts/ActionGame/ActionGameBase.cs" id="1_f66vs"]
 [ext_resource type="Texture2D" uid="uid://dkgye2j37jyvi" path="res://Credit and References/Survivors_Clone/Textures/dirt_full_new.png" id="2_idopy"]
 [ext_resource type="PackedScene" uid="uid://0s7odp1g51tv" path="res://Scenes/ActionGame/player.tscn" id="3_8mwp0"]
-[ext_resource type="Script" uid="uid://bec2evl3tjxcp" path="res://Prefabs/ActionGame/BulletBase.cs" id="5_8kvql"]
-[ext_resource type="Texture2D" uid="uid://cuxeie36cc21j" path="res://Resources/ActionGame/Kinetic_Bullet_V2.png" id="5_gmcek"]
+[ext_resource type="PackedScene" uid="uid://dw62403pk1am3" path="res://Prefabs/ActionGame/Bullets/basic_bullet.tscn" id="5_gmcek"]
 [ext_resource type="Script" uid="uid://dphi18xxcrn8b" path="res://Scripts/ActionGame/BulletManager.cs" id="5_okh2y"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_f66vs"]
-radius = 13.0
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gmcek"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_okh2y"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("5_gmcek")
-}],
-"loop": true,
-"name": &"BasicBullet",
-"speed": 5.0
-}]
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_8kvql"]
 
 [node name="ActionGameBase" type="Node" node_paths=PackedStringArray("PlayerManagerRef", "BulletManagerRef")]
 script = ExtResource("1_f66vs")
@@ -77,17 +66,30 @@ region_rect = Rect2(0, 0, 1280, 720)
 [node name="Player" parent="2DGameBase" instance=ExtResource("3_8mwp0")]
 position = Vector2(640, 450)
 
-[node name="Bullet_Base" type="Area2D" parent="2DGameBase"]
+[node name="BulletCleaner" type="Area2D" parent="2DGameBase/Player"]
+
+[node name="Up" type="CollisionShape2D" parent="2DGameBase/Player/BulletCleaner"]
+position = Vector2(0, -474)
+rotation = 3.14159
+shape = SubResource("WorldBoundaryShape2D_gmcek")
+
+[node name="Down" type="CollisionShape2D" parent="2DGameBase/Player/BulletCleaner"]
+position = Vector2(0, 293)
+shape = SubResource("WorldBoundaryShape2D_8kvql")
+
+[node name="Left" type="CollisionShape2D" parent="2DGameBase/Player/BulletCleaner"]
+position = Vector2(-661, 0)
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_8kvql")
+
+[node name="Right" type="CollisionShape2D" parent="2DGameBase/Player/BulletCleaner"]
+position = Vector2(669, 0)
+rotation = 4.71239
+shape = SubResource("WorldBoundaryShape2D_8kvql")
+
+[node name="BasicBullet" parent="2DGameBase" instance=ExtResource("5_gmcek")]
 position = Vector2(532, 447)
-script = ExtResource("5_8kvql")
 
-[node name="Hitbox" type="CollisionShape2D" parent="2DGameBase/Bullet_Base"]
-shape = SubResource("CircleShape2D_f66vs")
-
-[node name="BulletSprite" type="AnimatedSprite2D" parent="2DGameBase/Bullet_Base"]
-scale = Vector2(0.5, 0.5)
-sprite_frames = SubResource("SpriteFrames_okh2y")
-animation = &"BasicBullet"
-
-[node name="BulletManager" type="Node" parent="."]
+[node name="BulletManager" type="Node" parent="." node_paths=PackedStringArray("bulletCleanerArea")]
 script = ExtResource("5_okh2y")
+bulletCleanerArea = NodePath("../2DGameBase/Player/BulletCleaner")
