@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://do7g64n8bmqa8"]
+[gd_scene load_steps=6 format=3 uid="uid://do7g64n8bmqa8"]
 
+[ext_resource type="Script" uid="uid://blvmtvwjdw23k" path="res://Prefabs/ActionGame/Bullets/MagicBullet.cs" id="1_5xyqs"]
 [ext_resource type="Texture2D" uid="uid://cuxeie36cc21j" path="res://Resources/ActionGame/Kinetic_Bullet_V2.png" id="2_5xyqs"]
 [ext_resource type="Texture2D" uid="uid://nns2cwj6u1q7" path="res://Resources/ActionGame/bullet_edited.png" id="2_psxnt"]
 
@@ -27,6 +28,9 @@ animations = [{
 }]
 
 [node name="MagicBullet" type="Area2D"]
+script = ExtResource("1_5xyqs")
+BulletSpeed = 200.0
+Damage = 30.0
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_5xyqs")

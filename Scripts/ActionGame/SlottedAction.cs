@@ -1,0 +1,49 @@
+using Godot;
+using System;
+using Godot.Collections;
+
+public partial class SlottedAction : Node
+{
+    [Export] protected PlayerManager PlayerManagerRef;
+    [Export] private HealthSystem healthSystemRef;
+    [Export] private MagicBulletAttack magicBulletAttackRef;
+    
+    private BulletManager bulletManagerRef;
+    private ActionRpcHandler actionRpcHandler;
+    
+    private PlayerForm playerForm;
+
+    public override void _Ready()
+    {
+        playerForm = PlayerManagerRef.PlayerForm;
+        actionRpcHandler = ActionRpcHandler.Instance;
+        ConnectSignals();
+    }
+
+    private void ConnectSignals()
+    {
+        PlayerManagerRef.PlayerFormChanged += OnPlayerFormChange;
+        actionRpcHandler.SlotPokerAction += OnPokerSlotted;
+    }
+    private void OnPokerSlotted(PokerInfo pokerInfo, Dictionary modifiers)
+    {
+        switch (pokerInfo.Suit)
+        {
+            case CardSuit.Hearts or CardSuit.Diamonds:
+            {
+                GD.Print($"Slotted support Poker, Strength {pokerInfo.Rank + 1}");
+                break;
+            }
+            case CardSuit.Spades or CardSuit.Clubs:
+            {
+                var bulletCount = pokerInfo.Rank + 1;
+                magicBulletAttackRef.MakeMagicAttack(bulletCount);
+                break;
+            }
+        }
+    }
+    private void OnPlayerFormChange(PlayerForm form)
+    {
+        playerForm = form;
+    }
+}

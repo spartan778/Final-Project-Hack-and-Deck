@@ -3,14 +3,14 @@ using System;
 
 public partial class MagicBullet : BulletBase
 {
-    public override void _Ready()
-    {
-        base._Ready();
-    }
-
     public override void InitBullet(Vector2 direction)
     {
         base.InitBullet(direction);
-        Rotation = Direction.Angle() - Mathf.Pi / 2;
+        Rotation = Direction.Angle() + Mathf.Pi / 2;
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        base._PhysicsProcess(delta);
     }
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://0s7odp1g51tv"]
+[gd_scene load_steps=14 format=3 uid="uid://0s7odp1g51tv"]
 
 [ext_resource type="Texture2D" uid="uid://c4eglj7rf3os3" path="res://icon.svg" id="1_0mflq"]
 [ext_resource type="Script" uid="uid://cv62dao6bnc30" path="res://Scripts/ActionGame/PlayerManager.cs" id="1_mhocx"]
@@ -7,8 +7,10 @@
 [ext_resource type="Script" uid="uid://c6vpdedrg6rh1" path="res://Scripts/ActionGame/HealthSystem.cs" id="2_thk0v"]
 [ext_resource type="Script" uid="uid://denm3u3n8au4d" path="res://Scripts/ActionGame/BasicAttack.cs" id="3_25hhx"]
 [ext_resource type="PackedScene" uid="uid://dw62403pk1am3" path="res://Prefabs/ActionGame/Bullets/basic_bullet.tscn" id="6_rq88u"]
+[ext_resource type="Script" uid="uid://3ver75t7ymwg" path="res://Prefabs/ActionGame/Bullets/MagicBulletAttack.cs" id="7_e6f3n"]
 [ext_resource type="Script" uid="uid://by2bm21xikwd2" path="res://Scripts/ActionGame/TriggeredAction.cs" id="7_um666"]
 [ext_resource type="PackedScene" uid="uid://do7g64n8bmqa8" path="res://Prefabs/ActionGame/Bullets/magic_bullet.tscn" id="8_um666"]
+[ext_resource type="Script" uid="uid://bqdo7x80n285y" path="res://Scripts/ActionGame/SlottedAction.cs" id="9_bnihk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0mflq"]
 size = Vector2(40, 40)
@@ -56,17 +58,26 @@ basicAttackTimer = NodePath("BasicAttackTimer")
 
 [node name="BasicAttackTimer" type="Timer" parent="AttackSystem/BasicAttack"]
 
-[node name="TriggeredAction" type="Node" parent="AttackSystem" node_paths=PackedStringArray("PlayerManagerRef", "basicAttackRef")]
+[node name="MagicBulletAttack" type="Node" parent="AttackSystem" node_paths=PackedStringArray("playerManagerRef")]
+script = ExtResource("7_e6f3n")
+magicBulletPrefab = ExtResource("8_um666")
+playerManagerRef = NodePath("../..")
+AttackArc = 45.0
+
+[node name="TriggeredAction" type="Node" parent="." node_paths=PackedStringArray("PlayerManagerRef", "basicAttackRef")]
 script = ExtResource("7_um666")
-PlayerManagerRef = NodePath("../..")
-basicAttackRef = NodePath("../BasicAttack")
+PlayerManagerRef = NodePath("..")
+basicAttackRef = NodePath("../AttackSystem/BasicAttack")
 triggeredBulletPrefab = ExtResource("8_um666")
+
+[node name="SlottedAction" type="Node" parent="." node_paths=PackedStringArray("PlayerManagerRef", "healthSystemRef", "magicBulletAttackRef")]
+script = ExtResource("9_bnihk")
+PlayerManagerRef = NodePath("..")
+healthSystemRef = NodePath("../HealthSystem")
+magicBulletAttackRef = NodePath("../AttackSystem/MagicBulletAttack")
 
 [node name="CharacterSprite" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_0mflq")
 
 [node name="MainCamera" type="Camera2D" parent="."]
-
-[node name="MagicBulletDummy" parent="." instance=ExtResource("8_um666")]
-position = Vector2(56, 0)

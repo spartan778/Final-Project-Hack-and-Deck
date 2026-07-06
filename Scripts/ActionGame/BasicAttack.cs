@@ -64,7 +64,7 @@ public partial class BasicAttack : Node
         bullet.InitBullet(PlayerManagerRef.GetMouseToPlayerVector());
         AddChild(bullet); // temp AddChild function to make sure node is not orphaned.
         bulletManagerRef.BulletSpawned?.Invoke(bullet);
-        GD.Print("Bullet Spawned");
+        // GD.Print("Bullet Spawned");
     }
 
     

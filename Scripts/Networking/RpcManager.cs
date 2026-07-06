@@ -68,8 +68,8 @@ public partial class RpcManager : Node
     [Rpc(RpcMode.AnyPeer)]
     private void SlotPokerMod_Receive(Vector2 pokerInfo, Dictionary modifiers)
     {
-        GD.Print($"Receiving Poker: {pokerInfo}");
-        GD.Print($"Modifiers: {modifiers}");
+        // GD.Print($"Receiving Poker: {pokerInfo}");
+        // GD.Print($"Modifiers: {modifiers}");
         actionRpcHandler?.HandlePokerSlotted(pokerInfo, modifiers);
     }
     #endregion
