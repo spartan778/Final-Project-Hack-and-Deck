@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dl4rvai7ihkn6"]
+[gd_scene load_steps=11 format=3 uid="uid://dl4rvai7ihkn6"]
 
 [ext_resource type="Script" uid="uid://bu2g4ba2ix2bl" path="res://Scenes/ActionGame/ActionGameUIManager.cs" id="1_01emv"]
 [ext_resource type="Script" uid="uid://cinsmbvs132yd" path="res://Scripts/ActionGame/ActionGameBase.cs" id="1_f66vs"]
@@ -7,14 +7,19 @@
 [ext_resource type="Script" uid="uid://dphi18xxcrn8b" path="res://Scripts/ActionGame/BulletManager.cs" id="5_okh2y"]
 [ext_resource type="Script" uid="uid://gudl4abje0lu" path="res://Scripts/Networking/ActionRpcHandler.cs" id="6_okh2y"]
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_okh2y"]
+
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gmcek"]
+distance = -183.0
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_8kvql"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_yco5m"]
 
 [node name="ActionGameBase" type="Node" node_paths=PackedStringArray("PlayerManagerRef", "BulletManagerRef")]
 script = ExtResource("1_f66vs")
 PlayerManagerRef = NodePath("2DGameBase/Player")
-BulletManagerRef = NodePath("BulletManager")
+BulletManagerRef = NodePath("2DGameBase/BulletManager")
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
@@ -69,27 +74,27 @@ position = Vector2(640, 450)
 [node name="BulletCleaner" type="Area2D" parent="2DGameBase/Player"]
 
 [node name="Up" type="CollisionShape2D" parent="2DGameBase/Player/BulletCleaner"]
-position = Vector2(0, -474)
+position = Vector2(0, -587)
 rotation = 3.14159
-shape = SubResource("WorldBoundaryShape2D_gmcek")
+shape = SubResource("WorldBoundaryShape2D_okh2y")
 
 [node name="Down" type="CollisionShape2D" parent="2DGameBase/Player/BulletCleaner"]
-position = Vector2(0, 293)
-shape = SubResource("WorldBoundaryShape2D_8kvql")
+position = Vector2(0, 359)
+shape = SubResource("WorldBoundaryShape2D_gmcek")
 
 [node name="Left" type="CollisionShape2D" parent="2DGameBase/Player/BulletCleaner"]
-position = Vector2(-661, 0)
+position = Vector2(-875, 30)
 rotation = 1.5708
 shape = SubResource("WorldBoundaryShape2D_8kvql")
 
 [node name="Right" type="CollisionShape2D" parent="2DGameBase/Player/BulletCleaner"]
-position = Vector2(669, 0)
+position = Vector2(831, 0)
 rotation = 4.71239
-shape = SubResource("WorldBoundaryShape2D_8kvql")
+shape = SubResource("WorldBoundaryShape2D_yco5m")
 
-[node name="BulletManager" type="Node" parent="." node_paths=PackedStringArray("bulletCleanerArea")]
+[node name="BulletManager" type="Node" parent="2DGameBase" node_paths=PackedStringArray("bulletCleanerArea")]
 script = ExtResource("5_okh2y")
-bulletCleanerArea = NodePath("../2DGameBase/Player/BulletCleaner")
+bulletCleanerArea = NodePath("../Player/BulletCleaner")
 
 [node name="ActionRpcHandler" type="Node" parent="."]
 script = ExtResource("6_okh2y")

@@ -62,7 +62,6 @@ public partial class BasicAttack : Node
         var bullet = basicBulletPrefab.Instantiate<BasicBullet>();
         bullet.GlobalPosition = PlayerManagerRef.GlobalPosition;
         bullet.InitBullet(PlayerManagerRef.GetMouseToPlayerVector());
-        AddChild(bullet); // temp AddChild function to make sure node is not orphaned.
         bulletManagerRef.BulletSpawned?.Invoke(bullet);
         // GD.Print("Bullet Spawned");
     }

@@ -11,7 +11,9 @@ public partial class BulletManager : Node
 
     public override void _Ready()
     {
-        
+        BulletList = new Array<BulletBase>(); //init bullet list
+        GD.Print($"{bulletCleanerArea.GetChildren()} ");
+        ConnectSignals();
     }
 
     private void ConnectSignals()
@@ -22,9 +24,9 @@ public partial class BulletManager : Node
 
     private void OnAreaOutOfBound(Area2D area)
     {
+        GD.Print("area out of bound");
         if (area is BulletBase bullet)
         {
-            GD.Print("BULLET BASE AREA EXITED");
             area.QueueFree();
         }
         area?.QueueFree();
