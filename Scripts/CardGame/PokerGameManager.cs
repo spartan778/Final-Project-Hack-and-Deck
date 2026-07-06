@@ -17,7 +17,6 @@ public partial class PokerGameManager : Node2D
     public PokerBase HoveredPoker {get; private set;}
     public bool IsDragging {get; private set;}
     private Vector2 originalScale;
-
     private Vector2 phyMousePos, visualMousePos;
     
     public Action<PokerBase> HoldingPoker, ReleasingPoker, DrawingPoker, HoveringPoker, UnHoveringPoker;

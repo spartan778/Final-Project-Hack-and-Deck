@@ -59,18 +59,14 @@ public partial class CardSlots : Node2D
     }
 }
 
-public enum PokerHandType
+public enum PokerHandBase
 {
     HighCard,
     OnePair,
-    TwoPairs,
     ThreeOfAKind,
     Straight,
     Flush,
-    FullHouse,
     FourOfAKind,
-    StraightFlush,
-    RoyalFlush,
 }
 
 public enum ReleaseMode

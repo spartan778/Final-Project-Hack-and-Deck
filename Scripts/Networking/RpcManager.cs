@@ -47,32 +47,14 @@ public partial class RpcManager : Node
     }
 
     #region SlotPoker
-    public void SlotPokerRpc(PokerInfo pokerInfo, Dictionary modifiers = null)
+    public void SlotPokerRpc(PokerInfo pokerInfo, Dictionary modifiers)
     {
         var pokerVector = new Vector2((int)pokerInfo.Suit, pokerInfo.Rank); //convert to Vector2 for safe data transfer
         if (modifiers != null)
         {
             SlotPokerMod_Send(pokerVector, modifiers);
         }
-        else
-        {
-            SlotPoker_Send(pokerVector, modifiers);
-            GD.Print($"Sending Poker without modifiers: {pokerVector}");
-        }
     }
-    
-    [Rpc(RpcMode.AnyPeer)]
-    private void SlotPoker_Send(Vector2 pokerInfo, Dictionary modifiers = null)
-    {
-        if (!CardGameHelperSingleton.IsPokerValid(pokerInfo))
-        {
-            GD.PrintErr("Invalid poker info");
-            return;
-        }
-        Rpc(nameof(SlotPoker_Receive), pokerInfo);
-    }
-
-    // [Rpc(RpcMode.AnyPeer)]
     private void SlotPokerMod_Send(Vector2 pokerInfo, Dictionary modifiers)
     {
         if (!CardGameHelperSingleton.IsPokerValid(pokerInfo))
@@ -90,23 +72,16 @@ public partial class RpcManager : Node
         GD.Print($"Modifiers: {modifiers}");
         actionRpcHandler?.HandlePokerSlotted(pokerInfo, modifiers);
     }
-    
-
-    [Rpc(RpcMode.AnyPeer)]
-    private void SlotPoker_Receive(Vector2 pokerInfo)
-    {
-        GD.Print($"Normal Poker received: {pokerInfo}");
-    }
     #endregion
 
     #region TriggerPoker
 
-    public void TriggerPokerRpc(PokerInfo pokerInfo, Dictionary modifiers = null)
+    public void TriggerPokerRpc(PokerInfo pokerInfo, Dictionary modifiers)
     {
         var pokerVector = new Vector2((int)pokerInfo.Suit, pokerInfo.Rank);
         TriggerPoker_Send(pokerVector, modifiers);
     }
-    private void TriggerPoker_Send(Vector2 pokerInfo, Dictionary modifiers = null){
+    private void TriggerPoker_Send(Vector2 pokerInfo, Dictionary modifiers){
         if (!CardGameHelperSingleton.IsPokerValid(pokerInfo)) return;
         Rpc(nameof(TriggerPoker_Receive), pokerInfo, modifiers);
     }
@@ -115,10 +90,12 @@ public partial class RpcManager : Node
     {
         GD.Print($"Normal Poker Triggered: {pokerInfo}");
         GD.Print($"Modifiers: {modifiers}");
+        actionRpcHandler?.HandlePokerSlotTriggered(pokerInfo, modifiers);
+        
     }
     #endregion
     
-    #region SummonPoker
+    #region SummonPoker //stretch goal
 
     public void TriggerPokerSummonRpc(PokerInfo pokerInfo, Dictionary modifiers, Vector2 pokerPlacement)
     {
@@ -131,21 +108,21 @@ public partial class RpcManager : Node
     
     #region ReleaseHandSlots
 
-    public void ReleaseHandSlotsRpc(PokerHandType pokerHandType, ReleaseMode releaseMode)
+    public void ReleaseHandSlotsRpc(PokerHandBase pokerHandBase, ReleaseMode releaseMode)
     {
-        ReleaseHandSlots_Send(pokerHandType, releaseMode);
+        ReleaseHandSlots_Send(pokerHandBase, releaseMode);
     }
 
-    private void ReleaseHandSlots_Send(PokerHandType pokerHandType, ReleaseMode releaseMode)
+    private void ReleaseHandSlots_Send(PokerHandBase pokerHandBase, ReleaseMode releaseMode)
     {
-        var packedVector = new Vector2((int)pokerHandType, (int)releaseMode);
+        var packedVector = new Vector2((int)pokerHandBase, (int)releaseMode);
         Rpc(nameof(ReleaseHandSlots_Receive), packedVector);
     }
 
     [Rpc(RpcMode.AnyPeer)]
     private void ReleaseHandSlots_Receive(Vector2 packedVector)
     {
-        GD.Print($"Receiving Poker hand type: {(PokerHandType)packedVector.X})");
+        GD.Print($"Receiving Poker hand type: {(PokerHandBase)packedVector.X})");
         GD.Print($"Release Mode: {(ReleaseMode)packedVector.Y}");
     }
     #endregion

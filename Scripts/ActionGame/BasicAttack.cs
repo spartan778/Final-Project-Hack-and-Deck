@@ -5,7 +5,7 @@ using HCoroutines;
 
 public partial class BasicAttack : Node
 {
-    [Export] private PlayerManager playerManagerRef;
+    [Export] protected PlayerManager PlayerManagerRef;
     [Export] private PackedScene basicBulletPrefab;
     [Export] public int BulletCount;
     [Export] public float BasicAttackFrequency, TimeBetweenShots;
@@ -18,7 +18,7 @@ public partial class BasicAttack : Node
     
     public override void _Ready()
     {
-        playerForm = playerManagerRef.PlayerForm;
+        playerForm = PlayerManagerRef.PlayerForm;
         bulletManagerRef = ActionGameBase.Instance.BulletManagerRef;
         actionRpcHandler = ActionRpcHandler.Instance;
         basicAttackTimer.WaitTime = BasicAttackFrequency;
@@ -27,13 +27,13 @@ public partial class BasicAttack : Node
     }
     private void ConnectSignals()
     {
-        playerManagerRef.PlayerFormChanged += OnPlayerFormChange;
-        playerManagerRef.SettingAllowPlayerInput += OnSettingAllowPlayerInput;
+        PlayerManagerRef.PlayerFormChanged += OnPlayerFormChange;
+        PlayerManagerRef.SettingAllowPlayerInput += OnSettingAllowPlayerInput;
         basicAttackTimer.Timeout += MakeBasicAttack;
         actionRpcHandler.SlotPokerAction += (info, dictionary) => //temp lambda for testing
         {
             var bulletCount = info.Rank + 1; // +1 because poker index start a 0
-            MakeBasicAttack(bulletCount);
+            // MakeBasicAttack(bulletCount);
             GD.Print($"Making poker slotted attack, strength: {bulletCount}");
         };
     }
@@ -60,8 +60,8 @@ public partial class BasicAttack : Node
     private void ShootBasicBullet() //base function for shooting each bullet
     {
         var bullet = basicBulletPrefab.Instantiate<BasicBullet>();
-        bullet.GlobalPosition = playerManagerRef.GlobalPosition;
-        bullet.InitBullet(playerManagerRef.GetMouseToPlayerVector());
+        bullet.GlobalPosition = PlayerManagerRef.GlobalPosition;
+        bullet.InitBullet(PlayerManagerRef.GetMouseToPlayerVector());
         AddChild(bullet); // temp AddChild function to make sure node is not orphaned.
         bulletManagerRef.BulletSpawned?.Invoke(bullet);
         GD.Print("Bullet Spawned");
