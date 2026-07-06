@@ -2,7 +2,7 @@ using Godot;
 using System;
 using Godot.Collections;
 
-public partial class TriggeredAttack : Node
+public partial class TriggeredAction : Node
 {
     [Export] protected PlayerManager PlayerManagerRef;
     [Export] private BasicAttack basicAttackRef;
@@ -23,6 +23,7 @@ public partial class TriggeredAttack : Node
     private void ConnectSignals()
     {
         PlayerManagerRef.PlayerFormChanged += OnPlayerFormChange;
+        actionRpcHandler.TriggerPokerAction +=  OnPokerSlotTriggered;
     }
 
     private void OnPokerSlotTriggered(PokerInfo pokerInfo, Dictionary modifiers)
@@ -37,6 +38,7 @@ public partial class TriggeredAttack : Node
             case CardSuit.Spades or CardSuit.Clubs:
             {
                 var bulletCount = pokerInfo.Rank + 1;
+                GD.Print("Triggered ATTACK");
                 basicAttackRef.MakeBasicAttack(bulletCount);
                 break;
             }

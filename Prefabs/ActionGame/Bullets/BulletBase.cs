@@ -18,7 +18,7 @@ public abstract partial class BulletBase : Area2D, IBlockable //base class for b
 
     public override void _Ready()
     {
-        Direction = (GetGlobalMousePosition() - Position).Normalized();
+        // Direction = (GetGlobalMousePosition() - Position).Normalized();
         IsReady = true;
     }
     public virtual void InitBullet(Vector2 direction)

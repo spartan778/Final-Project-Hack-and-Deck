@@ -24,7 +24,7 @@ public partial class ActionRpcHandler : Node
     public void HandlePokerSlotTriggered(Vector2 pokerVector2, Dictionary modifiers)
     {
         var receivedPokerInfo = new PokerInfo(pokerVector2);
-        GD.Print($"Poker Modifier: {modifiers}");
+        // GD.Print($"Poker Modifier: {modifiers}");
         TriggerPokerAction?.Invoke(receivedPokerInfo, modifiers);
     }
 }

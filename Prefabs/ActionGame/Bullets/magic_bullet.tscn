@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://do7g64n8bmqa8"]
+
+[ext_resource type="Texture2D" uid="uid://cuxeie36cc21j" path="res://Resources/ActionGame/Kinetic_Bullet_V2.png" id="2_5xyqs"]
+[ext_resource type="Texture2D" uid="uid://nns2cwj6u1q7" path="res://Resources/ActionGame/bullet_edited.png" id="2_psxnt"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5xyqs"]
+radius = 7.0
+height = 32.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_okh2y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_5xyqs")
+}],
+"loop": true,
+"name": &"BasicBullet",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_psxnt")
+}],
+"loop": true,
+"name": &"MagicBullet",
+"speed": 5.0
+}]
+
+[node name="MagicBullet" type="Area2D"]
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_5xyqs")
+
+[node name="BulletSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_okh2y")
+animation = &"MagicBullet"
