@@ -90,7 +90,7 @@ public partial class RpcManager : Node
     {
         GD.Print($"Normal Poker Triggered: {pokerInfo}");
         GD.Print($"Modifiers: {modifiers}");
-        actionRpcHandler?.HandlePokerSlotTriggered(pokerInfo, modifiers);
+        actionRpcHandler.HandlePokerSlotTriggered(pokerInfo, modifiers);
         
     }
     #endregion

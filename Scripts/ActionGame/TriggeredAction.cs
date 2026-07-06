@@ -17,13 +17,14 @@ public partial class TriggeredAction : Node
         playerForm = PlayerManagerRef.PlayerForm;
         bulletManagerRef = ActionGameBase.Instance.BulletManagerRef;
         actionRpcHandler = ActionRpcHandler.Instance;
+        ConnectSignals();
         
     }
 
     private void ConnectSignals()
     {
         PlayerManagerRef.PlayerFormChanged += OnPlayerFormChange;
-        actionRpcHandler.TriggerPokerAction +=  OnPokerSlotTriggered;
+        actionRpcHandler.TriggerPokerAction += OnPokerSlotTriggered;
     }
 
     private void OnPokerSlotTriggered(PokerInfo pokerInfo, Dictionary modifiers)
