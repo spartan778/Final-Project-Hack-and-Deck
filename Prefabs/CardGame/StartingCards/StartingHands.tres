@@ -42,7 +42,7 @@ metadata/_custom_type_script = "uid://cc2l3v8r565lb"
 [sub_resource type="Resource" id="Resource_b4pnq"]
 script = ExtResource("1_3f381")
 Suit = 1
-Rank = 0
+Rank = 1
 metadata/_custom_type_script = "uid://cc2l3v8r565lb"
 
 [sub_resource type="Resource" id="Resource_lhwxp"]
