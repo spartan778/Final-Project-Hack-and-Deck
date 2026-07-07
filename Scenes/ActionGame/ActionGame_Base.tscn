@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dl4rvai7ihkn6"]
+[gd_scene load_steps=12 format=3 uid="uid://dl4rvai7ihkn6"]
 
 [ext_resource type="Script" uid="uid://bu2g4ba2ix2bl" path="res://Scenes/ActionGame/ActionGameUIManager.cs" id="1_01emv"]
 [ext_resource type="Script" uid="uid://cinsmbvs132yd" path="res://Scripts/ActionGame/ActionGameBase.cs" id="1_f66vs"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://0s7odp1g51tv" path="res://Scenes/ActionGame/player.tscn" id="3_8mwp0"]
 [ext_resource type="Script" uid="uid://dphi18xxcrn8b" path="res://Scripts/ActionGame/BulletManager.cs" id="5_okh2y"]
 [ext_resource type="Script" uid="uid://gudl4abje0lu" path="res://Scripts/Networking/ActionRpcHandler.cs" id="6_okh2y"]
+[ext_resource type="PackedScene" uid="uid://o5hyydlqnbwk" path="res://Prefabs/ActionGame/Enemies/basic_rat.tscn" id="7_gmcek"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_okh2y"]
 
@@ -98,3 +99,6 @@ bulletCleanerArea = NodePath("../Player/BulletCleaner")
 
 [node name="ActionRpcHandler" type="Node" parent="."]
 script = ExtResource("6_okh2y")
+
+[node name="BasicRat" parent="." instance=ExtResource("7_gmcek")]
+position = Vector2(275, 303)

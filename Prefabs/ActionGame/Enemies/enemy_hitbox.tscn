@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bljnuqqs8wwst"]
+
+[ext_resource type="Script" uid="uid://cduef1jhyl1fe" path="res://Prefabs/ActionGame/Enemies/EnemyHitbox.cs" id="1_w17i7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n431q"]
+size = Vector2(24, 20)
+
+[node name="EnemyHitbox" type="Area2D" groups=["Enemies"]]
+script = ExtResource("1_w17i7")
+
+[node name="HitBoxArea" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_n431q")

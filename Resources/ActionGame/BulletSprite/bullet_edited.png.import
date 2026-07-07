@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://nns2cwj6u1q7"
-path="res://.godot/imported/bullet_edited.png-d5ad2c4a78c7e66f7646643ca6b3a6e1.ctex"
+path="res://.godot/imported/bullet_edited.png-6f1e68a41d98c50952a34861a8d73a6e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/ActionGame/bullet_edited.png"
-dest_files=["res://.godot/imported/bullet_edited.png-d5ad2c4a78c7e66f7646643ca6b3a6e1.ctex"]
+source_file="res://Resources/ActionGame/BulletSprite/bullet_edited.png"
+dest_files=["res://.godot/imported/bullet_edited.png-6f1e68a41d98c50952a34861a8d73a6e.ctex"]
 
 [params]
 

@@ -37,6 +37,10 @@ project/assembly_name="Hack and Deck"
 
 enabled=PackedStringArray("res://addons/HCoroutines/plugin.cfg")
 
+[global_group]
+
+Enemies=""
+
 [input]
 
 menu_confirm={

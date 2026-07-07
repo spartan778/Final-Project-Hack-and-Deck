@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgtk07vj6rjv2"]
+
+[ext_resource type="Script" uid="uid://c6vpdedrg6rh1" path="res://Scripts/ActionGame/HealthSystem.cs" id="1_62ice"]
+
+[node name="HealthSystem" type="Node"]
+script = ExtResource("1_62ice")
+MaxHealth = 100.0
+CurrentHealth = 10.0

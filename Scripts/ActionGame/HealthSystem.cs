@@ -11,6 +11,15 @@ public partial class HealthSystem : Node
     {
         CurrentHealth = MaxHealth;
     }
+
+    public void InitHealthSystem(float maxHealth, float currentHealth = -1f)
+    {
+        MaxHealth = maxHealth;
+        if (currentHealth < 0)
+        {
+            currentHealth = maxHealth;
+        }
+    }
     public void SetMaxHealth(float maxHealth)
     {
         MaxHealth = maxHealth;

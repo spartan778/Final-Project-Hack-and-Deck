@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dw62403pk1am3"]
 
 [ext_resource type="Script" uid="uid://c6ld6es5jitrw" path="res://Prefabs/ActionGame/Bullets/BasicBullet.cs" id="1_js6ii"]
-[ext_resource type="Texture2D" uid="uid://cuxeie36cc21j" path="res://Resources/ActionGame/Kinetic_Bullet_V2.png" id="2_heflx"]
+[ext_resource type="Texture2D" uid="uid://cuxeie36cc21j" path="res://Resources/ActionGame/BulletSprite/Kinetic_Bullet_V2.png" id="2_heflx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f66vs"]
 radius = 13.0

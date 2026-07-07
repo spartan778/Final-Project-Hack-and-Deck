@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cuxeie36cc21j"
-path="res://.godot/imported/Kinetic_Bullet_V2.png-087c036f5c2e210b380c9f1ba592d9c2.ctex"
+uid="uid://hdjq1o6yucmq"
+path="res://.godot/imported/rat-run-outline.png-81fd8c70209e3f82ef2eaf8b5cf4908b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/ActionGame/Kinetic_Bullet_V2.png"
-dest_files=["res://.godot/imported/Kinetic_Bullet_V2.png-087c036f5c2e210b380c9f1ba592d9c2.ctex"]
+source_file="res://Resources/ActionGame/MonsterSprites/rat-run-outline.png"
+dest_files=["res://.godot/imported/rat-run-outline.png-81fd8c70209e3f82ef2eaf8b5cf4908b.ctex"]
 
 [params]
 
