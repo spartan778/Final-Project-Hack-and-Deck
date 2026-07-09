@@ -4,4 +4,4 @@
 
 [resource]
 script = ExtResource("1_r3qh2")
-Pokers = null
+SavedPokers = null

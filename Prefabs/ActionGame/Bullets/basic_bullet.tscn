@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dw62403pk1am3"]
+[gd_scene load_steps=8 format=3 uid="uid://dw62403pk1am3"]
 
 [ext_resource type="Script" uid="uid://c6ld6es5jitrw" path="res://Prefabs/ActionGame/Bullets/BasicBullet.cs" id="1_js6ii"]
-[ext_resource type="Texture2D" uid="uid://cuxeie36cc21j" path="res://Resources/ActionGame/BulletSprite/Kinetic_Bullet_V2.png" id="2_heflx"]
+[ext_resource type="Texture2D" uid="uid://cuxeie36cc21j" path="res://Assets/ActionGame/BulletSprite/Kinetic_Bullet_V2.png" id="2_heflx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f66vs"]
 radius = 13.0
@@ -17,17 +17,63 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Animation" id="Animation_js6ii"]
+resource_name = "BulletRotation"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteAnchor:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 3.14159, 6.28319]
+}
+
+[sub_resource type="Animation" id="Animation_heflx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteAnchor:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_heflx"]
+_data = {
+&"BulletRotation": SubResource("Animation_js6ii"),
+&"RESET": SubResource("Animation_heflx")
+}
+
 [node name="BasicBullet" type="Area2D"]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_js6ii")
 BulletSpeed = 300.0
 Damage = 10.0
+PassThroughCount = 1
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_f66vs")
 
-[node name="BulletSprite" type="AnimatedSprite2D" parent="."]
+[node name="SpriteAnchor" type="Node2D" parent="."]
+
+[node name="BulletSprite" type="AnimatedSprite2D" parent="SpriteAnchor"]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_okh2y")
 animation = &"BasicBullet"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_heflx")
+}
+autoplay = "BulletRotation"

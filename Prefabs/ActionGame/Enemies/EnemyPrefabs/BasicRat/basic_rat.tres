@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemyInfo" load_steps=3 format=3 uid="uid://bqt3hplmjflcl"]
+
+[ext_resource type="PackedScene" uid="uid://o5hyydlqnbwk" path="res://Prefabs/ActionGame/Enemies/EnemyPrefabs/BasicRat/basic_rat.tscn" id="1_60i87"]
+[ext_resource type="Script" uid="uid://c7huxfai1w0q3" path="res://Prefabs/ActionGame/Enemies/EnemyInfo.cs" id="1_hwoi7"]
+
+[resource]
+script = ExtResource("1_hwoi7")
+EnemyPrefab = ExtResource("1_60i87")
+SpawnValue = 5.0
+metadata/_custom_type_script = "uid://c7huxfai1w0q3"

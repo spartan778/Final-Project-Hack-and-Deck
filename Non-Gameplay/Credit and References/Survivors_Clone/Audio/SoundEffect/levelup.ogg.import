@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://drq3eg76gai12"
+path="res://.godot/imported/levelup.ogg-d9c3e7742064ed94d9733657f12db55f.oggvorbisstr"
+
+[deps]
+
+source_file="res://Non-Gameplay/Credit and References/Survivors_Clone/Audio/SoundEffect/levelup.ogg"
+dest_files=["res://.godot/imported/levelup.ogg-d9c3e7742064ed94d9733657f12db55f.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

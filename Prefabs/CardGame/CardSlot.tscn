@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dn3my5vkj40sf" path="res://Prefabs/CardGame/CardSlotControl.cs" id="1_f4jdp"]
 [ext_resource type="Script" uid="uid://d0biawvx2werp" path="res://Scripts/CardGame/CardSlotBase.cs" id="1_km50l"]
-[ext_resource type="Texture2D" uid="uid://b4lxy8von0qev" path="res://Resources/CardGame/Top-Down-Cards/Cards/PokerSlot_Image.png" id="2_f4jdp"]
+[ext_resource type="Texture2D" uid="uid://b4lxy8von0qev" path="res://Assets/CardGame/Top-Down-Cards/Cards/PokerSlot_Image.png" id="2_f4jdp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7nhsq"]
 size = Vector2(60, 80)

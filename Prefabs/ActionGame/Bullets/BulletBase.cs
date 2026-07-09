@@ -48,7 +48,7 @@ public abstract partial class BulletBase : Area2D, IBlockable //base class for b
         if (hitArea is not IDamageable target) return;
         target.TakeDamage(Damage);
         PassThroughCount--;
-        if (PassThroughCount <= 0)
+        if (PassThroughCount < 0)
         {
             QueueFree();
         }

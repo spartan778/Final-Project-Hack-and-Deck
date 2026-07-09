@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bt45027klaenp"
+path="res://.godot/imported/enemy_death.ogg-cc90b0c6f5ecd8d6768dc6f2806d76c4.oggvorbisstr"
+
+[deps]
+
+source_file="res://Non-Gameplay/Credit and References/Survivors_Clone/Audio/SoundEffect/enemy_death.ogg"
+dest_files=["res://.godot/imported/enemy_death.ogg-cc90b0c6f5ecd8d6768dc6f2806d76c4.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

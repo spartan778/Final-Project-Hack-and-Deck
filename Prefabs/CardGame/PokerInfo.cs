@@ -10,9 +10,7 @@ public partial class PokerInfo : Resource
     [Export(PropertyHint.Range, "0, 13")] public int Rank;
 
     public PokerInfo() // Intentional: keep empty constructor for edge case
-    {
-        
-    }
+    { }
 
     public PokerInfo(CardSuit suit, int rank)
     {

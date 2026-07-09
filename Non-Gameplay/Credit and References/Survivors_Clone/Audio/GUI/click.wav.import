@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://csl6ak8yrjr0g"
+path="res://.godot/imported/click.wav-af9321a9dd8374c3adc969c1db3cf9ed.sample"
+
+[deps]
+
+source_file="res://Non-Gameplay/Credit and References/Survivors_Clone/Audio/GUI/click.wav"
+dest_files=["res://.godot/imported/click.wav-af9321a9dd8374c3adc969c1db3cf9ed.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
