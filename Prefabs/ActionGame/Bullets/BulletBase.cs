@@ -10,16 +10,20 @@ public abstract partial class BulletBase : Area2D, IBlockable //base class for b
 {
     [Export] public float BulletSpeed { get; private set; }
     [Export] public float Damage { get; private set; }
+    [Export] public int PassThroughCount;
     
     public Vector2 Direction;
 
     protected bool IsReady;
+    
+    
 
 
     public override void _Ready()
     {
         // Direction = (GetGlobalMousePosition() - Position).Normalized();
         IsReady = true;
+        AreaEntered += OnAreaEntered;
     }
     public virtual void InitBullet(Vector2 direction)
     {
@@ -34,11 +38,19 @@ public abstract partial class BulletBase : Area2D, IBlockable //base class for b
         Damage = damage;
     }
     
-    public void _AreaEntered(Area2D hitArea)
+    public void OnAreaEntered(Area2D hitArea)
     {
-        if (hitArea is IDamageable target)
+        HandleHitProcess(hitArea);
+    }
+
+    private void HandleHitProcess(Area2D hitArea)
+    {
+        if (hitArea is not IDamageable target) return;
+        target.TakeDamage(Damage);
+        PassThroughCount--;
+        if (PassThroughCount <= 0)
         {
-            target.TakeDamage(Damage);
+            QueueFree();
         }
     }
 

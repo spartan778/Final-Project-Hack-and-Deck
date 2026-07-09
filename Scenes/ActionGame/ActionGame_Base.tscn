@@ -100,5 +100,7 @@ bulletCleanerArea = NodePath("../Player/BulletCleaner")
 [node name="ActionRpcHandler" type="Node" parent="."]
 script = ExtResource("6_okh2y")
 
+[node name="EnemyManager" type="Node" parent="."]
+
 [node name="BasicRat" parent="." instance=ExtResource("7_gmcek")]
 position = Vector2(275, 303)

@@ -27,7 +27,7 @@ shape = SubResource("RectangleShape2D_0mflq")
 
 [node name="PlayerHitbox" type="Area2D" parent="." node_paths=PackedStringArray("HealthSystem")]
 script = ExtResource("2_g7csx")
-HealthSystem = NodePath("")
+HealthSystem = NodePath("../HealthSystem")
 
 [node name="HitBoxArea" type="CollisionShape2D" parent="PlayerHitbox"]
 shape = SubResource("RectangleShape2D_g7csx")
@@ -68,10 +68,9 @@ PlayerManagerRef = NodePath("..")
 basicAttackRef = NodePath("../AttackSystem/BasicAttack")
 triggeredBulletPrefab = ExtResource("8_um666")
 
-[node name="SlottedAction" type="Node" parent="." node_paths=PackedStringArray("PlayerManagerRef", "healthSystemRef", "magicBulletAttackRef")]
+[node name="SlottedAction" type="Node" parent="." node_paths=PackedStringArray("PlayerManagerRef", "magicBulletAttackRef")]
 script = ExtResource("9_bnihk")
 PlayerManagerRef = NodePath("..")
-healthSystemRef = NodePath("")
 magicBulletAttackRef = NodePath("../AttackSystem/MagicBulletAttack")
 
 [node name="CharacterSprite" type="Sprite2D" parent="."]
