@@ -30,12 +30,6 @@ public partial class BasicAttack : Node
         PlayerManagerRef.PlayerFormChanged += OnPlayerFormChange;
         PlayerManagerRef.SettingAllowPlayerInput += OnSettingAllowPlayerInput;
         basicAttackTimer.Timeout += MakeBasicAttack;
-        actionRpcHandler.SlotPokerAction += (info, dictionary) => //temp lambda for testing
-        {
-            var bulletCount = info.Rank + 1; // +1 because poker index start a 0
-            // MakeBasicAttack(bulletCount);
-            GD.Print($"Making poker slotted attack, strength: {bulletCount}");
-        };
     }
 
     public void MakeBasicAttack() //normal version

@@ -6,4 +6,6 @@ public partial class EnemyInfo : Resource
 {
     [Export] public PackedScene EnemyPrefab;
     [Export] public float SpawnValue;
+    [Export] public int ThreatLevel;
+    [Export] public bool IsElite;
 }

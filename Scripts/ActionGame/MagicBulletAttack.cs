@@ -26,7 +26,7 @@ public partial class MagicBulletAttack : Node
             GD.Print($"Bullet Angle: {Mathf.RadToDeg(rotateInRad)}");
             var finalVector = playerManagerRef.GetMouseToPlayerVector().Rotated(rotateInRad);
             bullet.InitBullet(finalVector);
-            AddChild(bullet);
+            // AddChild(bullet);
             bulletManagerRef.BulletSpawned?.Invoke(bullet);
         }
         GD.Print($"MagicAttack with {bulletAmount} bullet");

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemyList" load_steps=3 format=3 uid="uid://cdtu8kqi0jj7g"]
+
+[ext_resource type="Resource" uid="uid://bqt3hplmjflcl" path="res://Prefabs/ActionGame/Enemies/EnemyPrefabs/BasicRat/basic_rat.tres" id="1_8bn1w"]
+[ext_resource type="Script" uid="uid://f0toxgbrrvnk" path="res://Prefabs/ActionGame/Enemies/EnemyList.cs" id="1_rlij0"]
+
+[resource]
+script = ExtResource("1_rlij0")
+EnemyInfos = Array[Object]([ExtResource("1_8bn1w")])
+DefaultEnemy = ExtResource("1_8bn1w")
+metadata/_custom_type_script = "uid://f0toxgbrrvnk"

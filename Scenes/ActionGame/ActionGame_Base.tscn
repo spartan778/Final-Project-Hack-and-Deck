@@ -1,12 +1,17 @@
-[gd_scene load_steps=12 format=3 uid="uid://dl4rvai7ihkn6"]
+[gd_scene load_steps=17 format=3 uid="uid://dl4rvai7ihkn6"]
 
 [ext_resource type="Script" uid="uid://bu2g4ba2ix2bl" path="res://Scenes/ActionGame/ActionGameUIManager.cs" id="1_01emv"]
 [ext_resource type="Script" uid="uid://cinsmbvs132yd" path="res://Scripts/ActionGame/ActionGameBase.cs" id="1_f66vs"]
 [ext_resource type="Texture2D" uid="uid://dkgye2j37jyvi" path="res://Non-Gameplay/Credit and References/Survivors_Clone/Textures/dirt_full_new.png" id="2_idopy"]
 [ext_resource type="PackedScene" uid="uid://0s7odp1g51tv" path="res://Scenes/ActionGame/player.tscn" id="3_8mwp0"]
 [ext_resource type="Script" uid="uid://dphi18xxcrn8b" path="res://Scripts/ActionGame/BulletManager.cs" id="5_okh2y"]
+[ext_resource type="Script" uid="uid://bc2602broxpta" path="res://Scripts/ActionGame/EnemySystem/EnemySpawner.cs" id="6_8kvql"]
 [ext_resource type="Script" uid="uid://gudl4abje0lu" path="res://Scripts/Networking/ActionRpcHandler.cs" id="6_okh2y"]
+[ext_resource type="Script" uid="uid://c1asrwg63i8k0" path="res://Scripts/ActionGame/EnemySystem/EnemySystem.cs" id="6_w8fwy"]
+[ext_resource type="Resource" uid="uid://cdtu8kqi0jj7g" path="res://Prefabs/ActionGame/Enemies/EnemyLists/BasicEnemyList.tres" id="7_2itc0"]
 [ext_resource type="PackedScene" uid="uid://o5hyydlqnbwk" path="res://Prefabs/ActionGame/Enemies/EnemyPrefabs/BasicRat/basic_rat.tscn" id="7_gmcek"]
+[ext_resource type="Script" uid="uid://bc5xunxtgt26s" path="res://Scripts/ActionGame/EnemySystem/WaveManager.cs" id="7_yco5m"]
+[ext_resource type="Script" uid="uid://fmk1hxisfhhd" path="res://Scripts/ActionGame/EnemySystem/DifficultyManager.cs" id="8_eoyb5"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_okh2y"]
 
@@ -97,11 +102,29 @@ shape = SubResource("WorldBoundaryShape2D_yco5m")
 script = ExtResource("5_okh2y")
 bulletCleanerArea = NodePath("../Player/BulletCleaner")
 
-[node name="EnemySystem" type="Node" parent="2DGameBase"]
+[node name="EnemySystem" type="Node" parent="2DGameBase" node_paths=PackedStringArray("DifficultyManagerRef", "WaveManagerRef", "EnemySpawnerRef")]
+script = ExtResource("6_w8fwy")
+StandardEnemies = ExtResource("7_2itc0")
+DifficultyManagerRef = NodePath("DiffifultyManager")
+WaveManagerRef = NodePath("WaveManager")
+EnemySpawnerRef = NodePath("EnemySpawner")
 
-[node name="DiffifultyManager" type="Node" parent="2DGameBase/EnemySystem"]
+[node name="DiffifultyManager" type="Node" parent="2DGameBase/EnemySystem" node_paths=PackedStringArray("enemySystemRef")]
+script = ExtResource("8_eoyb5")
+enemySystemRef = NodePath("..")
+DifficultyValue = 15.0
 
-[node name="EnemySpawner" type="Node" parent="2DGameBase/EnemySystem"]
+[node name="EnemySpawner" type="Node" parent="2DGameBase/EnemySystem" node_paths=PackedStringArray("playerManager")]
+script = ExtResource("6_8kvql")
+playerManager = NodePath("../../Player")
+
+[node name="WaveManager" type="Node" parent="2DGameBase/EnemySystem" node_paths=PackedStringArray("enemySpawnerRef", "WaveTimer")]
+script = ExtResource("7_yco5m")
+enemySpawnerRef = NodePath("../EnemySpawner")
+WaveTimer = NodePath("WaveTimer")
+WaveInterval = 10.0
+
+[node name="WaveTimer" type="Timer" parent="2DGameBase/EnemySystem/WaveManager"]
 
 [node name="ActionRpcHandler" type="Node" parent="."]
 script = ExtResource("6_okh2y")
