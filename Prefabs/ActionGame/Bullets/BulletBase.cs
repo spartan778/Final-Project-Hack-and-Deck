@@ -27,7 +27,7 @@ public abstract partial class BulletBase : Area2D, IBlockable //base class for b
     }
     public virtual void InitBullet(Vector2 direction)
     {
-        Direction = direction;
+        Direction = direction.Normalized();
     }
     
     public void SetBulletSpeed(float bulletSpeed){

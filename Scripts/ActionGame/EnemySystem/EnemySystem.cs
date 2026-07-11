@@ -47,7 +47,7 @@ public partial class EnemySystem : Node
             }
             var pickedEnemyInfo = validEnemies[Random.Shared.Next(validEnemies.Count)]; // standard implementation from Microsoft: https://learn.microsoft.com/en-us/dotnet/api/system.random.shared?view=net-6.0
             EnemySpawnerRef.SpawnEnemy(pickedEnemyInfo, out var enemy);
-            EnemySpawnerRef.PlaceRandomToPlayer(enemy);
+            EnemySpawnerRef.PlaceRandomToPlayer_Default(enemy);
             AddChild(enemy);
             availableValue -= pickedEnemyInfo.SpawnValue;
             

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dl4rvai7ihkn6"]
+[gd_scene load_steps=18 format=3 uid="uid://dl4rvai7ihkn6"]
 
 [ext_resource type="Script" uid="uid://bu2g4ba2ix2bl" path="res://Scenes/ActionGame/ActionGameUIManager.cs" id="1_01emv"]
 [ext_resource type="Script" uid="uid://cinsmbvs132yd" path="res://Scripts/ActionGame/ActionGameBase.cs" id="1_f66vs"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://o5hyydlqnbwk" path="res://Prefabs/ActionGame/Enemies/EnemyPrefabs/BasicRat/basic_rat.tscn" id="7_gmcek"]
 [ext_resource type="Script" uid="uid://bc5xunxtgt26s" path="res://Scripts/ActionGame/EnemySystem/WaveManager.cs" id="7_yco5m"]
 [ext_resource type="Script" uid="uid://fmk1hxisfhhd" path="res://Scripts/ActionGame/EnemySystem/DifficultyManager.cs" id="8_eoyb5"]
+[ext_resource type="PackedScene" uid="uid://dakvna1lwfsno" path="res://Prefabs/ActionGame/Enemies/EnemyPrefabs/RedSkull/red_skull.tscn" id="13_eoyb5"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_okh2y"]
 
@@ -131,3 +132,6 @@ script = ExtResource("6_okh2y")
 
 [node name="BasicRat" parent="." instance=ExtResource("7_gmcek")]
 position = Vector2(275, 303)
+
+[node name="RedSkull" parent="." instance=ExtResource("13_eoyb5")]
+position = Vector2(1038, 302)

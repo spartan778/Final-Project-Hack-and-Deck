@@ -4,7 +4,8 @@ using System;
 public partial class EnemyBase : CharacterBody2D
 {
     [Export] public float BaseHealth, BaseDamage, BaseSpeed;
-    protected float CurrentDamage, CurrentSpeed;
+    public float CurrentDamage { get; private set; }
+    public float CurrentSpeed { get; private set; }
     [Export] public HealthSystem HealthSystem { get; private set; }
     [Export] public MovementBehaviour MovementBehaviour{ get; private set; }
     [Export] private Node2D enemySpriteBase;
@@ -18,11 +19,11 @@ public partial class EnemyBase : CharacterBody2D
     public override void _Ready()
     {
         HealthSystem.InitHealthSystem(BaseHealth);
-        GD.Print($"Initializing health system: {HealthSystem}");
+        // GD.Print($"{Name}: Initializing health system: {HealthSystem}");
         PlayerManagerRef = ActionGameBase.Instance.PlayerManagerRef;
         CurrentDamage = BaseDamage;
         CurrentSpeed = BaseSpeed;
-        SetCollisionLayers(DefaultCollisionLayers);
+        // SetCollisionLayers(DefaultCollisionLayers);
         ConnectSignals();
     }
     protected virtual void SetCollisionLayers(int[] layers)
@@ -44,6 +45,7 @@ public partial class EnemyBase : CharacterBody2D
 
     protected virtual void OnDying()
     {
+        GD.Print($"Deleting: {Name}");
         QueueFree();
     }
     protected virtual void OnTakingDamage(float damage)
@@ -76,6 +78,8 @@ public partial class EnemyBase : CharacterBody2D
         FlipToPlayer();
         MoveAndSlide();
     }
+    
+    
 
     protected virtual void FlipToPlayer() // Abs function used to avoid vector and value confusion
     {

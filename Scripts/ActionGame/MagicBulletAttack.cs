@@ -16,14 +16,14 @@ public partial class MagicBulletAttack : Node
     public void MakeMagicAttack(int bulletAmount)
     {
         var separation = AttackArc / bulletAmount; // spread bullets depending on amount
-        var startAngle = -(AttackArc/2); //line up the middle bullet at centre
+        var startAngle = -(AttackArc/2); //line up the middle bullet at center
         
         for (var i = 0; i < bulletAmount; i++)
         {
             var bullet = magicBulletPrefab.Instantiate<MagicBullet>();
             bullet.GlobalPosition = playerManagerRef.GetGlobalPosition();
             var rotateInRad = Mathf.DegToRad(startAngle + separation * i);
-            GD.Print($"Bullet Angle: {Mathf.RadToDeg(rotateInRad)}");
+            // GD.Print($"Bullet Angle: {Mathf.RadToDeg(rotateInRad)}");
             var finalVector = playerManagerRef.GetMouseToPlayerVector().Rotated(rotateInRad);
             bullet.InitBullet(finalVector);
             // AddChild(bullet);

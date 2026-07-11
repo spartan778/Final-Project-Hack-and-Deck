@@ -31,7 +31,7 @@ public partial class HealthSystem : Node
     {
         CurrentHealth -= amount;
         TakingDamage?.Invoke(amount);
-        GD.Print($"Taking damage: {amount}");
+        GD.Print($"{GetParent().Name}:Taking damage: {amount}");
         if (CurrentHealth <= 0)
         {
             Dying?.Invoke();

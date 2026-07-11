@@ -27,12 +27,17 @@ public partial class EnemySpawner : Node
         }
     }
 
-    public void PlaceRandomToPlayer(EnemyBase enemy)
+    public void PlaceRandomToPlayer_Default(EnemyBase enemy)
     {
         enemy.GlobalPosition = PlayerPosition + GetRandomPos();
     }
+
+    public void PlaceRandomToPlayer_Range(EnemyBase enemy, float minDistance, float maxDistance)
+    {
+        enemy.GlobalPosition =  PlayerPosition + GetRandomPos(minDistance, maxDistance);
+    }
     
-    public static Vector2 GetRandomPos(float minDistance = 50f, float maxDistance = 300f) // General helper for generating a random offset
+    public static Vector2 GetRandomPos(float minDistance = 200f, float maxDistance = 400f) // General helper for generating a random offset
     {
         // Reference: https://stackoverflow.com/questions/5837572/generate-a-random-point-within-a-circle-uniformly
         float randomAngleRad = GD.Randf() * Mathf.Pi * 2; // Generate a random angle(0-360) in radian
