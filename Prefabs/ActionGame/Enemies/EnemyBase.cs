@@ -16,13 +16,18 @@ public partial class EnemyBase : CharacterBody2D
     
     protected Vector2 VectorToPlayer;
 
+
+    public override void _EnterTree()
+    {
+        CurrentDamage = BaseDamage;
+        CurrentSpeed = BaseSpeed;
+    }
+
     public override void _Ready()
     {
         HealthSystem.InitHealthSystem(BaseHealth);
         // GD.Print($"{Name}: Initializing health system: {HealthSystem}");
         PlayerManagerRef = ActionGameBase.Instance.PlayerManagerRef;
-        CurrentDamage = BaseDamage;
-        CurrentSpeed = BaseSpeed;
         // SetCollisionLayers(DefaultCollisionLayers);
         ConnectSignals();
     }

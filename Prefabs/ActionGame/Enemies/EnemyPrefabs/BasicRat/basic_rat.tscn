@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://o5hyydlqnbwk"]
+[gd_scene load_steps=16 format=3 uid="uid://o5hyydlqnbwk"]
 
 [ext_resource type="Texture2D" uid="uid://hdjq1o6yucmq" path="res://Assets/ActionGame/MonsterSprites/rat-run-outline.png" id="1_ci3vu"]
 [ext_resource type="Script" uid="uid://cb8hno4v0jfc1" path="res://Prefabs/ActionGame/Enemies/EnemyPrefabs/BasicRat/BasicRat.cs" id="1_n431q"]
 [ext_resource type="PackedScene" uid="uid://dgtk07vj6rjv2" path="res://Prefabs/ActionGame/health_system.tscn" id="2_265sw"]
 [ext_resource type="PackedScene" uid="uid://bljnuqqs8wwst" path="res://Prefabs/ActionGame/Enemies/enemy_hitbox.tscn" id="3_27a5a"]
+[ext_resource type="PackedScene" uid="uid://b38xnsp60kh8r" path="res://Prefabs/ActionGame/Enemies/bump_attack_module.tscn" id="5_51x01"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_30tax"]
 size = Vector2(48, 36)
@@ -61,14 +62,18 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_265sw"]
 size = Vector2(48, 36)
 
-[node name="BasicRat" type="CharacterBody2D" node_paths=PackedStringArray("HealthSystem", "enemySpriteBase", "Hitbox")]
-collision_layer = 4
-collision_mask = 4
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_51x01"]
+size = Vector2(52, 40)
+
+[node name="BasicRat" type="CharacterBody2D" node_paths=PackedStringArray("BumpAttackModule", "HealthSystem", "enemySpriteBase", "Hitbox")]
+collision_layer = 5
+collision_mask = 5
 motion_mode = 1
 script = ExtResource("1_n431q")
+BumpAttackModule = NodePath("BumpAttackModule")
 BaseHealth = 40.0
-BaseDamage = 10.0
-BaseSpeed = 20.0
+BaseDamage = 20.0
+BaseSpeed = 25.0
 HealthSystem = NodePath("HealthSystem")
 enemySpriteBase = NodePath("RatAnimation")
 Hitbox = NodePath("EnemyHitbox")
@@ -99,4 +104,18 @@ enemy = NodePath("..")
 position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_265sw")
 
+[node name="BumpArea" type="Area2D" parent="."]
+
+[node name="BumpShape" type="CollisionShape2D" parent="BumpArea"]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_51x01")
+
+[node name="BumpAttackModule" parent="." node_paths=PackedStringArray("enemy", "bumpArea") instance=ExtResource("5_51x01")]
+enemy = NodePath("..")
+bumpArea = NodePath("../BumpArea")
+
+[node name="CoolDownTimer" parent="BumpAttackModule" index="0"]
+wait_time = 3.0
+
 [editable path="EnemyHitbox"]
+[editable path="BumpAttackModule"]

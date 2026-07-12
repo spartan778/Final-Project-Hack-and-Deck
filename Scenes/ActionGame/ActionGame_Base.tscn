@@ -135,3 +135,7 @@ position = Vector2(275, 303)
 
 [node name="RedSkull" parent="." instance=ExtResource("13_eoyb5")]
 position = Vector2(1038, 302)
+
+[editable path="BasicRat"]
+[editable path="BasicRat/EnemyHitbox"]
+[editable path="BasicRat/BumpAttackModule"]

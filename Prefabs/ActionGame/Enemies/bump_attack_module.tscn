@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://b38xnsp60kh8r"]
+
+[ext_resource type="Script" uid="uid://dmb61am8ue4ip" path="res://Prefabs/ActionGame/Enemies/BumpAttackModule.cs" id="1_3y22f"]
+
+[node name="BumpAttackModule" type="Node" node_paths=PackedStringArray("bumpCoolDownTimer")]
+script = ExtResource("1_3y22f")
+bumpCoolDownTimer = NodePath("CoolDownTimer")
+
+[node name="CoolDownTimer" type="Timer" parent="."]
+wait_time = 2.0

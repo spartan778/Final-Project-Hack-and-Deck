@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://co03oipegx7kb"]
+
+[ext_resource type="Script" uid="uid://cduxvebndymwc" path="res://Prefabs/ActionGame/Enemies/RangeAttackModule.cs" id="1_8f1oe"]
+
+[node name="RangeAttackModule" type="Node"]
+script = ExtResource("1_8f1oe")
