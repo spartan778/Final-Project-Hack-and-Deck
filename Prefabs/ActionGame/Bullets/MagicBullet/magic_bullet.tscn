@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://do7g64n8bmqa8"]
 
-[ext_resource type="Script" uid="uid://blvmtvwjdw23k" path="res://Prefabs/ActionGame/Bullets/MagicBullet.cs" id="1_5xyqs"]
+[ext_resource type="Script" uid="uid://blvmtvwjdw23k" path="res://Prefabs/ActionGame/Bullets/MagicBullet/MagicBullet.cs" id="1_5xyqs"]
 [ext_resource type="Texture2D" uid="uid://cuxeie36cc21j" path="res://Assets/ActionGame/BulletSprite/Kinetic_Bullet_V2.png" id="2_5xyqs"]
 [ext_resource type="Texture2D" uid="uid://nns2cwj6u1q7" path="res://Assets/ActionGame/BulletSprite/bullet_edited.png" id="2_psxnt"]
 

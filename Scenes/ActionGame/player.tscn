@@ -6,10 +6,10 @@
 [ext_resource type="Script" uid="uid://cwska52asj5ib" path="res://Scenes/ActionGame/PlayerMovement.cs" id="2_sw6lw"]
 [ext_resource type="Script" uid="uid://denm3u3n8au4d" path="res://Scripts/ActionGame/BasicAttack.cs" id="3_25hhx"]
 [ext_resource type="PackedScene" uid="uid://dgtk07vj6rjv2" path="res://Prefabs/ActionGame/health_system.tscn" id="3_e6f3n"]
-[ext_resource type="PackedScene" uid="uid://dw62403pk1am3" path="res://Prefabs/ActionGame/Bullets/basic_bullet.tscn" id="6_rq88u"]
+[ext_resource type="PackedScene" uid="uid://dw62403pk1am3" path="res://Prefabs/ActionGame/Bullets/BasicBullet/basic_bullet.tscn" id="6_rq88u"]
 [ext_resource type="Script" uid="uid://3ver75t7ymwg" path="res://Scripts/ActionGame/MagicBulletAttack.cs" id="7_e6f3n"]
 [ext_resource type="Script" uid="uid://by2bm21xikwd2" path="res://Scripts/ActionGame/TriggeredAction.cs" id="7_um666"]
-[ext_resource type="PackedScene" uid="uid://do7g64n8bmqa8" path="res://Prefabs/ActionGame/Bullets/magic_bullet.tscn" id="8_um666"]
+[ext_resource type="PackedScene" uid="uid://do7g64n8bmqa8" path="res://Prefabs/ActionGame/Bullets/MagicBullet/magic_bullet.tscn" id="8_um666"]
 [ext_resource type="Script" uid="uid://bqdo7x80n285y" path="res://Scripts/ActionGame/SlottedAction.cs" id="9_bnihk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0mflq"]

@@ -29,7 +29,11 @@ public abstract partial class BulletBase : Area2D, IBlockable //base class for b
     {
         Direction = direction.Normalized();
     }
-    
+
+    public virtual void RotateToDirection() //helper to rotate non-sphere sprites to bullet vector
+    {
+        Rotation = Direction.Angle() + Mathf.Pi / 2; // match sprite rotation to shooting direction
+    }
     public void SetBulletSpeed(float bulletSpeed){
         BulletSpeed = bulletSpeed;
         

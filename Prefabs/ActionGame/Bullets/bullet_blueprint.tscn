@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dw7mbrdlmf4gm"]
+
+[node name="BulletBlueprint" type="Area2D"]
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+
+[node name="SpriteAnchor" type="Node2D" parent="."]

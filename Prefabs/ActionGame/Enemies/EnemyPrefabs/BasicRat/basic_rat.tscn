@@ -90,8 +90,8 @@ frame_progress = 0.814254
 offset = Vector2(0, -10)
 
 [node name="EnemyHitbox" parent="." node_paths=PackedStringArray("HealthSystem", "enemy") instance=ExtResource("3_27a5a")]
-collision_layer = 3
-collision_mask = 3
+collision_layer = 2
+collision_mask = 2
 HealthSystem = NodePath("../HealthSystem")
 enemy = NodePath("..")
 

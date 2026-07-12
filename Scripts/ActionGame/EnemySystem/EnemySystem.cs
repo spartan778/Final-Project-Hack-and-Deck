@@ -36,7 +36,7 @@ public partial class EnemySystem : Node
             validEnemies.Clear();
             foreach (var enemyInfo in StandardEnemies.EnemyInfos)
             {
-                if (enemyInfo.SpawnValue <= thresholdValue)
+                if (enemyInfo.SpawnValue <= availableValue)
                 {
                     validEnemies.Add(enemyInfo);
                 }

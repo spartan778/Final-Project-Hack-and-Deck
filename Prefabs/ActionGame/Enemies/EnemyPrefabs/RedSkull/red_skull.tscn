@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cpsu8yj8vklbf" path="res://Assets/ActionGame/MonsterSprites/RedSkull.png" id="2_00p44"]
 [ext_resource type="Script" uid="uid://cpuahnag1gvhw" path="res://Prefabs/ActionGame/Enemies/EnemyPrefabs/RedSkull/RedSkull.cs" id="2_dj7qp"]
 [ext_resource type="Script" uid="uid://cduxvebndymwc" path="res://Prefabs/ActionGame/Enemies/RangeAttackModule.cs" id="4_dj7qp"]
-[ext_resource type="PackedScene" uid="uid://dw62403pk1am3" path="res://Prefabs/ActionGame/Bullets/basic_bullet.tscn" id="4_m8o07"]
+[ext_resource type="PackedScene" uid="uid://qg4wbb8ycbgt" path="res://Prefabs/ActionGame/Bullets/RedBullet_Enemy/red_bullet_enemy.tscn" id="4_m8o07"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dj7qp"]
 radius = 18.0
@@ -82,8 +82,8 @@ frame_progress = 0.0807448
 offset = Vector2(0, 0)
 
 [node name="EnemyHitbox" parent="." index="4" node_paths=PackedStringArray("HealthSystem", "enemy")]
-collision_layer = 3
-collision_mask = 3
+collision_layer = 2
+collision_mask = 2
 HealthSystem = NodePath("../HealthSystem")
 enemy = NodePath("..")
 
