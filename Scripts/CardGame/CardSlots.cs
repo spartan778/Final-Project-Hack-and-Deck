@@ -49,6 +49,11 @@ public partial class CardSlots : Node2D
                 SlottedPokerArray.Add(cardSlot.CardSlotBase.SlottedPoker);
             }
         }
+        if(SlottedPokerArray.Count == 0)
+        {
+            GD.Print("No Poker in slots");
+            return;
+        }
         var playedPokerHands= ScanPlayedPokerHands();
         GD.Print(playedPokerHands);
     }
