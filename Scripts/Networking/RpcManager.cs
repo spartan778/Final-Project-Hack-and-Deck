@@ -62,7 +62,7 @@ public partial class RpcManager : Node
             GD.PrintErr("Invalid poker info");
             return;
         }
-        RpcId(1,nameof(SlotPokerMod_Receive), pokerInfo, modifiers);
+        Rpc(nameof(SlotPokerMod_Receive), pokerInfo, modifiers);
     }
 
     [Rpc(RpcMode.AnyPeer)]
