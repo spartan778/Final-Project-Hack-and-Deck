@@ -20,7 +20,7 @@ offset = Vector2(0, -10)
 
 [node name="EnemyHitbox" parent="." instance=ExtResource("4_augvu")]
 
-[node name="AttackHitbox" type="CollisionShape2D" parent="EnemyHitbox"]
+[node name="HitBoxShape" type="CollisionShape2D" parent="EnemyHitbox"]
 position = Vector2(0, -2)
 
 [editable path="EnemyHitbox"]
