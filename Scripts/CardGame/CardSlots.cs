@@ -10,11 +10,17 @@ using Godot.NativeInterop;
 public partial class CardSlots : Node2D
 {
     [Export] private HBoxContainer cardSlotContainer;
-    public Array<CardSlotControl> CardSlotControls{get; private set;}
-    [Export] public Timer SlotCheckTimer { get; private set;}
-    [Export] public float SlotCheckInterval { get; private set;}
-    [Export] public float PokerTriggerInterval { get; private set;}
-
+    public Array<CardSlotControl> CardSlotControls { get; private set; }
+    [Export] public Timer SlotCheckTimer { get; private set; }
+    [Export] public Timer ReleaseSlotsCoolDownTimer { get; private set; }
+    [Export] public float SlotCheckInterval { get; private set; }
+    [Export] public float PokerTriggerInterval { get; private set; }
+    [Export] public float SwipeCoolDownTime { get; private set; }
+    [Export] private TextureProgressBar coolDownProgressBar, swipeProgressBar;
+    public Action SwipeSuccess;
+    
+    public bool IsInCoolDown { get; private set; }
+    private RpcManager rpcManagerRef;
     public Array<PokerBase> SlottedPokerArray {get; private set;}
     public Array<PokerHandBase> PokerHandArray {get; private set;}
 
@@ -24,6 +30,7 @@ public partial class CardSlots : Node2D
         CardSlotControls = new Array<CardSlotControl>();
         SlottedPokerArray = new Array<PokerBase>();
         PokerHandArray = new Array<PokerHandBase>();
+        rpcManagerRef = RpcManager.Instance;
         var children = cardSlotContainer.GetChildren();
         foreach (var child in children) 
         {
@@ -33,12 +40,21 @@ public partial class CardSlots : Node2D
             }
         }
         // GD.Print("Slot Count: "+CardSlotControls.Count);
+        IsInCoolDown = false;
         SlotCheckTimer.WaitTime = SlotCheckInterval;
         SlotCheckTimer.Start();
-        SlotCheckTimer.Timeout += OnSlotCheckTimer_Timeout;
+        ReleaseSlotsCoolDownTimer.WaitTime = SwipeCoolDownTime;
+        ConnectSignals();
         
     }
 
+    private void ConnectSignals()
+    {
+        SlotCheckTimer.Timeout += OnSlotCheckTimer_Timeout;
+        SwipeSuccess += OnSwipeSuccess;
+        ReleaseSlotsCoolDownTimer.Timeout += OnCoolDownTimer_Timeout;
+    }
+    
     public void ScanPokerSlots()
     {
         SlottedPokerArray.Clear();
@@ -52,9 +68,14 @@ public partial class CardSlots : Node2D
         if(SlottedPokerArray.Count == 0)
         {
             GD.Print("No Poker in slots");
+            swipeProgressBar.Value = 0;
             return;
         }
         var playedPokerHands= ScanPlayedPokerHands();
+        ReleaseSlotsCoolDownTimer.Start();
+        GD.Print("Swipe cooldown started");
+        coolDownProgressBar.Visible = true;
+        IsInCoolDown = true;
         GD.Print(playedPokerHands);
     }
 
@@ -162,6 +183,19 @@ public partial class CardSlots : Node2D
     {
         TriggerAllSlots();
     }
+    private void OnSwipeSuccess()
+    {
+        ScanPokerSlots();
+    }
+
+    private void OnCoolDownTimer_Timeout()
+    {
+        // coolDownProgressBar.Visible = false;
+        // coolDownProgressBar.Value = 0;
+        swipeProgressBar.Visible = true;
+        IsInCoolDown = false;
+    }
+    
     private void TriggerAllSlots()
     {
         Co.Run(TriggerAllSlotsCoroutine);
