@@ -6,6 +6,7 @@ public partial class DrawPile : Node2D
     [Export] public ICardStorage CardStorage;
     [Export] public Node CardSystemRef { get;private set; }
     [Export] private DeckArea deckArea;
+    [Export] private HandSlots handSlotsRef;
     private PackedScene pokerPrefab;
     private PokerGameManager pokerGameManagerRef;
     
@@ -24,6 +25,13 @@ public partial class DrawPile : Node2D
         var drawnPokerInfo = CardStorage.DrawPoker();
         if (drawnPokerInfo == null)
         {
+            return;
+        }
+
+        if (handSlotsRef.IsHandSlotFull)
+        {
+            GD.Print("HandSlot is full");
+            // TODO add a event to handle this
             return;
         }
         var newPoker = pokerPrefab.Instantiate<PokerBase>();

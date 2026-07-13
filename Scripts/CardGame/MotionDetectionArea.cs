@@ -59,6 +59,7 @@ public partial class MotionDetectionArea : Area2D
             if (delta.X > swipeDistance)
             {
                 GD.Print("Swipe successful");
+                CardSlots.ScanPokerSlots();
                 yield break;
             }
             GD.Print($"Swiped distance {delta.X}");

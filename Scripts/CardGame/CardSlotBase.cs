@@ -57,6 +57,7 @@ public partial class CardSlotBase : Node2D
         // rpcManager.SlotPokerRpc(poker.PokerBaseRef.PokerContent.PokerInfo);
         rpcManager.SlotPokerRpc(poker.PokerBaseRef.PokerContent.PokerInfo,
             poker.PokerBaseRef.PokerModifiersManager.ToDictionary());
+        
         if (IsLockingPoker) // lock poker to slot by default
         {
             poker.PokerBaseRef.SetPokerLock(IsLockingPoker);
@@ -71,7 +72,7 @@ public partial class CardSlotBase : Node2D
     public void TriggerPoker()
     {
         if(SlottedPoker is null) return;
-        GD.Print($"{SlottedPoker.PokerContent.PokerInfo} is Triggered");
+        // GD.Print($"{SlottedPoker.PokerContent.PokerInfo} is Triggered");
         rpcManager.TriggerPokerRpc(SlottedPoker.PokerContent.PokerInfo,
             SlottedPoker.PokerModifiersManager.ToDictionary());
     }

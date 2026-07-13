@@ -44,7 +44,7 @@ public partial class HandSlots : Node2D
     }
     public void AddToHand(PokerBase poker)
     {
-        if (HandCount >= MaxHandCount)
+        if (IsHandSlotFull)
         {
             GD.Print("Too many pokers in hand");
             return;
@@ -62,6 +62,8 @@ public partial class HandSlots : Node2D
         Pokers.Remove(poker);
         cardOrganizer.OrganizePokers();
     }
+    
+    public bool IsHandSlotFull => Pokers.Count >= MaxHandCount;
     
     private void OnHoldingPoker(PokerBase heldPoker)
     {

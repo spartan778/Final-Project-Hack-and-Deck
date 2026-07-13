@@ -119,12 +119,13 @@ GameBase2D = NodePath("../..")
 
 [node name="PokerDeck" type="Node" parent="GameBase2D/CardSystem"]
 
-[node name="DrawPile" type="Node2D" parent="GameBase2D/CardSystem/PokerDeck" node_paths=PackedStringArray("CardStorage", "CardSystemRef", "deckArea")]
+[node name="DrawPile" type="Node2D" parent="GameBase2D/CardSystem/PokerDeck" node_paths=PackedStringArray("CardStorage", "CardSystemRef", "deckArea", "handSlotsRef")]
 position = Vector2(1150, 607)
 script = ExtResource("6_8hseb")
 CardStorage = NodePath("CardStorage")
 CardSystemRef = NodePath("../..")
 deckArea = NodePath("DeckArea")
+handSlotsRef = NodePath("../../../HandSlots")
 
 [node name="PokerSlotImage" type="Sprite2D" parent="GameBase2D/CardSystem/PokerDeck/DrawPile"]
 texture = ExtResource("6_of8xl")

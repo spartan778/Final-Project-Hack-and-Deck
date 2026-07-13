@@ -32,8 +32,8 @@ public partial class PokerContent : Node
     public void ChangePokerInfo(int suit, int value)
     {
         var suitEnum = (CardSuit)suit;
-        // var newPokerInfo = new PokerInfo(suitEnum, value);
-        
+        var newPokerInfo = new PokerInfo(suitEnum, value);
+        PokerInfo = newPokerInfo;
         UpdateDisplayInfo();
     }
     
