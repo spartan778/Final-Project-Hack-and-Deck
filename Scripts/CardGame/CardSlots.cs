@@ -18,7 +18,6 @@ public partial class CardSlots : Node2D
     [Export] public float SwipeCoolDownTime { get; private set; }
     [Export] private TextureProgressBar coolDownProgressBar, swipeProgressBar;
     public Action SwipeSuccess;
-    
     public bool IsInCoolDown { get; private set; }
     private RpcManager rpcManagerRef;
     public Array<PokerBase> SlottedPokerArray {get; private set;}
@@ -72,12 +71,28 @@ public partial class CardSlots : Node2D
             return;
         }
         var playedPokerHands= ScanPlayedPokerHands();
+        Co.Run(ReleaseChargedSlotsCoroutine(playedPokerHands));
         ReleaseSlotsCoolDownTimer.Start();
         GD.Print("Swipe cooldown started");
         swipeProgressBar.Value = 0;
         coolDownProgressBar.Visible = true;
         IsInCoolDown = true;
         GD.Print(playedPokerHands);
+        
+    }
+
+    private IEnumerator ReleaseChargedSlotsCoroutine(Array<PokerHandBase> pokerHands, float interval = 1f)
+    {
+        if (pokerHands == null || pokerHands.Count == 0)
+        {
+            rpcManagerRef.ReleaseHandSlotsRpc(PokerHandBase.HighCard ,ReleaseMode.Charged);
+            yield break;
+        }
+        foreach (var pokerHand in pokerHands)
+        {
+            rpcManagerRef.ReleaseHandSlotsRpc(pokerHand, ReleaseMode.Charged);
+            yield return Co.Wait(interval);
+        }
     }
 
     private Array<PokerHandBase> ScanPlayedPokerHands()
