@@ -230,6 +230,7 @@ offset_top = 110.0
 offset_right = 712.0
 offset_bottom = 169.0
 scale = Vector2(0.5, 0.5)
+fill_mode = 1
 texture_under = ExtResource("16_oye1g")
 texture_progress = ExtResource("14_oakbt")
 script = ExtResource("17_lvr4r")

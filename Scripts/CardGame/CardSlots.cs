@@ -74,6 +74,7 @@ public partial class CardSlots : Node2D
         var playedPokerHands= ScanPlayedPokerHands();
         ReleaseSlotsCoolDownTimer.Start();
         GD.Print("Swipe cooldown started");
+        swipeProgressBar.Value = 0;
         coolDownProgressBar.Visible = true;
         IsInCoolDown = true;
         GD.Print(playedPokerHands);
