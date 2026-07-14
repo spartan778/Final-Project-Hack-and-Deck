@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://0s7odp1g51tv"]
+[gd_scene load_steps=15 format=3 uid="uid://0s7odp1g51tv"]
 
 [ext_resource type="Texture2D" uid="uid://c4eglj7rf3os3" path="res://icon.svg" id="1_0mflq"]
 [ext_resource type="Script" uid="uid://cv62dao6bnc30" path="res://Scripts/ActionGame/PlayerManager.cs" id="1_mhocx"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://cwska52asj5ib" path="res://Scenes/ActionGame/PlayerMovement.cs" id="2_sw6lw"]
 [ext_resource type="Script" uid="uid://denm3u3n8au4d" path="res://Scripts/ActionGame/BasicAttack.cs" id="3_25hhx"]
 [ext_resource type="PackedScene" uid="uid://dgtk07vj6rjv2" path="res://Prefabs/ActionGame/health_system.tscn" id="3_e6f3n"]
+[ext_resource type="PackedScene" uid="uid://cpo25l2tgufg" path="res://Prefabs/ActionGame/health_bar.tscn" id="4_roci8"]
 [ext_resource type="PackedScene" uid="uid://dw62403pk1am3" path="res://Prefabs/ActionGame/Bullets/BasicBullet/basic_bullet.tscn" id="6_rq88u"]
 [ext_resource type="Script" uid="uid://3ver75t7ymwg" path="res://Scripts/ActionGame/MagicBulletAttack.cs" id="7_e6f3n"]
 [ext_resource type="Script" uid="uid://by2bm21xikwd2" path="res://Scripts/ActionGame/TriggeredAction.cs" id="7_um666"]
@@ -32,8 +33,11 @@ HealthSystem = NodePath("../HealthSystem")
 [node name="HitBoxArea" type="CollisionShape2D" parent="PlayerHitbox"]
 shape = SubResource("RectangleShape2D_g7csx")
 
-[node name="HealthSystem" parent="." instance=ExtResource("3_e6f3n")]
+[node name="HealthSystem" parent="." node_paths=PackedStringArray("HealthBar") instance=ExtResource("3_e6f3n")]
 CurrentHealth = 100.0
+HealthBar = NodePath("../HealthBar")
+
+[node name="HealthBar" parent="." instance=ExtResource("4_roci8")]
 
 [node name="MovementSystem" type="Node" parent="."]
 

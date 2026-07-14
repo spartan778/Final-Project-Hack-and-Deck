@@ -4,20 +4,43 @@ using System;
 public partial class HealthSystem : Node
 {
     [Export] public float MaxHealth { get; private set; }
-    [Export] public float CurrentHealth { get; private set; }
+    public Action HealthChanged;
+    [Export] public float CurrentHealth
+    {
+        get => currentHealth;
+        private set
+        {
+            if (Math.Abs(currentHealth - value) < 0.01f) { // avoid floating point precision bug
+                return;
+            }
+            currentHealth = value;
+            HealthChanged?.Invoke();
+        } 
+    }
+    
+    private float currentHealth;
+    [Export] public ProgressBar HealthBar { get; private set; }
 
     public Action<float> TakingDamage, Healing;
     public Action Dying;
+    
 
     public override void _Ready()
     {
+        ConnectSignals();
+        
         CurrentHealth = MaxHealth;
     }
 
-    public void InitHealthSystem(float maxHealth, float currentHealth = -1f)
+    private void ConnectSignals()
+    {
+        HealthChanged += OnHealthChanged;
+    }
+
+    public void InitHealthSystem(float maxHealth, float newHealth = -1f)
     {
         MaxHealth = maxHealth;
-        if (currentHealth < 0)
+        if (newHealth < 0)
         {
             currentHealth = maxHealth;
         }
@@ -38,10 +61,15 @@ public partial class HealthSystem : Node
             GD.Print($"Dying");
         }
     }
-    
     public void Heal(float amount)
     {
         CurrentHealth += amount;
         Healing?.Invoke(amount);
+    }
+
+    private void OnHealthChanged()
+    {
+        if (HealthBar is null) return;
+        HealthBar.Value = currentHealth/MaxHealth * 100f;
     }
 }

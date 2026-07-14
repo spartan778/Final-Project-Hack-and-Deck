@@ -39,7 +39,7 @@ public partial class TriggeredAction : Node
             case CardSuit.Spades or CardSuit.Clubs:
             {
                 var bulletCount = pokerInfo.Rank + 1;
-                GD.Print("Triggered ATTACK");
+                // GD.Print("Triggered ATTACK");
                 basicAttackRef.MakeBasicAttack(bulletCount);
                 break;
             }
