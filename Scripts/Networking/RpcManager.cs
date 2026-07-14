@@ -122,7 +122,7 @@ public partial class RpcManager : Node
     [Rpc(RpcMode.AnyPeer)]
     private void ReleaseHandSlots_Receive(Vector2 packedVector)
     {
-        GD.Print($"Receiving Poker hand type: {(PokerHandBase)packedVector.X})");
+        GD.Print($"Receiving Poker hand type: {(PokerHandBase)packedVector.X}");
         GD.Print($"Release Mode: {(ReleaseMode)packedVector.Y}");
     }
     #endregion
