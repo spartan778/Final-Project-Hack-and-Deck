@@ -8,4 +8,6 @@ public partial class EnemyRedBullet : BulletBase
         base.InitBullet(direction);
         RotateToDirection(); // this is a directional sprite
     }
+    
+    
 }
