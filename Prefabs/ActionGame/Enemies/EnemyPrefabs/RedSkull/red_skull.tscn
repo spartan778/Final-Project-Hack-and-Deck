@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://dakvna1lwfsno"]
+[gd_scene load_steps=14 format=3 uid="uid://dakvna1lwfsno"]
 
 [ext_resource type="PackedScene" uid="uid://brun683rcn1vl" path="res://Prefabs/ActionGame/Enemies/EnemyBlueprint.tscn" id="1_ynetm"]
 [ext_resource type="Texture2D" uid="uid://cpsu8yj8vklbf" path="res://Assets/ActionGame/MonsterSprites/RedSkull.png" id="2_00p44"]
 [ext_resource type="Script" uid="uid://cpuahnag1gvhw" path="res://Prefabs/ActionGame/Enemies/EnemyPrefabs/RedSkull/RedSkull.cs" id="2_dj7qp"]
 [ext_resource type="PackedScene" uid="uid://co03oipegx7kb" path="res://Prefabs/ActionGame/Enemies/range_attack_module.tscn" id="3_dj7qp"]
+[ext_resource type="PackedScene" uid="uid://cktb4u7gtc32b" path="res://Prefabs/Shaders/BlinkShader.tscn" id="3_dsgnc"]
 [ext_resource type="PackedScene" uid="uid://qg4wbb8ycbgt" path="res://Prefabs/ActionGame/Bullets/RedBullet_Enemy/red_bullet_enemy.tscn" id="4_m8o07"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dj7qp"]
@@ -64,16 +65,22 @@ Hitbox = NodePath("EnemyHitbox")
 MaxHealth = 30.0
 CurrentHealth = 30.0
 
-[node name="RangeAttackModule" parent="." index="1" node_paths=PackedStringArray("attackerNode") instance=ExtResource("3_dj7qp")]
+[node name="BlinkShader" parent="." index="1" node_paths=PackedStringArray("healthSystem", "animated_sprite") instance=ExtResource("3_dsgnc")]
+healthSystem = NodePath("../HealthSystem")
+animated_sprite = NodePath("../EnemyAnimation")
+duration = 0.5
+interval = 0.1
+
+[node name="RangeAttackModule" parent="." index="2" node_paths=PackedStringArray("attackerNode") instance=ExtResource("3_dj7qp")]
 projectilePrefab = ExtResource("4_m8o07")
 attackerNode = NodePath("..")
 ProjectileCount = 2
 
-[node name="EnemyCollision" parent="." index="2"]
+[node name="EnemyCollision" parent="." index="3"]
 position = Vector2(0, 0)
 shape = SubResource("CircleShape2D_dj7qp")
 
-[node name="EnemyAnimation" parent="." index="3"]
+[node name="EnemyAnimation" parent="." index="4"]
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_odvkt")
 animation = &"front"
@@ -82,7 +89,7 @@ frame = 3
 frame_progress = 0.0807448
 offset = Vector2(0, 0)
 
-[node name="EnemyHitbox" parent="." index="4" node_paths=PackedStringArray("HealthSystem", "enemy")]
+[node name="EnemyHitbox" parent="." index="5" node_paths=PackedStringArray("HealthSystem", "enemy")]
 collision_layer = 2
 collision_mask = 2
 HealthSystem = NodePath("../HealthSystem")
@@ -92,6 +99,8 @@ enemy = NodePath("..")
 position = Vector2(0, 2)
 shape = SubResource("CircleShape2D_m8o07")
 
-[node name="AttackTimer" type="Timer" parent="." index="5"]
+[node name="AttackTimer" type="Timer" parent="." index="6"]
+
+[connection signal="DamageEffect" from="HealthSystem" to="BlinkShader" method="_on_health_system_damage_effect"]
 
 [editable path="EnemyHitbox"]

@@ -12,6 +12,8 @@ public partial class EnemyBase : CharacterBody2D
     [Export] protected EnemyHitbox Hitbox;
     [Export] public int[] DefaultCollisionLayers;
     
+    [Signal] public delegate void HealthChangedEventHandler(float oldHealth, float newHealth);
+    
     protected PlayerManager PlayerManagerRef;
     
     protected Vector2 VectorToPlayer;

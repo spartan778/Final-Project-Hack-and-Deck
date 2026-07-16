@@ -1,16 +1,20 @@
 using Godot;
 using System;
 
+[GlobalClass]
 public partial class HealthSystem : Node
 {
     [Export] public float MaxHealth { get; private set; }
     public Action HealthChanged;
+    [Signal] 
+    public delegate void DamageEffectEventHandler(float oldHealth, float newHealth); // special event (signal) type for gdScript
     [Export] public float CurrentHealth
     {
         get => currentHealth;
         private set
         {
-            if (Math.Abs(currentHealth - value) < 0.01f) { // avoid floating point precision bug
+            
+            if (Mathf.Abs(currentHealth - value) < 0.01f) { // avoid floating point precision bug
                 return;
             }
             currentHealth = value;
@@ -54,6 +58,7 @@ public partial class HealthSystem : Node
     {
         CurrentHealth -= amount;
         TakingDamage?.Invoke(amount);
+        EmitSignal(SignalName.DamageEffect, (currentHealth + amount), currentHealth);
         GD.Print($"{GetParent().Name}:Taking damage: {amount}");
         if (CurrentHealth <= 0)
         {
