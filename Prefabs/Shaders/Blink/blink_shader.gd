@@ -37,5 +37,6 @@ func _on_duration_timer_timeout() -> void:
 
 func _on_health_system_healing_effect(healedValue: float) -> void:
 	if(!target_sprite): return #return if there is no targeted sprite
+	target_sprite.material = shaderMat
 	duration_timer.start()
 	interval_timer.start()
