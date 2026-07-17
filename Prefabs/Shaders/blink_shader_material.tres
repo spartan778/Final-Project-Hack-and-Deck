@@ -1,9 +1,0 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://hqm58gmfgjyj"]
-
-[ext_resource type="Shader" uid="uid://dwt6rp2cn4eyq" path="res://Prefabs/Shaders/BlinkShader.gdshader" id="1_w8tku"]
-
-[resource]
-shader = ExtResource("1_w8tku")
-shader_parameter/interval = 0.0
-shader_parameter/frequency = 0
-shader_parameter/blinkStrength = 0.3

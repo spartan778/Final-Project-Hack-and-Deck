@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://dakvna1lwfsno"]
+[gd_scene load_steps=15 format=3 uid="uid://dakvna1lwfsno"]
 
 [ext_resource type="PackedScene" uid="uid://brun683rcn1vl" path="res://Prefabs/ActionGame/Enemies/EnemyBlueprint.tscn" id="1_ynetm"]
 [ext_resource type="Texture2D" uid="uid://cpsu8yj8vklbf" path="res://Assets/ActionGame/MonsterSprites/RedSkull.png" id="2_00p44"]
 [ext_resource type="Script" uid="uid://cpuahnag1gvhw" path="res://Prefabs/ActionGame/Enemies/EnemyPrefabs/RedSkull/RedSkull.cs" id="2_dj7qp"]
 [ext_resource type="PackedScene" uid="uid://co03oipegx7kb" path="res://Prefabs/ActionGame/Enemies/range_attack_module.tscn" id="3_dj7qp"]
-[ext_resource type="PackedScene" uid="uid://cktb4u7gtc32b" path="res://Prefabs/Shaders/BlinkShader.tscn" id="3_dsgnc"]
+[ext_resource type="PackedScene" uid="uid://cktb4u7gtc32b" path="res://Prefabs/Shaders/Blink/BlinkShader.tscn" id="3_dsgnc"]
+[ext_resource type="Material" uid="uid://chegesvjx5m4" path="res://Prefabs/Shaders/Blink/red_blink.tres" id="4_aw3yl"]
 [ext_resource type="PackedScene" uid="uid://qg4wbb8ycbgt" path="res://Prefabs/ActionGame/Bullets/RedBullet_Enemy/red_bullet_enemy.tscn" id="4_m8o07"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dj7qp"]
@@ -67,6 +68,7 @@ CurrentHealth = 30.0
 
 [node name="BlinkShader" parent="." index="1" node_paths=PackedStringArray("healthSystem", "animated_sprite") instance=ExtResource("3_dsgnc")]
 healthSystem = NodePath("../HealthSystem")
+shaderMat = ExtResource("4_aw3yl")
 animated_sprite = NodePath("../EnemyAnimation")
 duration = 0.5
 interval = 0.1

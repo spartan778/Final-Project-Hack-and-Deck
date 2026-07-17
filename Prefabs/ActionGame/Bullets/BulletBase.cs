@@ -5,6 +5,7 @@ public interface IBlockable // General interface for a blockable (destroyable) b
 {
     bool IsBlockable { get; set; }
     bool IsAbsorbing { get; set; }
+    bool IsFromEnemy {get;set;}
     void Blocked();
 
     void SetBlockingCollision(bool isBlockable, bool isAbsorbing);
@@ -18,6 +19,7 @@ public abstract partial class BulletBase : Area2D, IBlockable //base class for b
     [Export] public int PassThroughCount;
     [Export] public bool IsBlockable { get; set; }
     [Export] public bool IsAbsorbing { get; set; }
+    [Export] public bool IsFromEnemy { get; set; }
     public Vector2 Direction;
 
     protected bool IsReady;
@@ -71,6 +73,10 @@ public abstract partial class BulletBase : Area2D, IBlockable //base class for b
     {
         if(hitArea is not IBlockable blockable) return;
         GD.Print("Bullet collision");
+        if (IsFromEnemy && blockable.IsFromEnemy) // no interaction as both are enemy attacks
+        {
+            return;
+        }
         if (blockable.IsAbsorbing) // if bullet is absorbing, they will destroy each other
         {
             Blocked();

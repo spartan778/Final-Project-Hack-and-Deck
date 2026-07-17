@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://0s7odp1g51tv"]
+[gd_scene load_steps=17 format=3 uid="uid://0s7odp1g51tv"]
 
 [ext_resource type="Texture2D" uid="uid://c4eglj7rf3os3" path="res://icon.svg" id="1_0mflq"]
 [ext_resource type="Script" uid="uid://cv62dao6bnc30" path="res://Scripts/ActionGame/PlayerManager.cs" id="1_mhocx"]
@@ -6,7 +6,9 @@
 [ext_resource type="Script" uid="uid://cwska52asj5ib" path="res://Scenes/ActionGame/PlayerMovement.cs" id="2_sw6lw"]
 [ext_resource type="Script" uid="uid://denm3u3n8au4d" path="res://Scripts/ActionGame/BasicAttack.cs" id="3_25hhx"]
 [ext_resource type="PackedScene" uid="uid://dgtk07vj6rjv2" path="res://Prefabs/ActionGame/health_system.tscn" id="3_e6f3n"]
+[ext_resource type="PackedScene" uid="uid://cktb4u7gtc32b" path="res://Prefabs/Shaders/Blink/BlinkShader.tscn" id="4_36vhm"]
 [ext_resource type="PackedScene" uid="uid://cpo25l2tgufg" path="res://Prefabs/ActionGame/health_bar.tscn" id="4_roci8"]
+[ext_resource type="Material" uid="uid://chegesvjx5m4" path="res://Prefabs/Shaders/Blink/red_blink.tres" id="5_0n75y"]
 [ext_resource type="PackedScene" uid="uid://dw62403pk1am3" path="res://Prefabs/ActionGame/Bullets/BasicBullet/basic_bullet.tscn" id="6_rq88u"]
 [ext_resource type="Script" uid="uid://3ver75t7ymwg" path="res://Scripts/ActionGame/MagicBulletAttack.cs" id="7_e6f3n"]
 [ext_resource type="Script" uid="uid://by2bm21xikwd2" path="res://Scripts/ActionGame/TriggeredAction.cs" id="7_um666"]
@@ -37,6 +39,21 @@ shape = SubResource("RectangleShape2D_g7csx")
 CurrentHealth = 100.0
 HealthBar = NodePath("../HealthBar")
 
+[node name="VFXs" type="Node" parent="."]
+
+[node name="DamageBlinkShader" parent="VFXs" node_paths=PackedStringArray("healthSystem", "sprite_2d") instance=ExtResource("4_36vhm")]
+healthSystem = NodePath("../../HealthSystem")
+shaderMat = ExtResource("5_0n75y")
+sprite_2d = NodePath("../../CharacterSprite")
+duration = 0.3
+interval = 0.1
+
+[node name="HealBlinkShader" parent="VFXs" node_paths=PackedStringArray("healthSystem", "sprite_2d") instance=ExtResource("4_36vhm")]
+healthSystem = NodePath("../../HealthSystem")
+sprite_2d = NodePath("../../CharacterSprite")
+duration = 0.6
+interval = 0.2
+
 [node name="HealthBar" parent="." instance=ExtResource("4_roci8")]
 
 [node name="MovementSystem" type="Node" parent="."]
@@ -66,11 +83,12 @@ magicBulletPrefab = ExtResource("8_um666")
 playerManagerRef = NodePath("../..")
 AttackArc = 45.0
 
-[node name="TriggeredAction" type="Node" parent="." node_paths=PackedStringArray("PlayerManagerRef", "basicAttackRef")]
+[node name="TriggeredAction" type="Node" parent="." node_paths=PackedStringArray("PlayerManagerRef", "basicAttackRef", "healthSystemRef")]
 script = ExtResource("7_um666")
 PlayerManagerRef = NodePath("..")
 basicAttackRef = NodePath("../AttackSystem/BasicAttack")
 triggeredBulletPrefab = ExtResource("8_um666")
+healthSystemRef = NodePath("../HealthSystem")
 
 [node name="SlottedAction" type="Node" parent="." node_paths=PackedStringArray("PlayerManagerRef", "magicBulletAttackRef")]
 script = ExtResource("9_bnihk")
@@ -82,3 +100,6 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_0mflq")
 
 [node name="MainCamera" type="Camera2D" parent="."]
+
+[connection signal="DamageEffect" from="HealthSystem" to="VFXs/DamageBlinkShader" method="_on_health_system_damage_effect"]
+[connection signal="HealingEffect" from="HealthSystem" to="VFXs/HealBlinkShader" method="_on_health_system_healing_effect"]

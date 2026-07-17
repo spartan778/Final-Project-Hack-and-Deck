@@ -7,6 +7,7 @@ public partial class TriggeredAction : Node
     [Export] protected PlayerManager PlayerManagerRef;
     [Export] private BasicAttack basicAttackRef;
     [Export] private PackedScene triggeredBulletPrefab;
+    [Export] private HealthSystem healthSystemRef;
     
     private BulletManager bulletManagerRef;
     private ActionRpcHandler actionRpcHandler;
@@ -33,7 +34,8 @@ public partial class TriggeredAction : Node
         {
             case CardSuit.Hearts or CardSuit.Diamonds:
             {
-                GD.Print($"Trigger support Poker, Strength {pokerInfo.Rank + 1}");
+                // GD.Print($"Trigger support Poker, Strength {pokerInfo.Rank + 1}");
+                healthSystemRef.Heal(pokerInfo.Rank + 1);
                 break;
             }
             case CardSuit.Spades or CardSuit.Clubs:

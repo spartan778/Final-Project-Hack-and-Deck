@@ -8,6 +8,8 @@ public partial class HealthSystem : Node
     public Action HealthChanged;
     [Signal] 
     public delegate void DamageEffectEventHandler(float oldHealth, float newHealth); // special event (signal) type for gdScript
+   [Signal]
+   public delegate void HealingEffectEventHandler(float healedValue);
     [Export] public float CurrentHealth
     {
         get => currentHealth;
@@ -70,6 +72,8 @@ public partial class HealthSystem : Node
     {
         CurrentHealth += amount;
         Healing?.Invoke(amount);
+        GD.Print($"{GetParent().Name}:Healing: {amount}");
+        EmitSignalHealingEffect(amount); // godot generated (c#) helper
     }
 
     private void OnHealthChanged()

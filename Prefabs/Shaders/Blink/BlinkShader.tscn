@@ -1,15 +1,14 @@
 [gd_scene load_steps=6 format=3 uid="uid://cktb4u7gtc32b"]
 
-[ext_resource type="Shader" uid="uid://dwt6rp2cn4eyq" path="res://Prefabs/Shaders/BlinkShader.gdshader" id="1_46j70"]
+[ext_resource type="Shader" uid="uid://dwt6rp2cn4eyq" path="res://Prefabs/Shaders/Blink/BlinkShader.gdshader" id="1_46j70"]
 [ext_resource type="Texture2D" uid="uid://c4eglj7rf3os3" path="res://icon.svg" id="1_tn4ty"]
-[ext_resource type="Script" uid="uid://b5bmddqiafnit" path="res://Prefabs/Shaders/blink_shader.gd" id="1_vtqfw"]
-[ext_resource type="Material" uid="uid://hqm58gmfgjyj" path="res://Prefabs/Shaders/blink_shader_material.tres" id="2_81ruw"]
+[ext_resource type="Script" uid="uid://b5bmddqiafnit" path="res://Prefabs/Shaders/Blink/blink_shader.gd" id="1_vtqfw"]
+[ext_resource type="Material" uid="uid://hqm58gmfgjyj" path="res://Prefabs/Shaders/Blink/white_blink.tres" id="2_81ruw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vtqfw"]
 shader = ExtResource("1_46j70")
-shader_parameter/interval = 0.0
-shader_parameter/frequency = 0
-shader_parameter/blinkStrength = 0.2
+shader_parameter/color_mod = Color(0.3, 0.3, 0.3, 1)
+shader_parameter/alpha = 1.0
 
 [node name="BlinkShader" type="Node"]
 script = ExtResource("1_vtqfw")

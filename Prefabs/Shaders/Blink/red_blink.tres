@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://chegesvjx5m4"]
+
+[ext_resource type="Shader" uid="uid://dwt6rp2cn4eyq" path="res://Prefabs/Shaders/Blink/BlinkShader.gdshader" id="1_8ii0d"]
+
+[resource]
+shader = ExtResource("1_8ii0d")
+shader_parameter/color_mod = Color(0.6, 0.3, 0.3, 1)
+shader_parameter/alpha = 1.0
