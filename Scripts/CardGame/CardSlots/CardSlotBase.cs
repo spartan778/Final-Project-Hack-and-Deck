@@ -49,6 +49,12 @@ public partial class CardSlotBase : Node2D
         }
     }
 
+    public void SendToDiscard()
+    {
+        if (SlottedPoker is null) return;
+        
+    }
+
     private void SlotPoker(PokerDragging poker)
     {
         SlottedPoker = poker.PokerBaseRef;

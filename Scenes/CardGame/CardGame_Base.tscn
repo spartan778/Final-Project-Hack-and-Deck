@@ -8,11 +8,11 @@
 [ext_resource type="Script" uid="uid://boyyg3jjrl28a" path="res://Scripts/CardGame/DrawPile.cs" id="6_8hseb"]
 [ext_resource type="Texture2D" uid="uid://b4lxy8von0qev" path="res://Assets/CardGame/Top-Down-Cards/Cards/PokerSlot_Image.png" id="6_of8xl"]
 [ext_resource type="Texture2D" uid="uid://dpdtt42uonp7d" path="res://Assets/CardGame/Top-Down-Cards/Cards/Card Deck - Top Down 88x140.png" id="7_0n1s0"]
-[ext_resource type="Script" uid="uid://c0135dftraqg6" path="res://Scripts/CardGame/CardSlots.cs" id="7_6mt5e"]
+[ext_resource type="Script" uid="uid://c0135dftraqg6" path="res://Scripts/CardGame/CardSlots/CardSlots.cs" id="7_6mt5e"]
 [ext_resource type="PackedScene" uid="uid://4spdyrwd1t8h" path="res://Prefabs/CardGame/CardSlot.tscn" id="7_7nhsq"]
 [ext_resource type="Script" uid="uid://d3751tqllbblu" path="res://Scripts/CardGame/DeckArea.cs" id="9_3ocyd"]
 [ext_resource type="Script" uid="uid://cf465j5jowb8e" path="res://Scripts/CardGame/ICardStorage.cs" id="9_k0eva"]
-[ext_resource type="Script" uid="uid://ds3xpniv7dblm" path="res://Scripts/CardGame/MotionDetectionArea.cs" id="13_acdag"]
+[ext_resource type="Script" uid="uid://ds3xpniv7dblm" path="res://Scripts/CardGame/CardSlots/MotionDetectionArea.cs" id="13_acdag"]
 [ext_resource type="Texture2D" uid="uid://8fti67v4hxn3" path="res://Assets/UI/Vector_UI_Pack_dobo_ui/ProgressBars/progressBar_red.png" id="14_oakbt"]
 [ext_resource type="Script" uid="uid://bysj3u51ehhl8" path="res://Scripts/CardGame/HandSlots.cs" id="15_acdag"]
 [ext_resource type="Texture2D" uid="uid://615f4p6s5pjk" path="res://Assets/UI/Vector_UI_Pack_dobo_ui/ProgressBars/progressBar_green.png" id="15_efgkn"]
@@ -128,7 +128,7 @@ position = Vector2(1150, 607)
 script = ExtResource("6_8hseb")
 CardStorage = NodePath("CardStorage")
 CardSystemRef = NodePath("../..")
-deckArea = NodePath("DeckArea")
+deckArea = NodePath("DrawArea")
 handSlotsRef = NodePath("../../../HandSlots")
 
 [node name="PokerSlotImage" type="Sprite2D" parent="GameBase2D/CardSystem/PokerDeck/DrawPile"]
@@ -138,12 +138,12 @@ texture = ExtResource("6_of8xl")
 sprite_frames = SubResource("SpriteFrames_0n1s0")
 animation = &"Color"
 
-[node name="DeckArea" type="Area2D" parent="GameBase2D/CardSystem/PokerDeck/DrawPile"]
+[node name="DrawArea" type="Area2D" parent="GameBase2D/CardSystem/PokerDeck/DrawPile"]
 collision_layer = 2
 collision_mask = 3
 script = ExtResource("9_3ocyd")
 
-[node name="Collider" type="CollisionShape2D" parent="GameBase2D/CardSystem/PokerDeck/DrawPile/DeckArea"]
+[node name="Collider" type="CollisionShape2D" parent="GameBase2D/CardSystem/PokerDeck/DrawPile/DrawArea"]
 shape = SubResource("RectangleShape2D_0n1s0")
 
 [node name="CardStorage" type="Node" parent="GameBase2D/CardSystem/PokerDeck/DrawPile"]

@@ -34,8 +34,8 @@ public partial class TriggeredAction : Node
         {
             case CardSuit.Hearts or CardSuit.Diamonds:
             {
-                // GD.Print($"Trigger support Poker, Strength {pokerInfo.Rank + 1}");
-                healthSystemRef.Heal(pokerInfo.Rank + 1);
+                GD.Print($"Trigger support Poker, Strength {pokerInfo.Rank + 1}");
+                //TODO reduce mana / cooldown
                 break;
             }
             case CardSuit.Spades or CardSuit.Clubs:

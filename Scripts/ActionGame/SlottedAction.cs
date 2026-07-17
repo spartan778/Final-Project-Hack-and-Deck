@@ -32,6 +32,7 @@ public partial class SlottedAction : Node
             case CardSuit.Hearts or CardSuit.Diamonds:
             {
                 GD.Print($"Slotted support Poker, Strength {pokerInfo.Rank + 1}");
+                healthSystemRef.Heal(pokerInfo.Rank + 1);
                 break;
             }
             case CardSuit.Spades or CardSuit.Clubs:
