@@ -56,6 +56,8 @@ public partial class ICardStorage : Node
     {
         var count = StoredPokers.Count;
         var i = (index < 0 || index >= count) ? GD.RandRange(0, count-1) : index; // if not given an index param, will insert card at random
+        // GD.Print($"Inserting at: {i}");
+        if (count == 0) i = 0; // avoid edge case of (count-1) = -1 when stored poker is 0
         StoredPokers.Insert(i, poker);
         GD.Print($"{GetParent().Name}: Inserted, current pokers: {StoredPokers}");
     }
