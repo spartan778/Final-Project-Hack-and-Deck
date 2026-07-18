@@ -126,13 +126,14 @@ DiscardPile = NodePath("../PokerDeck/DiscardPile")
 
 [node name="PokerDeck" type="Node" parent="GameBase2D/CardSystem"]
 
-[node name="DrawPile" type="Node2D" parent="GameBase2D/CardSystem/PokerDeck" node_paths=PackedStringArray("CardStorage", "CardSystemRef", "deckArea", "handSlotsRef")]
+[node name="DrawPile" type="Node2D" parent="GameBase2D/CardSystem/PokerDeck" node_paths=PackedStringArray("CardStorage", "CardSystemRef", "deckArea", "handSlotsRef", "discardPileRef")]
 position = Vector2(1150, 607)
 script = ExtResource("6_8hseb")
 CardStorage = NodePath("CardStorage")
 CardSystemRef = NodePath("../..")
 deckArea = NodePath("DrawArea")
 handSlotsRef = NodePath("../../../HandSlots")
+discardPileRef = NodePath("../DiscardPile")
 
 [node name="PokerSlotImage" type="Sprite2D" parent="GameBase2D/CardSystem/PokerDeck/DrawPile"]
 texture = ExtResource("6_of8xl")
@@ -140,6 +141,15 @@ texture = ExtResource("6_of8xl")
 [node name="DeckSlotImage" type="AnimatedSprite2D" parent="GameBase2D/CardSystem/PokerDeck/DrawPile/PokerSlotImage"]
 sprite_frames = SubResource("SpriteFrames_0n1s0")
 animation = &"Color"
+
+[node name="CardCount" type="Label" parent="GameBase2D/CardSystem/PokerDeck/DrawPile/PokerSlotImage"]
+offset_left = -30.0
+offset_top = 75.0
+offset_right = 29.0
+offset_bottom = 124.0
+text = "10/10"
+horizontal_alignment = 1
+autowrap_mode = 2
 
 [node name="DrawArea" type="Area2D" parent="GameBase2D/CardSystem/PokerDeck/DrawPile"]
 collision_layer = 2
@@ -149,16 +159,18 @@ script = ExtResource("9_3ocyd")
 [node name="Collider" type="CollisionShape2D" parent="GameBase2D/CardSystem/PokerDeck/DrawPile/DrawArea"]
 shape = SubResource("RectangleShape2D_0n1s0")
 
-[node name="CardStorage" type="Node" parent="GameBase2D/CardSystem/PokerDeck/DrawPile"]
+[node name="CardStorage" type="Node" parent="GameBase2D/CardSystem/PokerDeck/DrawPile" node_paths=PackedStringArray("cardCountLabel")]
 script = ExtResource("9_k0eva")
 StoredPokers = Array[Object]([])
+cardCountLabel = NodePath("../PokerSlotImage/CardCount")
 
-[node name="DiscardPile" type="Node2D" parent="GameBase2D/CardSystem/PokerDeck" node_paths=PackedStringArray("DiscardStorage", "drawPileRef", "discardPileSprite")]
+[node name="DiscardPile" type="Node2D" parent="GameBase2D/CardSystem/PokerDeck" node_paths=PackedStringArray("DiscardStorage", "drawPileRef", "discardPileSprite", "inputArea")]
 position = Vector2(117, 606)
 script = ExtResource("11_li3x3")
 DiscardStorage = NodePath("DiscardStorage")
 drawPileRef = NodePath("../DrawPile")
 discardPileSprite = NodePath("PokerSlotImage/DiscardPileImage")
+inputArea = NodePath("DrawArea")
 
 [node name="PokerSlotImage" type="Sprite2D" parent="GameBase2D/CardSystem/PokerDeck/DiscardPile"]
 texture = ExtResource("6_of8xl")
@@ -167,16 +179,27 @@ texture = ExtResource("6_of8xl")
 sprite_frames = SubResource("SpriteFrames_0n1s0")
 animation = &"Color"
 
-[node name="SlotArea" type="Area2D" parent="GameBase2D/CardSystem/PokerDeck/DiscardPile"]
+[node name="CardCount" type="Label" parent="GameBase2D/CardSystem/PokerDeck/DiscardPile/PokerSlotImage"]
+offset_left = -31.0
+offset_top = 75.0
+offset_right = 28.0
+offset_bottom = 124.0
+text = "0"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="DrawArea" type="Area2D" parent="GameBase2D/CardSystem/PokerDeck/DiscardPile"]
 collision_layer = 2
 collision_mask = 3
+script = ExtResource("9_3ocyd")
 
-[node name="Collider" type="CollisionShape2D" parent="GameBase2D/CardSystem/PokerDeck/DiscardPile/SlotArea"]
+[node name="Collider" type="CollisionShape2D" parent="GameBase2D/CardSystem/PokerDeck/DiscardPile/DrawArea"]
 shape = SubResource("RectangleShape2D_0n1s0")
 
-[node name="DiscardStorage" type="Node" parent="GameBase2D/CardSystem/PokerDeck/DiscardPile"]
+[node name="DiscardStorage" type="Node" parent="GameBase2D/CardSystem/PokerDeck/DiscardPile" node_paths=PackedStringArray("cardCountLabel")]
 script = ExtResource("9_k0eva")
 StoredPokers = Array[Object]([])
+cardCountLabel = NodePath("../PokerSlotImage/CardCount")
 
 [node name="CardSlots" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("cardSlotContainer", "SlotCheckTimer", "ReleaseSlotsCoolDownTimer", "coolDownProgressBar", "swipeProgressBar")]
 position = Vector2(339, 313)

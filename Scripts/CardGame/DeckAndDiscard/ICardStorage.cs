@@ -8,6 +8,7 @@ public partial class ICardStorage : Node
 {
     [Export] public Array<PokerInfo> StoredPokers;
     [Export] public PokerArray PokerPreset;
+    [Export] private Label cardCountLabel;
     public int CardCount => StoredPokers.Count;
 
     public override void _Ready()
@@ -15,6 +16,7 @@ public partial class ICardStorage : Node
         if (PokerPreset != null)
         {
             StoredPokers = PokerPreset.SavedPokers;
+            UpdateCardCountDisplay();
         }
     }
     public void ReshufflePokers()
@@ -35,6 +37,7 @@ public partial class ICardStorage : Node
         var poker = StoredPokers[0];
         StoredPokers.RemoveAt(0);
         GD.Print($"Remaining cards: {StoredPokers.Count}");
+        UpdateCardCountDisplay();
         return poker;
     }
 
@@ -49,6 +52,7 @@ public partial class ICardStorage : Node
         var poker = StoredPokers[index];
         StoredPokers.RemoveAt(index);
         pokerInfo = poker;
+        UpdateCardCountDisplay();
         return true;
     }
 
@@ -59,7 +63,15 @@ public partial class ICardStorage : Node
         // GD.Print($"Inserting at: {i}");
         if (count == 0) i = 0; // avoid edge case of (count-1) = -1 when stored poker is 0
         StoredPokers.Insert(i, poker);
+        UpdateCardCountDisplay();
         GD.Print($"{GetParent().Name}: Inserted, current pokers: {StoredPokers}");
+    }
+
+    public void InsertAtBack(PokerInfo poker)
+    {
+        var targetIndex = StoredPokers.Count - 1;
+        StoredPokers.Insert(targetIndex, poker);
+        UpdateCardCountDisplay();
     }
 
     public void RefreshPokers(Array<PokerInfo> pokers)
@@ -71,5 +83,10 @@ public partial class ICardStorage : Node
     public void RefreshPokers(PokerArray pokerArray)
     {
         StoredPokers = pokerArray.SavedPokers;
+    }
+    
+    public void UpdateCardCountDisplay()
+    {
+        cardCountLabel.Text = $"{StoredPokers.Count}";
     }
 }

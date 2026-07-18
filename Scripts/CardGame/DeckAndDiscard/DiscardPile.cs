@@ -6,12 +6,13 @@ public partial class DiscardPile : Node2D
     [Export] public ICardStorage DiscardStorage;
     [Export] private DrawPile drawPileRef;
     [Export] private AnimatedSprite2D discardPileSprite;
-    
+    [Export] private DeckArea inputArea;
     private PokerGameManager pokerGameManagerRef;
 
     public override void _Ready()
     {
         pokerGameManagerRef = CardGameHelperSingleton.Instance.PokerGameManager;
+        inputArea.IsClicked += RefillRandomToDrawPile;
         UpdateDiscardDisplay();
     }
 
@@ -27,18 +28,31 @@ public partial class DiscardPile : Node2D
         DiscardStorage.InsertPoker(pokerInfo, index);
         UpdateDiscardDisplay();
     }
+    
+    public void RefillToDrawPile(bool isRandom = false)
+    {
+        if (isRandom)
+        {
+            RefillRandomToDrawPile();
+            return;
+        }
+        var drawnPoker = DiscardStorage.DrawPoker();
+        if (drawnPoker != null)
+        {
+            drawPileRef.CardStorage.InsertAtBack(drawnPoker);
+            UpdateDiscardDisplay();
+        }
 
+    }
     public void UpdateDiscardDisplay()
     {
         discardPileSprite.Visible = DiscardStorage.CardCount > 0;
     }
 
-    public void RefillRandomToDrawPile()
+    private void RefillRandomToDrawPile()
     {
-        if (DiscardStorage.TryDrawRandomPoker(out var poker))
-        {
-            GD.Print($"Discard Pile: {DiscardStorage}");
-            drawPileRef.CardStorage.InsertPoker(poker,drawPileRef.CardStorage.CardCount-1);
-        }
+        if (!DiscardStorage.TryDrawRandomPoker(out var poker)) return;
+        UpdateDiscardDisplay();
+        drawPileRef.CardStorage.InsertAtBack(poker);
     }
 }

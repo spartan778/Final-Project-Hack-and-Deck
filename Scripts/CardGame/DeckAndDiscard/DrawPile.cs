@@ -8,6 +8,7 @@ public partial class DrawPile : Node2D
     [Export] private DeckArea deckArea;
     [Export] private HandSlots handSlotsRef;
     [Export] private DiscardPile discardPileRef;
+    
     private PackedScene pokerPrefab;
     private PokerGameManager pokerGameManagerRef;
     
@@ -32,7 +33,13 @@ public partial class DrawPile : Node2D
         if (handSlotsRef.IsHandSlotFull)
         {
             GD.Print("HandSlot is full");
-            // TODO add a event to handle this
+            var randomOffset = EnemySpawner.GetRandomPos(50, 150); //assign a random point on screen
+            var overflowPoker = pokerPrefab.Instantiate<PokerBase>();
+            overflowPoker.InitPoker(drawnPokerInfo);
+            CardSystemRef.AddChild(overflowPoker);
+            overflowPoker.GlobalPosition = GetGlobalMousePosition() + randomOffset;
+            GD.Print($"DrawPoker(overflow): {drawnPokerInfo}");
+            GD.Print($"Pos: {overflowPoker.GlobalPosition}");
             return;
         }
         var newPoker = pokerPrefab.Instantiate<PokerBase>();
