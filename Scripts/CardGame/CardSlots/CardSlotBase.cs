@@ -7,6 +7,7 @@ public partial class CardSlotBase : Node2D
     public PokerBase SlottedPoker {get; private set;}
     private PokerGameManager pokerGameManagerRef;
     private RpcManager rpcManager;
+    private DiscardPile discardPileRef;
 
     public bool IsLockingPoker{get; private set;}
 
@@ -16,6 +17,7 @@ public partial class CardSlotBase : Node2D
         pokerGameManagerRef.ReleasingPoker += OnPokerReleased;
         pokerGameManagerRef.HoldingPoker += OnHoldingPoker;
         rpcManager = RpcManager.Instance;
+        discardPileRef = pokerGameManagerRef.DiscardPile;
         IsLockingPoker = true;
     }
 
@@ -52,7 +54,9 @@ public partial class CardSlotBase : Node2D
     public void SendToDiscard()
     {
         if (SlottedPoker is null) return;
-        
+        discardPileRef.AddToDiscardPile(SlottedPoker);
+        SlottedPoker.QueueFree();
+        SlottedPoker = null;
     }
 
     private void SlotPoker(PokerDragging poker)

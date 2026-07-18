@@ -8,6 +8,7 @@ public partial class ICardStorage : Node
 {
     [Export] public Array<PokerInfo> StoredPokers;
     [Export] public PokerArray PokerPreset;
+    public int CardCount => StoredPokers.Count;
 
     public override void _Ready()
     {
@@ -37,11 +38,26 @@ public partial class ICardStorage : Node
         return poker;
     }
 
+    public bool TryDrawRandomPoker(out PokerInfo pokerInfo)
+    {
+        if (StoredPokers.Count == 0)
+        {
+            pokerInfo = null;
+            return false;
+        }
+        var index = GD.RandRange(0, StoredPokers.Count-1);
+        var poker = StoredPokers[index];
+        StoredPokers.RemoveAt(index);
+        pokerInfo = poker;
+        return true;
+    }
+
     public void InsertPoker(PokerInfo poker, int index = -1)
     {
         var count = StoredPokers.Count;
-        var i = (index < 0 || index > count) ? GD.RandRange(0, count) : index;
+        var i = (index < 0 || index >= count) ? GD.RandRange(0, count-1) : index; // if not given an index param, will insert card at random
         StoredPokers.Insert(i, poker);
+        GD.Print($"{GetParent().Name}: Inserted, current pokers: {StoredPokers}");
     }
 
     public void RefreshPokers(Array<PokerInfo> pokers)

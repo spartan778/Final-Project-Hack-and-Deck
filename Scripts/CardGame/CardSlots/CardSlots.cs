@@ -210,6 +210,15 @@ public partial class CardSlots : Node2D
         // coolDownProgressBar.Value = 0;
         swipeProgressBar.Visible = true;
         IsInCoolDown = false;
+        DiscardAllSlots();
+    }
+
+    public void DiscardAllSlots()
+    {
+        foreach (var cardSlotControl in CardSlotControls)
+        {
+            cardSlotControl.CardSlotBase.SendToDiscard();
+        }
     }
     
     private void TriggerAllSlots()

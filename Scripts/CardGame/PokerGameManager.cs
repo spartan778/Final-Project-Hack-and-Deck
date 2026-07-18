@@ -9,6 +9,8 @@ public partial class PokerGameManager : Node2D
     [Export] private InputManager inputManager;
     [Export] public CardGameBase CardGameBase { get; private set; }
     [Export] public Node2D GameBase2D { get; private set; }
+    [Export] public DrawPile DrawPile { get; private set; }
+    [Export] public DiscardPile DiscardPile { get; private set; }
     
     public RpcManager RpcManager { get; private set; }
     

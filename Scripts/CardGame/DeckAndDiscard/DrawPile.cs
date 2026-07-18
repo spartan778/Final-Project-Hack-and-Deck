@@ -7,6 +7,7 @@ public partial class DrawPile : Node2D
     [Export] public Node CardSystemRef { get;private set; }
     [Export] private DeckArea deckArea;
     [Export] private HandSlots handSlotsRef;
+    [Export] private DiscardPile discardPileRef;
     private PackedScene pokerPrefab;
     private PokerGameManager pokerGameManagerRef;
     
