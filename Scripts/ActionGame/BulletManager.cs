@@ -27,8 +27,9 @@ public partial class BulletManager : Node
         if (area is BulletBase bullet)
         {
             area.QueueFree();
+            GD.Print($"{bullet.Name} is out of range");
         }
-        area?.QueueFree();
+        // area?.QueueFree();
     }
 
     public void OnBulletSpawned(BulletBase bullet) // track all bullets in manager

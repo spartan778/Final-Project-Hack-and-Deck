@@ -34,6 +34,7 @@ script = ExtResource("1_5xyqs")
 BulletSpeed = 200.0
 Damage = 30.0
 IsAbsorbing = true
+IsFromPlayer = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_5xyqs")
