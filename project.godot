@@ -13,7 +13,8 @@ config_version=5
 config/name="Hack and Deck"
 run/main_scene="uid://bcm0cjq03sytx"
 config/features=PackedStringArray("4.4", "C#", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://cuxeie36cc21j"
+config/windows_native_icon="res://Assets/ActionGame/BulletSprite/Kinetic_Bullet_V2.ico"
 
 [autoload]
 
