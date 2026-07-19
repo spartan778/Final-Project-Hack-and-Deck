@@ -10,6 +10,7 @@ public partial class ICardStorage : Node
     [Export] public PokerArray PokerPreset;
     [Export] private Label cardCountLabel;
     public int CardCount => StoredPokers.Count;
+    private PokerGameManager pokerGameManagerRef;
 
     public override void _Ready()
     {
@@ -18,6 +19,7 @@ public partial class ICardStorage : Node
             StoredPokers = PokerPreset.SavedPokers;
             UpdateCardCountDisplay();
         }
+        pokerGameManagerRef = CardGameHelperSingleton.Instance.PokerGameManager;
     }
     public void ReshufflePokers()
     {

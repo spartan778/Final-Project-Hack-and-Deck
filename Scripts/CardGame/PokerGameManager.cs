@@ -17,6 +17,8 @@ public partial class PokerGameManager : Node2D
     
     public PokerBase HeldPoker {get; private set;}
     public PokerBase HoveredPoker {get; private set;}
+    
+    public int TotalCardCount => DrawPile.CardStorage.CardCount + DiscardPile.DiscardStorage.CardCount;
     public bool IsDragging {get; private set;}
     private Vector2 originalScale;
     private Vector2 phyMousePos, visualMousePos;

@@ -90,9 +90,10 @@ basicAttackRef = NodePath("../AttackSystem/BasicAttack")
 triggeredBulletPrefab = ExtResource("8_um666")
 healthSystemRef = NodePath("../HealthSystem")
 
-[node name="SlottedAction" type="Node" parent="." node_paths=PackedStringArray("PlayerManagerRef", "magicBulletAttackRef")]
+[node name="SlottedAction" type="Node" parent="." node_paths=PackedStringArray("PlayerManagerRef", "healthSystemRef", "magicBulletAttackRef")]
 script = ExtResource("9_bnihk")
 PlayerManagerRef = NodePath("..")
+healthSystemRef = NodePath("../HealthSystem")
 magicBulletAttackRef = NodePath("../AttackSystem/MagicBulletAttack")
 
 [node name="CharacterSprite" type="Sprite2D" parent="."]

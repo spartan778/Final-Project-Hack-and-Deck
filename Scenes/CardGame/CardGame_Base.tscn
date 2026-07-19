@@ -135,14 +135,14 @@ deckArea = NodePath("DrawArea")
 handSlotsRef = NodePath("../../../HandSlots")
 discardPileRef = NodePath("../DiscardPile")
 
-[node name="PokerSlotImage" type="Sprite2D" parent="GameBase2D/CardSystem/PokerDeck/DrawPile"]
+[node name="DrawPileDisplays" type="Sprite2D" parent="GameBase2D/CardSystem/PokerDeck/DrawPile"]
 texture = ExtResource("6_of8xl")
 
-[node name="DeckSlotImage" type="AnimatedSprite2D" parent="GameBase2D/CardSystem/PokerDeck/DrawPile/PokerSlotImage"]
+[node name="DeckSlotImage" type="AnimatedSprite2D" parent="GameBase2D/CardSystem/PokerDeck/DrawPile/DrawPileDisplays"]
 sprite_frames = SubResource("SpriteFrames_0n1s0")
 animation = &"Color"
 
-[node name="CardCount" type="Label" parent="GameBase2D/CardSystem/PokerDeck/DrawPile/PokerSlotImage"]
+[node name="CardCount" type="Label" parent="GameBase2D/CardSystem/PokerDeck/DrawPile/DrawPileDisplays"]
 offset_left = -30.0
 offset_top = 75.0
 offset_right = 29.0
@@ -162,24 +162,24 @@ shape = SubResource("RectangleShape2D_0n1s0")
 [node name="CardStorage" type="Node" parent="GameBase2D/CardSystem/PokerDeck/DrawPile" node_paths=PackedStringArray("cardCountLabel")]
 script = ExtResource("9_k0eva")
 StoredPokers = Array[Object]([])
-cardCountLabel = NodePath("../PokerSlotImage/CardCount")
+cardCountLabel = NodePath("../DrawPileDisplays/CardCount")
 
 [node name="DiscardPile" type="Node2D" parent="GameBase2D/CardSystem/PokerDeck" node_paths=PackedStringArray("DiscardStorage", "drawPileRef", "discardPileSprite", "inputArea")]
 position = Vector2(117, 606)
 script = ExtResource("11_li3x3")
 DiscardStorage = NodePath("DiscardStorage")
 drawPileRef = NodePath("../DrawPile")
-discardPileSprite = NodePath("PokerSlotImage/DiscardPileImage")
+discardPileSprite = NodePath("DiscardPileDisplays/DiscardPileImage")
 inputArea = NodePath("DrawArea")
 
-[node name="PokerSlotImage" type="Sprite2D" parent="GameBase2D/CardSystem/PokerDeck/DiscardPile"]
+[node name="DiscardPileDisplays" type="Sprite2D" parent="GameBase2D/CardSystem/PokerDeck/DiscardPile"]
 texture = ExtResource("6_of8xl")
 
-[node name="DiscardPileImage" type="AnimatedSprite2D" parent="GameBase2D/CardSystem/PokerDeck/DiscardPile/PokerSlotImage"]
+[node name="DiscardPileImage" type="AnimatedSprite2D" parent="GameBase2D/CardSystem/PokerDeck/DiscardPile/DiscardPileDisplays"]
 sprite_frames = SubResource("SpriteFrames_0n1s0")
 animation = &"Color"
 
-[node name="CardCount" type="Label" parent="GameBase2D/CardSystem/PokerDeck/DiscardPile/PokerSlotImage"]
+[node name="CardCount" type="Label" parent="GameBase2D/CardSystem/PokerDeck/DiscardPile/DiscardPileDisplays"]
 offset_left = -31.0
 offset_top = 75.0
 offset_right = 28.0
@@ -199,7 +199,7 @@ shape = SubResource("RectangleShape2D_0n1s0")
 [node name="DiscardStorage" type="Node" parent="GameBase2D/CardSystem/PokerDeck/DiscardPile" node_paths=PackedStringArray("cardCountLabel")]
 script = ExtResource("9_k0eva")
 StoredPokers = Array[Object]([])
-cardCountLabel = NodePath("../PokerSlotImage/CardCount")
+cardCountLabel = NodePath("../DiscardPileDisplays/CardCount")
 
 [node name="CardSlots" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("cardSlotContainer", "SlotCheckTimer", "ReleaseSlotsCoolDownTimer", "coolDownProgressBar", "swipeProgressBar")]
 position = Vector2(339, 313)
