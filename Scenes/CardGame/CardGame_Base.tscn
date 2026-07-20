@@ -308,6 +308,9 @@ organizeArea = NodePath("../HandPanel")
 handSlots = NodePath("..")
 pokerSpacing = 100.0
 
+[node name="SummonSystem" type="Node2D" parent="GameBase2D"]
+position = Vector2(1163, 322)
+
 [node name="GameTimers" type="Node" parent="."]
 
 [node name="NetworkTickTimer" type="Timer" parent="GameTimers"]
