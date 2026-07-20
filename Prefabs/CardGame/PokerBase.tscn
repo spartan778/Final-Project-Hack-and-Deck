@@ -23,6 +23,7 @@ sprite_frames = ExtResource("1_0y7fh")
 animation = &"ClubCardSprites"
 
 [node name="SummonEffect" parent="CardDisplay" instance=ExtResource("3_jok1i")]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

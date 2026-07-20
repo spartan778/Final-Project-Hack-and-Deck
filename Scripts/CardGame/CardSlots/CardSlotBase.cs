@@ -1,9 +1,16 @@
 using Godot;
 using System;
 
-public partial class CardSlotBase : Node2D
+public interface IPokerSlot
 {
-    [Export] Area2D slotArea;
+    Area2D SlotArea { get;}
+    PokerBase SlottedPoker { get; }
+    void SlotPoker(PokerDragging poker);
+}
+
+public partial class CardSlotBase : Node2D, IPokerSlot
+{
+    [Export] public Area2D SlotArea { get; private set;}
     public PokerBase SlottedPoker {get; private set;}
     private PokerGameManager pokerGameManagerRef;
     private RpcManager rpcManager;
@@ -35,7 +42,7 @@ public partial class CardSlotBase : Node2D
     }
     private void OnPokerReleased(PokerBase poker)
     {
-        var overlappingAreas = slotArea.GetOverlappingAreas();
+        var overlappingAreas = SlotArea.GetOverlappingAreas();
         if(overlappingAreas.Count == 0) return; // skip all logic when nothing is overlapping
         foreach (var area in overlappingAreas)
         {
@@ -59,7 +66,7 @@ public partial class CardSlotBase : Node2D
         SlottedPoker = null;
     }
 
-    private void SlotPoker(PokerDragging poker)
+    public void SlotPoker(PokerDragging poker)
     {
         SlottedPoker = poker.PokerBaseRef;
         GD.Print($"Slotted: {poker.PokerBaseRef.Name} at {GetParent().Name}");
@@ -86,4 +93,6 @@ public partial class CardSlotBase : Node2D
         rpcManager.TriggerPokerRpc(SlottedPoker.PokerContent.PokerInfo,
             SlottedPoker.PokerModifiersManager.ToDictionary());
     }
+
+    
 }

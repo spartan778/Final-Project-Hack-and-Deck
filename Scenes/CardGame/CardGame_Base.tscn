@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://b18mj00imbv7"]
+[gd_scene load_steps=31 format=3 uid="uid://b18mj00imbv7"]
 
 [ext_resource type="Script" uid="uid://fkcmkhn8mgr2" path="res://Scripts/CardGame/CardGameBase.cs" id="1_64jno"]
 [ext_resource type="Script" uid="uid://ds5ea665i8jo4" path="res://Scripts/CardGame/CardGameUIManager.cs" id="1_y7kd2"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://dxu34kjbgguef" path="res://Assets/UI/Vector_UI_Pack_dobo_ui/ProgressBars/progressBar_white.png" id="16_oye1g"]
 [ext_resource type="Script" uid="uid://bavx68j17p247" path="res://Scripts/CardGame/CoolDownProgress.cs" id="17_lvr4r"]
 [ext_resource type="Script" uid="uid://cxvgulsekr1c" path="res://Scripts/CardGame/DeckAndDiscard/ICardOrganizer.cs" id="17_oakbt"]
+[ext_resource type="Script" uid="uid://3sl7mi21gfwc" path="res://Scripts/CardGame/CardSlots/SummonSystem.cs" id="22_ib4bk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8hseb"]
 atlas = ExtResource("7_0n1s0")
@@ -59,6 +60,9 @@ size = Vector2(800, 200)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_acdag"]
 size = Vector2(800, 200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_li3x3"]
+size = Vector2(60, 80)
 
 [node name="CardGameBase" type="Node" node_paths=PackedStringArray("PokerGameManager", "GameBase2D", "NetworkTickTimer")]
 script = ExtResource("1_64jno")
@@ -310,6 +314,17 @@ pokerSpacing = 100.0
 
 [node name="SummonSystem" type="Node2D" parent="GameBase2D"]
 position = Vector2(1163, 322)
+script = ExtResource("22_ib4bk")
+
+[node name="PokerSlotImage" type="Sprite2D" parent="GameBase2D/SummonSystem"]
+texture = ExtResource("6_of8xl")
+
+[node name="SlotArea" type="Area2D" parent="GameBase2D/SummonSystem"]
+collision_layer = 2
+collision_mask = 3
+
+[node name="Collider" type="CollisionShape2D" parent="GameBase2D/SummonSystem/SlotArea"]
+shape = SubResource("RectangleShape2D_li3x3")
 
 [node name="GameTimers" type="Node" parent="."]
 

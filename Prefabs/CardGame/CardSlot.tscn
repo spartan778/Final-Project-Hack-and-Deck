@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://4spdyrwd1t8h"]
+[gd_scene load_steps=6 format=3 uid="uid://4spdyrwd1t8h"]
 
 [ext_resource type="Script" uid="uid://dn3my5vkj40sf" path="res://Prefabs/CardGame/CardSlotControl.cs" id="1_f4jdp"]
 [ext_resource type="Script" uid="uid://d0biawvx2werp" path="res://Scripts/CardGame/CardSlots/CardSlotBase.cs" id="1_km50l"]
 [ext_resource type="Texture2D" uid="uid://b4lxy8von0qev" path="res://Assets/CardGame/Top-Down-Cards/Cards/PokerSlot_Image.png" id="2_f4jdp"]
+[ext_resource type="Script" uid="uid://dfvdlo7h04itv" path="res://Prefabs/CardGame/CardSlotModule.cs" id="3_oj02t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7nhsq"]
 size = Vector2(60, 80)
@@ -13,9 +14,12 @@ anchors_preset = 0
 script = ExtResource("1_f4jdp")
 CardSlotBase = NodePath("CardSlotBase")
 
-[node name="CardSlotBase" type="Node2D" parent="." node_paths=PackedStringArray("slotArea")]
+[node name="CardSlotBase" type="Node2D" parent="." node_paths=PackedStringArray("SlotArea")]
 script = ExtResource("1_km50l")
-slotArea = NodePath("SlotArea")
+SlotArea = NodePath("SlotArea")
+
+[node name="CardSlotModule" type="Node" parent="CardSlotBase"]
+script = ExtResource("3_oj02t")
 
 [node name="PokerSlotImage" type="Sprite2D" parent="CardSlotBase"]
 texture = ExtResource("2_f4jdp")
