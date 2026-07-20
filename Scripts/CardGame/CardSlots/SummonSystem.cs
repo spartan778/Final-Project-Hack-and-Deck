@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class SummonSystem : Node2D, IPokerSlot
+public partial class SummonSystem : Node2D
 {
     [Export] public Area2D SlotArea { get; private set; }
     public PokerBase SlottedPoker { get; set; }

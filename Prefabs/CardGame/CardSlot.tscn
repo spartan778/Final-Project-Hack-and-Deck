@@ -14,12 +14,15 @@ anchors_preset = 0
 script = ExtResource("1_f4jdp")
 CardSlotBase = NodePath("CardSlotBase")
 
-[node name="CardSlotBase" type="Node2D" parent="." node_paths=PackedStringArray("SlotArea")]
+[node name="CardSlotBase" type="Node2D" parent="." node_paths=PackedStringArray("SlotArea", "CardSlotModule")]
 script = ExtResource("1_km50l")
 SlotArea = NodePath("SlotArea")
+CardSlotModule = NodePath("CardSlotModule")
 
-[node name="CardSlotModule" type="Node" parent="CardSlotBase"]
+[node name="CardSlotModule" type="Node" parent="CardSlotBase" node_paths=PackedStringArray("parentNode2D", "SlotArea")]
 script = ExtResource("3_oj02t")
+parentNode2D = NodePath("..")
+SlotArea = NodePath("../SlotArea")
 
 [node name="PokerSlotImage" type="Sprite2D" parent="CardSlotBase"]
 texture = ExtResource("2_f4jdp")
