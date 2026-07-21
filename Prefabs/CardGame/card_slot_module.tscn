@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://3km5mref7efe"]
+
+[ext_resource type="Script" uid="uid://dfvdlo7h04itv" path="res://Prefabs/CardGame/CardSlotModule.cs" id="1_g3tqd"]
+
+[node name="CardSlotModule" type="Node" node_paths=PackedStringArray("parentNode2D", "SlotArea")]
+script = ExtResource("1_g3tqd")
+parentNode2D = NodePath("")
+SlotArea = NodePath("")

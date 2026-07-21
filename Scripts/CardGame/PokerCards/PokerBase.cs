@@ -8,7 +8,12 @@ public partial class PokerBase : Node2D
 	[Export] public PokerContent PokerContent { get; private set; }
 	[Export] public PokerDragging PokerDraggingRef{ get; private set; }
 	[Export] public PokerModifiersManager PokerModifiersManager { get; private set; }
+
+	public Action PokerSummoned;
 	public bool IsLocked { get; private set; }
+	
+	public PokerState PokerState => PokerModifiersManager.PokerState;
+	public PokerType PokerType => PokerModifiersManager.PokerType;
 
 
 	public override void _Ready()

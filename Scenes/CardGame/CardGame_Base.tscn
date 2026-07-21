@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://b18mj00imbv7"]
+[gd_scene load_steps=39 format=3 uid="uid://b18mj00imbv7"]
 
 [ext_resource type="Script" uid="uid://fkcmkhn8mgr2" path="res://Scripts/CardGame/CardGameBase.cs" id="1_64jno"]
 [ext_resource type="Script" uid="uid://ds5ea665i8jo4" path="res://Scripts/CardGame/CardGameUIManager.cs" id="1_y7kd2"]
@@ -22,6 +22,8 @@
 [ext_resource type="Script" uid="uid://bavx68j17p247" path="res://Scripts/CardGame/CoolDownProgress.cs" id="17_lvr4r"]
 [ext_resource type="Script" uid="uid://cxvgulsekr1c" path="res://Scripts/CardGame/DeckAndDiscard/ICardOrganizer.cs" id="17_oakbt"]
 [ext_resource type="Script" uid="uid://3sl7mi21gfwc" path="res://Scripts/CardGame/CardSlots/SummonSystem.cs" id="22_ib4bk"]
+[ext_resource type="Texture2D" uid="uid://c11xbtfrdgjkn" path="res://Assets/CardGame/Card-FX/SummonEffect.png" id="23_fl3cp"]
+[ext_resource type="PackedScene" uid="uid://3km5mref7efe" path="res://Prefabs/CardGame/card_slot_module.tscn" id="23_y2t1j"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8hseb"]
 atlas = ExtResource("7_0n1s0")
@@ -60,6 +62,49 @@ size = Vector2(800, 200)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_acdag"]
 size = Vector2(800, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0f7mf"]
+atlas = ExtResource("23_fl3cp")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y2t1j"]
+atlas = ExtResource("23_fl3cp")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mt5kn"]
+atlas = ExtResource("23_fl3cp")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s0l6r"]
+atlas = ExtResource("23_fl3cp")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_chari"]
+atlas = ExtResource("23_fl3cp")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_86ync"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0f7mf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y2t1j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mt5kn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s0l6r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_chari")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_li3x3"]
 size = Vector2(60, 80)
@@ -312,12 +357,23 @@ organizeArea = NodePath("../HandPanel")
 handSlots = NodePath("..")
 pokerSpacing = 100.0
 
-[node name="SummonSystem" type="Node2D" parent="GameBase2D"]
+[node name="SummonSystem" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("CardSlotModule", "networkTickTimer")]
 position = Vector2(1163, 322)
 script = ExtResource("22_ib4bk")
+CardSlotModule = NodePath("CardSlotModule")
+networkTickTimer = NodePath("../../GameTimers/NetworkTickTimer")
+
+[node name="CardSlotModule" parent="GameBase2D/SummonSystem" node_paths=PackedStringArray("parentNode2D", "SlotArea") instance=ExtResource("23_y2t1j")]
+parentNode2D = NodePath("..")
+SlotArea = NodePath("../SlotArea")
 
 [node name="PokerSlotImage" type="Sprite2D" parent="GameBase2D/SummonSystem"]
 texture = ExtResource("6_of8xl")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GameBase2D/SummonSystem"]
+sprite_frames = SubResource("SpriteFrames_86ync")
+autoplay = "default"
+frame_progress = 0.526177
 
 [node name="SlotArea" type="Area2D" parent="GameBase2D/SummonSystem"]
 collision_layer = 2

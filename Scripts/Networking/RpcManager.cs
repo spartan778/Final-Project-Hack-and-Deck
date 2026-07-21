@@ -95,9 +95,26 @@ public partial class RpcManager : Node
     }
     #endregion
     
-    #region SummonPoker //stretch goal
+    #region SummonPoker
 
-    public void TriggerPokerSummonRpc(PokerInfo pokerInfo, Dictionary modifiers, Vector2 pokerPlacement)
+    public void TriggerPokerSummonRpc(PokerBase pokerBase)
+    {
+        var pokerInfo = pokerBase.PokerContent.PokerInfo;
+        TriggerSummonPoker_Send(pokerInfo.ToVector2(), pokerBase.PokerState);
+    }
+
+    private void TriggerSummonPoker_Send(Vector2 pokerInfo, PokerState pokerState)
+    {
+        Rpc(nameof(TriggerSummonPoker_Receive), pokerInfo, (int)pokerState);
+    }
+
+    [Rpc(RpcMode.AnyPeer)]
+    private void TriggerSummonPoker_Receive(Vector2 pokerInfo, PokerState pokerState)
+    {
+        GD.Print($"Summoning: {pokerInfo}: {pokerState}");
+    }
+
+    public void SyncPokerSummonRpc(bool isTracking, Vector2 pokerPlacement)
     {
         
     }

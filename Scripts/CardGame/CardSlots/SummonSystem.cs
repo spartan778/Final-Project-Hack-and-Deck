@@ -1,15 +1,42 @@
 using Godot;
 using System;
 
-public partial class SummonSystem : Node2D
+public partial class SummonSystem : Node2D, ICardSlotModule
 {
-    [Export] public Area2D SlotArea { get; private set; }
-    public PokerBase SlottedPoker { get; set; }
-    
-    public void SlotPoker(PokerDragging poker)
+    [Export] public CardSlotModule CardSlotModule { get;private set; }
+    [Export] private Timer networkTickTimer;
+    public PokerBase SlottedPoker => CardSlotModule.SlottedPoker;
+    public PokerDragging DraggedPoker;
+    public PokerBase SummonedPoker{ get;private set; }
+    private RpcManager rpcManager;
+
+    public override void _Ready()
     {
-        SlottedPoker = poker.PokerBaseRef;
-        GD.Print($"Slotted: {poker.PokerBaseRef.Name} at {GetParent().Name}");
-        SlottedPoker.Position = GlobalPosition;
+        rpcManager = RpcManager.Instance;
+        ConnectSignals();
+    }
+
+    private void ConnectSignals()
+    {
+        CardSlotModule.PokerSlotted += OnPokerSlotted;
+        CardSlotModule.PokerUnslotted += OnPokerUnslotted;
+        networkTickTimer.Timeout += OnNetworkTick;
+    }
+
+    private void OnPokerSlotted(PokerDragging poker)
+    {
+        var pokerBase = poker.PokerBaseRef;
+        SummonedPoker = pokerBase;
+    }
+
+    private void OnPokerUnslotted(PokerBase poker)
+    {
+        SummonedPoker.PokerSummoned?.Invoke();
+        rpcManager.TriggerPokerSummonRpc(poker);
+    }
+    
+    private void OnNetworkTick()
+    {
+        //TODO
     }
 }

@@ -35,6 +35,11 @@ public partial class PokerInfo : Resource
         }
         Rank = (int)pokerVector.Y;
     }
+
+    public Vector2 ToVector2()
+    {
+        return new Vector2((int)Rank, (int)Suit);
+    }
     
     public override string ToString() => $"{Rank+1} of {Suit}";
     

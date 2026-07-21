@@ -54,5 +54,7 @@ cardDisplay = NodePath("../CardDisplay")
 [node name="PokerModifiersManager" type="Node" parent="."]
 script = ExtResource("6_c3ud2")
 
-[node name="PokerSummonManager" type="Node" parent="."]
+[node name="PokerSummonManager" type="Node" parent="." node_paths=PackedStringArray("pokerBaseRef", "summonEffect")]
 script = ExtResource("7_5i6cv")
+pokerBaseRef = NodePath("..")
+summonEffect = NodePath("../CardDisplay/SummonEffect")

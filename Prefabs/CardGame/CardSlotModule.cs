@@ -14,6 +14,7 @@ public partial class CardSlotModule : Node
     public bool IsLockingPoker{get; set;}
     
     public Action<PokerDragging> PokerSlotted { get; set; }
+    public Action<PokerBase> PokerUnslotted { get; set; }
     
     private PokerGameManager pokerGameManagerRef;
 
@@ -35,6 +36,7 @@ public partial class CardSlotModule : Node
         if (SlottedPoker != poker) return; // only care if the Slotted poker is picked
         SlottedPoker = null; // remove slotted poker because it's picked
         GD.Print($"Unslotted: {poker.Name} at {parentNode2D.Name}");
+        PokerUnslotted?.Invoke(poker);
     }
     
     private void OnPokerReleased(PokerBase poker)

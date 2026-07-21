@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dn3my5vkj40sf" path="res://Prefabs/CardGame/CardSlotControl.cs" id="1_f4jdp"]
 [ext_resource type="Script" uid="uid://d0biawvx2werp" path="res://Scripts/CardGame/CardSlots/CardSlotBase.cs" id="1_km50l"]
 [ext_resource type="Texture2D" uid="uid://b4lxy8von0qev" path="res://Assets/CardGame/Top-Down-Cards/Cards/PokerSlot_Image.png" id="2_f4jdp"]
-[ext_resource type="Script" uid="uid://dfvdlo7h04itv" path="res://Prefabs/CardGame/CardSlotModule.cs" id="3_oj02t"]
+[ext_resource type="PackedScene" uid="uid://3km5mref7efe" path="res://Prefabs/CardGame/card_slot_module.tscn" id="3_oj02t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7nhsq"]
 size = Vector2(60, 80)
@@ -19,8 +19,7 @@ script = ExtResource("1_km50l")
 SlotArea = NodePath("SlotArea")
 CardSlotModule = NodePath("CardSlotModule")
 
-[node name="CardSlotModule" type="Node" parent="CardSlotBase" node_paths=PackedStringArray("parentNode2D", "SlotArea")]
-script = ExtResource("3_oj02t")
+[node name="CardSlotModule" parent="CardSlotBase" node_paths=PackedStringArray("parentNode2D", "SlotArea") instance=ExtResource("3_oj02t")]
 parentNode2D = NodePath("..")
 SlotArea = NodePath("../SlotArea")
 
