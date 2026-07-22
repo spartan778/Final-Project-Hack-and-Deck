@@ -364,6 +364,7 @@ CardSlotModule = NodePath("CardSlotModule")
 discardPileRef = NodePath("../CardSystem/PokerDeck/DiscardPile")
 networkTickTimer = NodePath("../../GameTimers/NetworkTickTimer")
 inverseTimer = NodePath("InverseTimer")
+inverseTime = 4.0
 
 [node name="CardSlotModule" parent="GameBase2D/SummonSystem" node_paths=PackedStringArray("parentNode2D", "SlotArea") instance=ExtResource("23_y2t1j")]
 parentNode2D = NodePath("..")

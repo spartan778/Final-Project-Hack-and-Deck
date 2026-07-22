@@ -116,12 +116,12 @@ public partial class RpcManager : Node
 
     public void SyncPokerSummonRpc_Send(Vector2 pokerPlacementRatio)
     {
-        
+        Rpc(nameof(SyncPokerSummonRpc_Receive), pokerPlacementRatio);
     }
-
+    [Rpc(RpcMode.AnyPeer)]
     public void SyncPokerSummonRpc_Receive(Vector2 pokerPlacementRatio)
     {
-        
+        GD.Print($"(RPC) Vector:{ pokerPlacementRatio}");
     }
     
     

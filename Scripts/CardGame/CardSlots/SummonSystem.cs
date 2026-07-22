@@ -62,6 +62,7 @@ public partial class SummonSystem : Node2D, ICardSlotModule
         // rpcManager.SyncPokerSummonRpc_Send();
         if(SummonedPoker == null) return;
         var posVector = CardGameHelperSingleton.Instance.GetPokerPlacementVector(SummonedPoker);
+        rpcManager.SyncPokerSummonRpc_Send(posVector);
         
     }
     private void OnInverseTimerTimeout()
