@@ -52,6 +52,7 @@ public partial class CardSlotModule : Node
                 RejectPoker(draggedPoker.PokerBaseRef);
                 break;
             } ;
+            if(!IsAccepted(poker)) return;
             SlotPoker(draggedPoker);
             break; // stop once a poker is slotted
         }
@@ -71,6 +72,16 @@ public partial class CardSlotModule : Node
     private void RejectPoker(PokerBase poker)
     {
         GD.Print($"{parentNode2D.Name} already has {SlottedPoker.PokerContent.PokerInfo}, rejecting poker {poker.PokerContent.PokerInfo}");
+    }
+
+    private bool IsAccepted(PokerBase poker) // a helper to filter out all not accepted pokers
+    {
+        if(poker.IsSummoned)
+        {
+            GD.Print($"Poker in Summoned state is not accepted");
+            return false;
+        }
+        return true;
     }
 
     public void DeletePoker()

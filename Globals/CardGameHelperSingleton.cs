@@ -68,7 +68,7 @@ public partial class CardGameHelperSingleton : Node
         var basePos = pokerBase.GetGlobalPosition();
         var renderSize = GetViewport().GetVisibleRect().Size;
         var vectorPos = new Vector2 (basePos.X/renderSize.X, basePos.Y/renderSize.Y);
-        GD.Print($"PosVector: {vectorPos}");
+        // GD.Print($"PosVector: {vectorPos}");
         return vectorPos;
     }
 }

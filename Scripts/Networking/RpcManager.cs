@@ -111,7 +111,8 @@ public partial class RpcManager : Node
     [Rpc(RpcMode.AnyPeer)]
     private void TriggerSummonPoker_Receive(Vector2 pokerInfo, PokerState pokerState)
     {
-        GD.Print($"Summoning: {pokerInfo}: {pokerState}");
+        // GD.Print($"Summoning: {pokerInfo}: {pokerState}");
+        actionRpcHandler.HandleTriggerSummonPoker(pokerInfo, pokerState);
     }
 
     public void SyncPokerSummonRpc_Send(Vector2 pokerPlacementRatio)
@@ -121,7 +122,8 @@ public partial class RpcManager : Node
     [Rpc(RpcMode.AnyPeer)]
     public void SyncPokerSummonRpc_Receive(Vector2 pokerPlacementRatio)
     {
-        GD.Print($"(RPC) Vector:{ pokerPlacementRatio}");
+        // GD.Print($"(RPC) Vector:{ pokerPlacementRatio}");
+        actionRpcHandler.SyncSummonedPokerPosition(pokerPlacementRatio);
     }
     
     

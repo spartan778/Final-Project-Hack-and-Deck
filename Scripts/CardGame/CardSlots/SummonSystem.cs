@@ -42,6 +42,8 @@ public partial class SummonSystem : Node2D, ICardSlotModule
         rpcManager.TriggerPokerSummonRpc(poker);
         networkTickTimer.Start();
         inverseTimer.Stop();
+        poker.PokerDraggingRef.SetCollisionLayer(0); // make this card unscannable by card slots
+        poker.PokerDraggingRef.SetCollisionLayerValue(4, true); // turn detection back on layer 4 ONLY 
     }
     
     private void OnReleasingPoker(PokerBase poker)

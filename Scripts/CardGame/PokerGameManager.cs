@@ -116,7 +116,7 @@ public partial class PokerGameManager : Node2D
         var parameters = new PhysicsPointQueryParameters2D(); // setup detection parameters
         parameters.Position = GetGlobalMousePosition(); // using mouse position as raycast source
         parameters.CollideWithAreas = true;
-        parameters.CollisionMask = 1;
+        parameters.CollisionMask = 9; // checking layer 1 and 4 = (1+8) (using bitmask)
         var results = spaceState.IntersectPoint(parameters);
         /*GD.Print(results);
         if (results != null)

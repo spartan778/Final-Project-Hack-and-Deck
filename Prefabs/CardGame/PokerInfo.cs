@@ -38,7 +38,7 @@ public partial class PokerInfo : Resource
 
     public Vector2 ToVector2()
     {
-        return new Vector2((int)Rank, (int)Suit);
+        return new Vector2((int)Suit, (int)Rank);
     }
     
     public override string ToString() => $"{Rank+1} of {Suit}";

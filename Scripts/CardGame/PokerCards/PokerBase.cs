@@ -11,6 +11,7 @@ public partial class PokerBase : Node2D
 
 	public Action PokerSummoned;
 	public bool IsLocked { get; private set; }
+	public bool IsSummoned { get; private set; }
 	
 	public PokerState PokerState => PokerModifiersManager.PokerState;
 	public PokerType PokerType => PokerModifiersManager.PokerType;
@@ -25,6 +26,7 @@ public partial class PokerBase : Node2D
 			return;
 		}
 		PokerGameManager = cardGameBase.PokerGameManager;
+		PokerSummoned += OnPokerSummoned;
 	}
 
 	public void InitPoker(PokerInfo pokerInfo)
@@ -35,5 +37,10 @@ public partial class PokerBase : Node2D
 	public void SetPokerLock(bool isLocked)
 	{
 		IsLocked = isLocked;
+	}
+	
+	private void OnPokerSummoned()
+	{
+		IsSummoned = true;
 	}
 }

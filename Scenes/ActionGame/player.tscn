@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://0s7odp1g51tv"]
+[gd_scene load_steps=19 format=3 uid="uid://0s7odp1g51tv"]
 
 [ext_resource type="Texture2D" uid="uid://c4eglj7rf3os3" path="res://icon.svg" id="1_0mflq"]
 [ext_resource type="Script" uid="uid://cv62dao6bnc30" path="res://Scripts/ActionGame/PlayerManager.cs" id="1_mhocx"]
@@ -11,9 +11,11 @@
 [ext_resource type="Material" uid="uid://chegesvjx5m4" path="res://Prefabs/Shaders/Blink/red_blink.tres" id="5_0n75y"]
 [ext_resource type="PackedScene" uid="uid://dw62403pk1am3" path="res://Prefabs/ActionGame/Bullets/BasicBullet/basic_bullet.tscn" id="6_rq88u"]
 [ext_resource type="Script" uid="uid://3ver75t7ymwg" path="res://Scripts/ActionGame/MagicBulletAttack.cs" id="7_e6f3n"]
-[ext_resource type="Script" uid="uid://by2bm21xikwd2" path="res://Scripts/ActionGame/TriggeredAction.cs" id="7_um666"]
+[ext_resource type="Script" uid="uid://by2bm21xikwd2" path="res://Scripts/ActionGame/CardHandling/TriggeredAction.cs" id="7_um666"]
 [ext_resource type="PackedScene" uid="uid://do7g64n8bmqa8" path="res://Prefabs/ActionGame/Bullets/MagicBullet/magic_bullet.tscn" id="8_um666"]
-[ext_resource type="Script" uid="uid://bqdo7x80n285y" path="res://Scripts/ActionGame/SlottedAction.cs" id="9_bnihk"]
+[ext_resource type="Script" uid="uid://bqdo7x80n285y" path="res://Scripts/ActionGame/CardHandling/SlottedAction.cs" id="9_bnihk"]
+[ext_resource type="Script" uid="uid://db7l34k4bc7oj" path="res://Scripts/ActionGame/CardHandling/CardSummonSystem.cs" id="9_i4xmh"]
+[ext_resource type="PackedScene" uid="uid://dhdu8s5akoesb" path="res://Prefabs/CardGame/PokerBase.tscn" id="10_0l2bn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0mflq"]
 size = Vector2(40, 40)
@@ -30,71 +32,80 @@ shape = SubResource("RectangleShape2D_0mflq")
 
 [node name="PlayerHitbox" type="Area2D" parent="." node_paths=PackedStringArray("HealthSystem")]
 script = ExtResource("2_g7csx")
-HealthSystem = NodePath("../HealthSystem")
+HealthSystem = NodePath("../PlayerSystems/HealthSystem")
 
 [node name="HitBoxArea" type="CollisionShape2D" parent="PlayerHitbox"]
 shape = SubResource("RectangleShape2D_g7csx")
 
-[node name="HealthSystem" parent="." node_paths=PackedStringArray("HealthBar") instance=ExtResource("3_e6f3n")]
-CurrentHealth = 100.0
-HealthBar = NodePath("../HealthBar")
-
 [node name="VFXs" type="Node" parent="."]
 
 [node name="DamageBlinkShader" parent="VFXs" node_paths=PackedStringArray("healthSystem", "sprite_2d") instance=ExtResource("4_36vhm")]
-healthSystem = NodePath("../../HealthSystem")
+healthSystem = NodePath("../../PlayerSystems/HealthSystem")
 shaderMat = ExtResource("5_0n75y")
 sprite_2d = NodePath("../../CharacterSprite")
 duration = 0.3
 interval = 0.1
 
 [node name="HealBlinkShader" parent="VFXs" node_paths=PackedStringArray("healthSystem", "sprite_2d") instance=ExtResource("4_36vhm")]
-healthSystem = NodePath("../../HealthSystem")
+healthSystem = NodePath("../../PlayerSystems/HealthSystem")
 sprite_2d = NodePath("../../CharacterSprite")
 duration = 1.0
 interval = 0.2
 
 [node name="HealthBar" parent="." instance=ExtResource("4_roci8")]
 
-[node name="MovementSystem" type="Node" parent="."]
+[node name="PokerSystem" type="Node" parent="."]
 
-[node name="PlayerMovement" type="Node" parent="MovementSystem" node_paths=PackedStringArray("playerManagerRef")]
-script = ExtResource("2_sw6lw")
+[node name="TriggeredAction" type="Node" parent="PokerSystem" node_paths=PackedStringArray("PlayerManagerRef", "basicAttackRef", "healthSystemRef")]
+script = ExtResource("7_um666")
+PlayerManagerRef = NodePath("../..")
+basicAttackRef = NodePath("../../PlayerSystems/AttackSystem/BasicAttack")
+triggeredBulletPrefab = ExtResource("8_um666")
+healthSystemRef = NodePath("../../PlayerSystems/HealthSystem")
+
+[node name="SlottedAction" type="Node" parent="PokerSystem" node_paths=PackedStringArray("PlayerManagerRef", "healthSystemRef", "magicBulletAttackRef")]
+script = ExtResource("9_bnihk")
+PlayerManagerRef = NodePath("../..")
+healthSystemRef = NodePath("../../PlayerSystems/HealthSystem")
+magicBulletAttackRef = NodePath("../../PlayerSystems/AttackSystem/MagicBulletAttack")
+
+[node name="CardSummonSystem" type="Node2D" parent="PokerSystem" node_paths=PackedStringArray("playerManagerRef")]
+script = ExtResource("9_i4xmh")
+pokerBasePrefab = ExtResource("10_0l2bn")
 playerManagerRef = NodePath("../..")
+
+[node name="PlayerSystems" type="Node" parent="."]
+
+[node name="HealthSystem" parent="PlayerSystems" node_paths=PackedStringArray("HealthBar") instance=ExtResource("3_e6f3n")]
+CurrentHealth = 100.0
+HealthBar = NodePath("../../HealthBar")
+
+[node name="MovementSystem" type="Node" parent="PlayerSystems"]
+
+[node name="PlayerMovement" type="Node" parent="PlayerSystems/MovementSystem" node_paths=PackedStringArray("playerManagerRef")]
+script = ExtResource("2_sw6lw")
+playerManagerRef = NodePath("../../..")
 Speed = 100.0
 DashSpeed = 300.0
 
-[node name="AttackSystem" type="Node" parent="."]
+[node name="AttackSystem" type="Node" parent="PlayerSystems"]
 
-[node name="BasicAttack" type="Node" parent="AttackSystem" node_paths=PackedStringArray("PlayerManagerRef", "basicAttackTimer")]
+[node name="BasicAttack" type="Node" parent="PlayerSystems/AttackSystem" node_paths=PackedStringArray("PlayerManagerRef", "basicAttackTimer")]
 script = ExtResource("3_25hhx")
-PlayerManagerRef = NodePath("../..")
+PlayerManagerRef = NodePath("../../..")
 basicBulletPrefab = ExtResource("6_rq88u")
 BulletCount = 3
 BasicAttackFrequency = 3.0
 TimeBetweenShots = 0.33
 basicAttackTimer = NodePath("BasicAttackTimer")
 
-[node name="BasicAttackTimer" type="Timer" parent="AttackSystem/BasicAttack"]
+[node name="BasicAttackTimer" type="Timer" parent="PlayerSystems/AttackSystem/BasicAttack"]
 
-[node name="MagicBulletAttack" type="Node" parent="AttackSystem" node_paths=PackedStringArray("playerManagerRef")]
+[node name="MagicBulletAttack" type="Node" parent="PlayerSystems/AttackSystem" node_paths=PackedStringArray("playerManagerRef")]
 script = ExtResource("7_e6f3n")
 magicBulletPrefab = ExtResource("8_um666")
-playerManagerRef = NodePath("../..")
+playerManagerRef = NodePath("../../..")
 AttackArc = 45.0
-
-[node name="TriggeredAction" type="Node" parent="." node_paths=PackedStringArray("PlayerManagerRef", "basicAttackRef", "healthSystemRef")]
-script = ExtResource("7_um666")
-PlayerManagerRef = NodePath("..")
-basicAttackRef = NodePath("../AttackSystem/BasicAttack")
-triggeredBulletPrefab = ExtResource("8_um666")
-healthSystemRef = NodePath("../HealthSystem")
-
-[node name="SlottedAction" type="Node" parent="." node_paths=PackedStringArray("PlayerManagerRef", "healthSystemRef", "magicBulletAttackRef")]
-script = ExtResource("9_bnihk")
-PlayerManagerRef = NodePath("..")
-healthSystemRef = NodePath("../HealthSystem")
-magicBulletAttackRef = NodePath("../AttackSystem/MagicBulletAttack")
 
 [node name="CharacterSprite" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
@@ -102,5 +113,5 @@ texture = ExtResource("1_0mflq")
 
 [node name="MainCamera" type="Camera2D" parent="."]
 
-[connection signal="DamageEffect" from="HealthSystem" to="VFXs/DamageBlinkShader" method="_on_health_system_damage_effect"]
-[connection signal="HealingEffect" from="HealthSystem" to="VFXs/HealBlinkShader" method="_on_health_system_healing_effect"]
+[connection signal="DamageEffect" from="PlayerSystems/HealthSystem" to="VFXs/DamageBlinkShader" method="_on_health_system_damage_effect"]
+[connection signal="HealingEffect" from="PlayerSystems/HealthSystem" to="VFXs/HealBlinkShader" method="_on_health_system_healing_effect"]
