@@ -357,11 +357,13 @@ organizeArea = NodePath("../HandPanel")
 handSlots = NodePath("..")
 pokerSpacing = 100.0
 
-[node name="SummonSystem" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("CardSlotModule", "networkTickTimer")]
+[node name="SummonSystem" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("CardSlotModule", "discardPileRef", "networkTickTimer", "inverseTimer")]
 position = Vector2(1163, 322)
 script = ExtResource("22_ib4bk")
 CardSlotModule = NodePath("CardSlotModule")
+discardPileRef = NodePath("../CardSystem/PokerDeck/DiscardPile")
 networkTickTimer = NodePath("../../GameTimers/NetworkTickTimer")
+inverseTimer = NodePath("InverseTimer")
 
 [node name="CardSlotModule" parent="GameBase2D/SummonSystem" node_paths=PackedStringArray("parentNode2D", "SlotArea") instance=ExtResource("23_y2t1j")]
 parentNode2D = NodePath("..")
@@ -381,6 +383,9 @@ collision_mask = 3
 
 [node name="Collider" type="CollisionShape2D" parent="GameBase2D/SummonSystem/SlotArea"]
 shape = SubResource("RectangleShape2D_li3x3")
+
+[node name="InverseTimer" type="Timer" parent="GameBase2D/SummonSystem"]
+one_shot = true
 
 [node name="GameTimers" type="Node" parent="."]
 

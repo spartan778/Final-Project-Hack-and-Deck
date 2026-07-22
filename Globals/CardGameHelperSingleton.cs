@@ -62,4 +62,13 @@ public partial class CardGameHelperSingleton : Node
         if (pokerVector.X < 0 || pokerVector.X > 3 || pokerVector.Y < 0 || pokerVector.Y > 12) return false;
         return true;
     }
+
+    public Vector2 GetPokerPlacementVector(PokerBase pokerBase)
+    {
+        var basePos = pokerBase.GetGlobalPosition();
+        var renderSize = GetViewport().GetVisibleRect().Size;
+        var vectorPos = new Vector2 (basePos.X/renderSize.X, basePos.Y/renderSize.Y);
+        GD.Print($"PosVector: {vectorPos}");
+        return vectorPos;
+    }
 }

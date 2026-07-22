@@ -114,11 +114,15 @@ public partial class RpcManager : Node
         GD.Print($"Summoning: {pokerInfo}: {pokerState}");
     }
 
-    public void SyncPokerSummonRpc(bool isTracking, Vector2 pokerPlacement)
+    public void SyncPokerSummonRpc_Send(Vector2 pokerPlacementRatio)
     {
         
     }
-    // public void SyncPokerSummonRpc(PokerInfo pokerInfo, Dictionary modifiers)
+
+    public void SyncPokerSummonRpc_Receive(Vector2 pokerPlacementRatio)
+    {
+        
+    }
     
     
     #endregion

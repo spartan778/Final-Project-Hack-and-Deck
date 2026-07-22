@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cvm27xsurynxq"]
+
+[ext_resource type="Shader" uid="uid://b250hf6hl3ir0" path="res://Prefabs/Shaders/Inverse/InverseColor.gdshader" id="1_yp015"]
+
+[resource]
+shader = ExtResource("1_yp015")
