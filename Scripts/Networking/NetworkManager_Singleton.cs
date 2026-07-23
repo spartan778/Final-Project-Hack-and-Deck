@@ -39,6 +39,7 @@ public partial class NetworkManager_Singleton : Node
 	{
 		ConnectSignals();
 		PrepareConnection();
+		StartSignalServerConnection();
 		rpcManager = RpcManager.GetInstance();
 	}
 	
@@ -195,13 +196,9 @@ public partial class NetworkManager_Singleton : Node
 		return testLocal ? localAddress : onlineAddress;
 	}
 
-	public async void StartSignalingConnection()
+	public void JoinGameRoom()
 	{
-		webSocket.ConnectToUrl(GetServerAddress());
-		while (webSocket.GetReadyState() != WebSocketPeer.State.Open) //wait until Web Socket is Open
-		{
-			await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-		}
+		
 		SendJoinMsg();
 		if (isHost) //switch ID to match on two peers
 		{
@@ -218,8 +215,7 @@ public partial class NetworkManager_Singleton : Node
 		rtcMultiplayerPeer.CreateMesh(deviceId);
 		rtcMultiplayerPeer.AddPeer(peerConnection,peerId);
 		Multiplayer.MultiplayerPeer = rtcMultiplayerPeer; //attach peer to Godot high level API (RPC)
-		GD.Print("Signal Server connected");
-		SignalServerConnected?.Invoke();
+		
 		// Co.Run(OnDurationRepeat(2f));
 	}
 
@@ -269,6 +265,16 @@ public partial class NetworkManager_Singleton : Node
 		});
 	}
 
+	private async void StartSignalServerConnection()
+	{
+		webSocket.ConnectToUrl(GetServerAddress());
+		while (webSocket.GetReadyState() != WebSocketPeer.State.Open) //wait until Web Socket is Open
+		{
+			await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+			GD.Print("Signal Server connected");
+			SignalServerConnected?.Invoke();
+		}
+	}
 	public static NetworkManager_Singleton GetInstance()
 	{
 		if (_instance == null)

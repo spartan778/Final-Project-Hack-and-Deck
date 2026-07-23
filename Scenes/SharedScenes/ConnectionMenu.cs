@@ -5,8 +5,8 @@ public partial class ConnectionMenu : Control
 {
     private NetworkManager_Singleton networkManagerSingleton;
     [Export] private CheckButton isHostButton;
-    [Export] private Button connectButton, makeOfferButton, testOfflineButton;
-    [Export] private Label infoLabel;
+    [Export] private Button joinRoomButton, startGameButton, testOfflineButton;
+    [Export] private Label infoLabel,titleLabel;
 
     public override void _EnterTree()
     {
@@ -17,7 +17,8 @@ public partial class ConnectionMenu : Control
     public override void _Ready()
     {
         networkManagerSingleton = NetworkManager_Singleton.GetInstance();
-        makeOfferButton.Disabled = true;
+        startGameButton.Disabled = true;
+        joinRoomButton.Disabled = true;
         isHostButton.SetPressedNoSignal(false);
         ConnectSignals();
     }
@@ -25,8 +26,8 @@ public partial class ConnectionMenu : Control
     private void ConnectSignals()
     {
         isHostButton.Pressed += OnIsHostButtonPressed;
-        connectButton.Pressed += OnConnectButtonPressed;
-        makeOfferButton.Pressed += OnMakeOfferButtonPressed;
+        joinRoomButton.Pressed += OnJoinGameButtonPressed;
+        startGameButton.Pressed += OnStartGameButtonPressed;
         networkManagerSingleton.SignalServerConnected += OnSignalServerConnected;
         networkManagerSingleton.PlayerMatched += OnPlayerMatched;
         networkManagerSingleton.PlayerCountChanged += OnPlayerCountChanged;
@@ -39,19 +40,19 @@ public partial class ConnectionMenu : Control
         SceneManager.Instance.PrepareMainGameScene();
         SceneManager.Instance.ChangeToMainGameScene();
     }
-    private void OnMakeOfferButtonPressed()
+    private void OnStartGameButtonPressed()
     {
         networkManagerSingleton.StartRtcProcess();
     }
 
-    private void OnConnectButtonPressed()
+    private void OnJoinGameButtonPressed()
     {
-        networkManagerSingleton.StartSignalingConnection();
-        connectButton.Disabled = true;
+        networkManagerSingleton.JoinGameRoom();
+        joinRoomButton.Disabled = true;
         isHostButton.Disabled = true;
-        infoLabel.Text = "Connecting to server...";
+        infoLabel.Text = "Joining Room...";
     }
-
+    
     private void OnIsHostButtonPressed()
     {
         var state= isHostButton.ButtonPressed;
@@ -62,21 +63,22 @@ public partial class ConnectionMenu : Control
     
     private void OnSignalServerConnected()
     {
-        connectButton.Disabled = true;
-        infoLabel.Text = "Signal Server Connected," +
-                         "\n waiting for the other player";
+        joinRoomButton.Disabled = false;
+        titleLabel.Text = "Signal Server is online";
     }
 
     private void OnPlayerMatched()
     {
         if (networkManagerSingleton.IsHost)
         {
-            infoLabel.Text = "Player Matched, Click [Make Offer] to create P2P connection as Host";
-            makeOfferButton.Disabled = false;
+            infoLabel.Text = "Player Matched, Click [Start Game] to Start the game";
+            startGameButton.Disabled = false;
+            joinRoomButton.Disabled = true;
         }
         else
         {
-            infoLabel.Text = "Player Matched, wait for Host to start P2P connection";
+            infoLabel.Text = "Player Matched, please wait for the Host to start the game";
+            joinRoomButton.Disabled = true;
         }
         SceneManager.Instance.PrepareMainGameScene();
     }
@@ -86,12 +88,13 @@ public partial class ConnectionMenu : Control
         var state= isHostButton.ButtonPressed;
         var text = state? "Host" : "Client";
         infoLabel.Text = $"P2P connection established, you are playing as: {text}";
-        makeOfferButton.Disabled = true;
+        startGameButton.Disabled = true;
         SceneManager.Instance.ChangeToMainGameScene();
     }
 
     private void OnPlayerCountChanged(int playerCount)
     {
         GD.Print($"Current Player Count: {playerCount}");
+        infoLabel.Text = $"Current Player Count: {playerCount}";
     }
 }

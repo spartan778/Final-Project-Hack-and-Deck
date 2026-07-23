@@ -18,7 +18,7 @@ Button/styles/hover = SubResource("StyleBoxFlat_7yh3l")
 Button/styles/normal = SubResource("StyleBoxFlat_h3gyg")
 Button/styles/pressed = SubResource("StyleBoxFlat_pqov5")
 
-[node name="ConnectionMenu" type="Control" node_paths=PackedStringArray("isHostButton", "connectButton", "makeOfferButton", "testOfflineButton", "infoLabel")]
+[node name="ConnectionMenu" type="Control" node_paths=PackedStringArray("isHostButton", "joinRoomButton", "startGameButton", "testOfflineButton", "infoLabel", "titleLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,11 +28,12 @@ offset_bottom = -720.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_tspjj")
-isHostButton = NodePath("MainPanel/InfoLabel/IsHostButtonT")
-connectButton = NodePath("MainPanel/ConnectButton")
-makeOfferButton = NodePath("MainPanel/MakeOfferButton")
+isHostButton = NodePath("MainPanel/InfoLabel/IsHostButton")
+joinRoomButton = NodePath("MainPanel/JoinRoomButton")
+startGameButton = NodePath("MainPanel/StartGameButton")
 testOfflineButton = NodePath("MainPanel/TestOffline")
 infoLabel = NodePath("MainPanel/InfoLabel")
+titleLabel = NodePath("MainPanel/Title")
 
 [node name="MainPanel" type="Panel" parent="."]
 layout_mode = 0
@@ -76,7 +77,7 @@ text = "Join as Client"
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="IsHostButtonT" type="CheckButton" parent="MainPanel/InfoLabel"]
+[node name="IsHostButton" type="CheckButton" parent="MainPanel/InfoLabel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -91,7 +92,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(5, 5)
 
-[node name="ConnectButton" type="Button" parent="MainPanel"]
+[node name="JoinRoomButton" type="Button" parent="MainPanel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -106,9 +107,9 @@ grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 theme = SubResource("Theme_aei5g")
-text = "Connect"
+text = "Join Room"
 
-[node name="MakeOfferButton" type="Button" parent="MainPanel"]
+[node name="StartGameButton" type="Button" parent="MainPanel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -123,7 +124,7 @@ grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 theme = SubResource("Theme_aei5g")
-text = "Make Offer"
+text = "Start Game"
 
 [node name="TestOffline" type="Button" parent="MainPanel"]
 layout_mode = 1
