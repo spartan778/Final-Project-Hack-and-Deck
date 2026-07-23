@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://0s7odp1g51tv"]
+[gd_scene load_steps=21 format=3 uid="uid://0s7odp1g51tv"]
 
 [ext_resource type="Texture2D" uid="uid://c4eglj7rf3os3" path="res://icon.svg" id="1_0mflq"]
 [ext_resource type="Script" uid="uid://cv62dao6bnc30" path="res://Scripts/ActionGame/PlayerManager.cs" id="1_mhocx"]
@@ -16,6 +16,8 @@
 [ext_resource type="Script" uid="uid://bqdo7x80n285y" path="res://Scripts/ActionGame/CardHandling/SlottedAction.cs" id="9_bnihk"]
 [ext_resource type="Script" uid="uid://db7l34k4bc7oj" path="res://Scripts/ActionGame/CardHandling/CardSummonSystem.cs" id="9_i4xmh"]
 [ext_resource type="PackedScene" uid="uid://dbgh8rfar0wng" path="res://Prefabs/ActionGame/action_game_poker.tscn" id="10_0l2bn"]
+[ext_resource type="Script" uid="uid://sdciksy81bk8" path="res://Scripts/ActionGame/CardHandling/DirectionalAnchor.cs" id="11_5yi2e"]
+[ext_resource type="Texture2D" uid="uid://dne4vwrg08ea4" path="res://Assets/UI/Vector_UI_Pack_dobo_ui/Arrows/arrow_blue.png" id="11_elfip"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0mflq"]
 size = Vector2(40, 40)
@@ -69,11 +71,6 @@ PlayerManagerRef = NodePath("../..")
 healthSystemRef = NodePath("../../PlayerSystems/HealthSystem")
 magicBulletAttackRef = NodePath("../../PlayerSystems/AttackSystem/MagicBulletAttack")
 
-[node name="CardSummonSystem" type="Node2D" parent="PokerSystem" node_paths=PackedStringArray("playerManagerRef")]
-script = ExtResource("9_i4xmh")
-actionGamePokerPrefab = ExtResource("10_0l2bn")
-playerManagerRef = NodePath("../..")
-
 [node name="PlayerSystems" type="Node" parent="."]
 
 [node name="HealthSystem" parent="PlayerSystems" node_paths=PackedStringArray("HealthBar") instance=ExtResource("3_e6f3n")]
@@ -112,6 +109,24 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_0mflq")
 
 [node name="MainCamera" type="Camera2D" parent="."]
+
+[node name="CardSummonSystem" type="Node2D" parent="." node_paths=PackedStringArray("playerManagerRef")]
+script = ExtResource("9_i4xmh")
+actionGamePokerPrefab = ExtResource("10_0l2bn")
+playerManagerRef = NodePath("..")
+
+[node name="DirectionalAnchor" type="Node2D" parent="CardSummonSystem" node_paths=PackedStringArray("cardSummonSystem", "playerManagerRef")]
+script = ExtResource("11_5yi2e")
+cardSummonSystem = NodePath("..")
+playerManagerRef = NodePath("../..")
+
+[node name="SkillSlot" type="Node2D" parent="CardSummonSystem/DirectionalAnchor"]
+position = Vector2(58, 2)
+
+[node name="Sprite2D" type="Sprite2D" parent="CardSummonSystem/DirectionalAnchor/SkillSlot"]
+rotation = 1.5708
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("11_elfip")
 
 [connection signal="DamageEffect" from="PlayerSystems/HealthSystem" to="VFXs/DamageBlinkShader" method="_on_health_system_damage_effect"]
 [connection signal="HealingEffect" from="PlayerSystems/HealthSystem" to="VFXs/HealBlinkShader" method="_on_health_system_healing_effect"]

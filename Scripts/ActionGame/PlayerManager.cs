@@ -24,6 +24,18 @@ public partial class PlayerManager : CharacterBody2D
         var rawVector = GetGlobalMousePosition() - GlobalPosition;
         return rawVector.Normalized();
     }
+    
+    public Vector2 GetTargetToPlayerVector(Node2D target)
+    {
+        var rawVector = target.GlobalPosition - GlobalPosition;
+        return rawVector.Normalized();
+    }
+
+    public Vector2 GetTargetToPlayerVector(Vector2 targetPos)
+    {
+        var rawVector = targetPos - GlobalPosition;
+        return rawVector.Normalized();
+    }
 }
 
 public enum PlayerForm
