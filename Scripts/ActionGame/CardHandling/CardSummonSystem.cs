@@ -3,21 +3,28 @@ using System;
 
 public partial class CardSummonSystem : Node2D
 {
-    [Export] private PackedScene pokerBasePrefab;
+    [Export] private PackedScene actionGamePokerPrefab;
     [Export] private PlayerManager playerManagerRef;
-    public PokerBase SummonedPokerBase{get; private set;}
+    public ActionGamePoker SummonedActionPoker{get; private set;}
 
-    private ActionRpcHandler actionRpcHandlerRef; 
+    private ActionRpcHandler actionRpcHandlerRef;
 
     public override void _EnterTree()
     {
-        var pokerBase = pokerBasePrefab.InstantiateOrNull<PokerBase>();
-        if (pokerBase == null)
+        // var pokerBase = pokerBasePrefab.InstantiateOrNull<PokerBase>();
+        var actionPoker = actionGamePokerPrefab.InstantiateOrNull<ActionGamePoker>();
+        // if (pokerBase == null)
+        // {
+        //     GD.PrintErr("Could not instantiate PokerBase");
+        //     return;
+        // }
+        if (actionPoker == null)
         {
-            GD.PrintErr("Could not instantiate PokerBase");
+            GD.PrintErr("Could not instantiate ActionPoker");
             return;
         }
-        pokerBase.QueueFree();
+        // pokerBase.QueueFree();
+        actionPoker.QueueFree();
         
     }
     public override void _Ready()
@@ -35,17 +42,17 @@ public partial class CardSummonSystem : Node2D
     private void OnSummonPoker(PokerInfo pokerInfo, PokerState pokerState)
     {
         GD.Print($"Triggered summoning: {pokerInfo}: {pokerState}");
-        var pokerTemp = pokerBasePrefab.Instantiate<PokerBase>();
-        pokerTemp.InitPoker(pokerInfo);
+        var pokerTemp = actionGamePokerPrefab.Instantiate<ActionGamePoker>();
+        pokerTemp.InitActionPoker(pokerInfo, pokerState);
         pokerTemp.PokerModifiersManager.SetPokerState(pokerState);
-        SummonedPokerBase = pokerTemp;
-        playerManagerRef.AddChild(SummonedPokerBase);
+        SummonedActionPoker = pokerTemp;
+        playerManagerRef.AddChild(SummonedActionPoker);
     }
 
     private void OnSyncSummonedPokerPosition(Vector2 summonedPokerPosition)
     {
-        if(SummonedPokerBase == null) return;
-        var offset = new Vector2(0, 100);
-        SummonedPokerBase.Position = summonedPokerPosition - playerManagerRef.Position + offset;
+        if(SummonedActionPoker == null) return;
+        var offset = new Vector2(0, 100); // to properly align card placement on both screens
+        SummonedActionPoker.Position = summonedPokerPosition - playerManagerRef.Position + offset;
     }
 }

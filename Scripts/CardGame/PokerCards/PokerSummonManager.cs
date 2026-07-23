@@ -10,11 +10,19 @@ public partial class PokerSummonManager : Node
 
     public override void _Ready()
     {
-        pokerBaseRef.PokerSummoned += OnPokerSummoned;
+        if(pokerBaseRef != null)
+        {
+            pokerBaseRef.PokerSummoned += OnPokerSummoned;
+        }
     }
 
     private void OnPokerSummoned()
     {
         summonEffect.Visible = true;
+    }
+
+    public void SetShowSummonEffect(bool value)
+    {
+        summonEffect.Visible = value;
     }
 }

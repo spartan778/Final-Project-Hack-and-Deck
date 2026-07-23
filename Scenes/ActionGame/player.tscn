@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://do7g64n8bmqa8" path="res://Prefabs/ActionGame/Bullets/MagicBullet/magic_bullet.tscn" id="8_um666"]
 [ext_resource type="Script" uid="uid://bqdo7x80n285y" path="res://Scripts/ActionGame/CardHandling/SlottedAction.cs" id="9_bnihk"]
 [ext_resource type="Script" uid="uid://db7l34k4bc7oj" path="res://Scripts/ActionGame/CardHandling/CardSummonSystem.cs" id="9_i4xmh"]
-[ext_resource type="PackedScene" uid="uid://dhdu8s5akoesb" path="res://Prefabs/CardGame/PokerBase.tscn" id="10_0l2bn"]
+[ext_resource type="PackedScene" uid="uid://dbgh8rfar0wng" path="res://Prefabs/ActionGame/action_game_poker.tscn" id="10_0l2bn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0mflq"]
 size = Vector2(40, 40)
@@ -71,7 +71,7 @@ magicBulletAttackRef = NodePath("../../PlayerSystems/AttackSystem/MagicBulletAtt
 
 [node name="CardSummonSystem" type="Node2D" parent="PokerSystem" node_paths=PackedStringArray("playerManagerRef")]
 script = ExtResource("9_i4xmh")
-pokerBasePrefab = ExtResource("10_0l2bn")
+actionGamePokerPrefab = ExtResource("10_0l2bn")
 playerManagerRef = NodePath("../..")
 
 [node name="PlayerSystems" type="Node" parent="."]

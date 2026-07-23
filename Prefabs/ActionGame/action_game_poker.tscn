@@ -1,0 +1,54 @@
+[gd_scene load_steps=9 format=3 uid="uid://dbgh8rfar0wng"]
+
+[ext_resource type="Script" uid="uid://cjn18y3irtrvp" path="res://Prefabs/ActionGame/ActionGamePoker.cs" id="1_yt0vf"]
+[ext_resource type="SpriteFrames" uid="uid://6u3iajvhk1s3" path="res://Assets/CardGame/Top-Down-Cards/Cards/CardsStack.tres" id="2_d8n37"]
+[ext_resource type="PackedScene" uid="uid://bwcwwjhhqgglj" path="res://Assets/CardGame/Card-FX/wave_filter.tscn" id="3_oe7sb"]
+[ext_resource type="Script" uid="uid://cmg15ajyo4qhg" path="res://Scripts/CardGame/PokerCards/PokerContent.cs" id="4_c1n67"]
+[ext_resource type="Script" uid="uid://bb6jx2drb0q06" path="res://Scripts/CardGame/PokerCards/PokerModifiersManager.cs" id="5_4hd3w"]
+[ext_resource type="Material" uid="uid://cvm27xsurynxq" path="res://Prefabs/Shaders/Inverse/InverseColor.tres" id="6_mlnw3"]
+[ext_resource type="Script" uid="uid://e5ejs06st20v" path="res://Scripts/CardGame/PokerCards/PokerSummonManager.cs" id="7_j31mg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d824c"]
+size = Vector2(88, 124)
+
+[node name="ActionGamePoker" type="Node2D" node_paths=PackedStringArray("PokerContent", "PokerArea", "PokerModifiersManager", "PokerSummonManager")]
+script = ExtResource("1_yt0vf")
+PokerContent = NodePath("PokerContent")
+PokerArea = NodePath("DetectionArea")
+PokerModifiersManager = NodePath("PokerModifiersManager")
+PokerSummonManager = NodePath("PokerSummonManager")
+
+[node name="CardDisplay" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_d8n37")
+animation = &"ClubCardSprites"
+
+[node name="SummonEffect" parent="CardDisplay" instance=ExtResource("3_oe7sb")]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -44.0
+offset_top = -62.0
+offset_right = -44.0
+offset_bottom = -62.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DetectionArea" type="Area2D" parent="."]
+collision_mask = 129
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("RectangleShape2D_d824c")
+
+[node name="PokerContent" type="Node" parent="." node_paths=PackedStringArray("cardDisplay")]
+script = ExtResource("4_c1n67")
+cardDisplay = NodePath("../CardDisplay")
+
+[node name="PokerModifiersManager" type="Node" parent="." node_paths=PackedStringArray("cardDisplayRef")]
+script = ExtResource("5_4hd3w")
+cardDisplayRef = NodePath("../CardDisplay")
+shaderMaterial = ExtResource("6_mlnw3")
+
+[node name="PokerSummonManager" type="Node" parent="." node_paths=PackedStringArray("summonEffect")]
+script = ExtResource("7_j31mg")
+summonEffect = NodePath("../CardDisplay/SummonEffect")
