@@ -48,6 +48,7 @@ public partial class ConnectionMenu : Control
     {
         networkManagerSingleton.StartSignalingConnection();
         connectButton.Disabled = true;
+        isHostButton.Disabled = true;
         infoLabel.Text = "Connecting to server...";
     }
 
