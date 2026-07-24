@@ -12,6 +12,7 @@ public partial class CardSlotModule : Node
     [Export] public Area2D SlotArea { get; private set;}
     public PokerBase SlottedPoker {get; set;}
     public bool IsLockingPoker{get; set;}
+    public bool IsSlotOpen;
     
     public Action<PokerDragging> PokerSlotted { get; set; }
     public Action<PokerBase> PokerUnslotted { get; set; }
@@ -23,6 +24,7 @@ public partial class CardSlotModule : Node
         pokerGameManagerRef = CardGameHelperSingleton.Instance.PokerGameManager;
         pokerGameManagerRef.ReleasingPoker += OnPokerReleased;
         pokerGameManagerRef.HoldingPoker += OnHoldingPoker;
+        IsSlotOpen = true;
     }
 
     private void OnHoldingPoker(PokerBase poker)
@@ -41,12 +43,14 @@ public partial class CardSlotModule : Node
     
     private void OnPokerReleased(PokerBase poker)
     {
+        if(!IsSlotOpen) return;
         var overlappingAreas = SlotArea.GetOverlappingAreas();
         if(overlappingAreas.Count == 0) return; // skip all logic when nothing is overlapping
         foreach (var area in overlappingAreas)
         {
             if (area is not PokerDragging draggedPoker) continue; // filter out all non-pokers
-            if (draggedPoker.PokerBaseRef != poker) continue; // filter out  all pokers not being dragged
+            if (draggedPoker.PokerBaseRef != poker) continue; // filter out all pokers not being dragged
+            
             if (SlottedPoker != null && SlottedPoker != draggedPoker.PokerBaseRef)
             {
                 RejectPoker(draggedPoker.PokerBaseRef);
@@ -94,4 +98,6 @@ public partial class CardSlotModule : Node
     {
         IsLockingPoker = value;
     }
+    
+    
 }

@@ -271,9 +271,9 @@ public partial class NetworkManager_Singleton : Node
 		while (webSocket.GetReadyState() != WebSocketPeer.State.Open) //wait until Web Socket is Open
 		{
 			await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-			GD.Print("Signal Server connected");
-			SignalServerConnected?.Invoke();
 		}
+		GD.Print("Signal Server connected");
+		SignalServerConnected?.Invoke();
 	}
 	public static NetworkManager_Singleton GetInstance()
 	{

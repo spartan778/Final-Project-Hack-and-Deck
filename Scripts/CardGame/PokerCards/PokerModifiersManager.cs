@@ -38,7 +38,7 @@ public partial class PokerModifiersManager : Node
             }
         }
     }
-public Dictionary ToDictionary()
+public Dictionary ToDictionary() //turn card info into RPC friendly format
     {
         var enumDict = new Godot.Collections.Dictionary
         {

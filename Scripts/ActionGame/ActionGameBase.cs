@@ -5,6 +5,7 @@ public partial class ActionGameBase : Node // mostly used as a place to store re
 {
     [Export] public PlayerManager PlayerManagerRef { get; private set; }
     [Export] public BulletManager BulletManagerRef { get; private set; }
+    [Export] public Label TopLabel { get; private set; }
     
     public static ActionGameBase Instance { get; private set; }
     
@@ -18,5 +19,15 @@ public partial class ActionGameBase : Node // mostly used as a place to store re
         {
             QueueFree();
         }
+    }
+
+    public override void _Ready()
+    {
+        Multiplayer.PeerDisconnected += OnPeerDisconnected;
+    }
+
+    private void OnPeerDisconnected(long id)
+    {
+        TopLabel.Text = "Player Disconnected";
     }
 }

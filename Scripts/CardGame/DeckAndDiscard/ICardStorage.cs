@@ -9,8 +9,18 @@ public partial class ICardStorage : Node
     [Export] public Array<PokerInfo> StoredPokers;
     [Export] public PokerArray PokerPreset;
     [Export] private Label cardCountLabel;
-    public int CardCount => StoredPokers.Count;
+    [Export] private Area2D interactionArea;
+    [Export] public Timer HoldActionCoolDownTimer { get; private set; }
+    [Export] public float HoldTimeRequired {get; private set;}
+    [Export] public float HoldCoolDownTime {get; private set;}
     private PokerGameManager pokerGameManagerRef;
+
+    private bool isHoldOnCoolDown = false;
+    public Action HoldActionCompleted;
+    public bool IsMouseOverArea { get; private set; }
+    public int CardCount => StoredPokers.Count;
+    private double interactionProgress;
+    
 
     public override void _Ready()
     {
@@ -20,7 +30,57 @@ public partial class ICardStorage : Node
             UpdateCardCountDisplay();
         }
         pokerGameManagerRef = CardGameHelperSingleton.Instance.PokerGameManager;
+        HoldActionCoolDownTimer.WaitTime = HoldCoolDownTime;
+        ConnectSignals();
     }
+    private void ConnectSignals()
+    {
+        interactionArea.MouseEntered += OnMouseEntered;
+        interactionArea.MouseExited += OnMouseExited;
+        HoldActionCoolDownTimer.Timeout += OnHoldCoolDownTimer_Timeout;
+    }
+    
+    private void OnMouseEntered()
+    {
+        IsMouseOverArea = true;
+        interactionProgress = 0; // making sure progress is reset
+    }
+    private void OnMouseExited()
+    {
+        IsMouseOverArea = false;
+        interactionProgress = 0;
+    }
+
+    private void OnHoldCoolDownTimer_Timeout()
+    {
+        isHoldOnCoolDown = false;
+        GD.Print("Cooldown finished");
+    }
+    
+    public override void _PhysicsProcess(double delta)
+    {
+        HoldInteractionProcess(delta);
+    }
+
+    private void HoldInteractionProcess(double delta)
+    {
+        if(!IsMouseOverArea || isHoldOnCoolDown) return;
+        if (Input.IsActionPressed("card_poker_hold"))
+        {
+            interactionProgress += delta;
+            if (!(interactionProgress >= HoldTimeRequired)) return;
+            HoldActionCompleted?.Invoke();
+            GD.Print($"{GetParent().Name}: Hold action completed");
+            isHoldOnCoolDown = true;
+            HoldActionCoolDownTimer.Start();
+        }
+        else
+        {
+            interactionProgress -= delta;
+        }
+    }
+    
+
     public void ReshufflePokers()
     {
         for (var i = 0; i < StoredPokers.Count; i++)

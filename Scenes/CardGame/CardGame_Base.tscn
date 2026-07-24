@@ -178,7 +178,7 @@ DiscardPile = NodePath("../PokerDeck/DiscardPile")
 [node name="DrawPile" type="Node2D" parent="GameBase2D/CardSystem/PokerDeck" node_paths=PackedStringArray("CardStorage", "CardSystemRef", "deckArea", "handSlotsRef", "discardPileRef")]
 position = Vector2(1150, 607)
 script = ExtResource("6_8hseb")
-CardStorage = NodePath("CardStorage")
+CardStorage = NodePath("DrawStorage")
 CardSystemRef = NodePath("../..")
 deckArea = NodePath("DrawArea")
 handSlotsRef = NodePath("../../../HandSlots")
@@ -208,10 +208,17 @@ script = ExtResource("9_3ocyd")
 [node name="Collider" type="CollisionShape2D" parent="GameBase2D/CardSystem/PokerDeck/DrawPile/DrawArea"]
 shape = SubResource("RectangleShape2D_0n1s0")
 
-[node name="CardStorage" type="Node" parent="GameBase2D/CardSystem/PokerDeck/DrawPile" node_paths=PackedStringArray("cardCountLabel")]
+[node name="DrawStorage" type="Node" parent="GameBase2D/CardSystem/PokerDeck/DrawPile" node_paths=PackedStringArray("cardCountLabel", "interactionArea", "HoldActionCoolDownTimer")]
 script = ExtResource("9_k0eva")
 StoredPokers = Array[Object]([])
 cardCountLabel = NodePath("../DrawPileDisplays/CardCount")
+interactionArea = NodePath("../DrawArea")
+HoldActionCoolDownTimer = NodePath("HoldCoolDownTimer")
+HoldTimeRequired = 2.0
+HoldCoolDownTime = 5.0
+
+[node name="HoldCoolDownTimer" type="Timer" parent="GameBase2D/CardSystem/PokerDeck/DrawPile/DrawStorage"]
+one_shot = true
 
 [node name="DiscardPile" type="Node2D" parent="GameBase2D/CardSystem/PokerDeck" node_paths=PackedStringArray("DiscardStorage", "drawPileRef", "discardPileSprite", "inputArea")]
 position = Vector2(117, 606)
@@ -245,10 +252,17 @@ script = ExtResource("9_3ocyd")
 [node name="Collider" type="CollisionShape2D" parent="GameBase2D/CardSystem/PokerDeck/DiscardPile/DrawArea"]
 shape = SubResource("RectangleShape2D_0n1s0")
 
-[node name="DiscardStorage" type="Node" parent="GameBase2D/CardSystem/PokerDeck/DiscardPile" node_paths=PackedStringArray("cardCountLabel")]
+[node name="DiscardStorage" type="Node" parent="GameBase2D/CardSystem/PokerDeck/DiscardPile" node_paths=PackedStringArray("cardCountLabel", "interactionArea", "HoldActionCoolDownTimer")]
 script = ExtResource("9_k0eva")
 StoredPokers = Array[Object]([])
 cardCountLabel = NodePath("../DiscardPileDisplays/CardCount")
+interactionArea = NodePath("../DrawArea")
+HoldActionCoolDownTimer = NodePath("HoldCoolDownTimer")
+HoldTimeRequired = 2.0
+HoldCoolDownTime = 5.0
+
+[node name="HoldCoolDownTimer" type="Timer" parent="GameBase2D/CardSystem/PokerDeck/DiscardPile/DiscardStorage"]
+one_shot = true
 
 [node name="CardSlots" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("cardSlotContainer", "SlotCheckTimer", "ReleaseSlotsCoolDownTimer", "coolDownProgressBar", "swipeProgressBar")]
 position = Vector2(339, 313)
@@ -357,14 +371,16 @@ organizeArea = NodePath("../HandPanel")
 handSlots = NodePath("..")
 pokerSpacing = 100.0
 
-[node name="SummonSystem" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("CardSlotModule", "discardPileRef", "networkTickTimer", "inverseTimer")]
+[node name="SummonSystem" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("CardSlotModule", "discardPileRef", "networkTickTimer", "inverseTimer", "coolDownTimer", "summonAnimation")]
 position = Vector2(1163, 322)
 script = ExtResource("22_ib4bk")
 CardSlotModule = NodePath("CardSlotModule")
 discardPileRef = NodePath("../CardSystem/PokerDeck/DiscardPile")
 networkTickTimer = NodePath("../../GameTimers/NetworkTickTimer")
-inverseTimer = NodePath("InverseTimer")
+inverseTimer = NodePath("Timers/InverseTimer")
+coolDownTimer = NodePath("Timers/CoolDownTimer")
 inverseTime = 4.0
+summonAnimation = NodePath("SummonAnimation")
 
 [node name="CardSlotModule" parent="GameBase2D/SummonSystem" node_paths=PackedStringArray("parentNode2D", "SlotArea") instance=ExtResource("23_y2t1j")]
 parentNode2D = NodePath("..")
@@ -373,7 +389,7 @@ SlotArea = NodePath("../SlotArea")
 [node name="PokerSlotImage" type="Sprite2D" parent="GameBase2D/SummonSystem"]
 texture = ExtResource("6_of8xl")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GameBase2D/SummonSystem"]
+[node name="SummonAnimation" type="AnimatedSprite2D" parent="GameBase2D/SummonSystem"]
 sprite_frames = SubResource("SpriteFrames_86ync")
 autoplay = "default"
 frame_progress = 0.526177
@@ -385,7 +401,12 @@ collision_mask = 3
 [node name="Collider" type="CollisionShape2D" parent="GameBase2D/SummonSystem/SlotArea"]
 shape = SubResource("RectangleShape2D_li3x3")
 
-[node name="InverseTimer" type="Timer" parent="GameBase2D/SummonSystem"]
+[node name="Timers" type="Node" parent="GameBase2D/SummonSystem"]
+
+[node name="InverseTimer" type="Timer" parent="GameBase2D/SummonSystem/Timers"]
+one_shot = true
+
+[node name="CoolDownTimer" type="Timer" parent="GameBase2D/SummonSystem/Timers"]
 one_shot = true
 
 [node name="GameTimers" type="Node" parent="."]

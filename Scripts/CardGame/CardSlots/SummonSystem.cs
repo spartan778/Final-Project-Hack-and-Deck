@@ -5,8 +5,10 @@ public partial class SummonSystem : Node2D, ICardSlotModule
 {
     [Export] public CardSlotModule CardSlotModule { get;private set; }
     [Export] private DiscardPile discardPileRef;
-    [Export] private Timer networkTickTimer, inverseTimer;
+    [Export] private Timer networkTickTimer, inverseTimer, coolDownTimer;
     [Export] private float inverseTime = 5f;
+    [Export] private float coolDownTime = 15f;
+    [Export] private AnimatedSprite2D summonAnimation;
     public PokerBase SlottedPoker => CardSlotModule.SlottedPoker;
     public PokerDragging DraggedPoker;
     public PokerBase SummonedPoker{ get;private set; }
@@ -17,6 +19,8 @@ public partial class SummonSystem : Node2D, ICardSlotModule
         rpcManager = RpcManager.Instance;
         inverseTimer.WaitTime = inverseTime;
         inverseTimer.OneShot = true;
+        coolDownTimer.WaitTime = coolDownTime;
+        coolDownTimer.OneShot = true;
         ConnectSignals();
     }
 
@@ -26,6 +30,7 @@ public partial class SummonSystem : Node2D, ICardSlotModule
         CardSlotModule.PokerUnslotted += OnPokerUnslotted;
         networkTickTimer.Timeout += OnNetworkTick;
         inverseTimer.Timeout += OnInverseTimerTimeout;
+        coolDownTimer.Timeout += OnCoolDownTimerTimeout;
         // CardGameBase.Instance.PokerGameManager.ReleasingPoker += OnReleasingPoker;
     }
 
@@ -43,7 +48,11 @@ public partial class SummonSystem : Node2D, ICardSlotModule
         networkTickTimer.Start();
         inverseTimer.Stop();
         poker.PokerDraggingRef.SetCollisionLayer(0); // make this card unscannable by card slots
-        poker.PokerDraggingRef.SetCollisionLayerValue(4, true); // turn detection back on layer 4 ONLY 
+        poker.PokerDraggingRef.SetCollisionLayerValue(4, true); // turn detection back on layer 4 ONLY
+        GD.Print("PokerUnslotted Poker");
+        coolDownTimer.Start();
+        summonAnimation.Visible = false;
+        CardSlotModule.IsSlotOpen = false;
     }
     
     private void OnReleasingPoker(PokerBase poker)
@@ -54,6 +63,7 @@ public partial class SummonSystem : Node2D, ICardSlotModule
     public void ReturnToDiscard()
     {
         if(SummonedPoker == null) return;
+        //TODO handle summon poker return
         discardPileRef.AddToDiscardPile(SummonedPoker);
         SummonedPoker.QueueFree();
         SummonedPoker = null;
@@ -71,4 +81,12 @@ public partial class SummonSystem : Node2D, ICardSlotModule
     {
         SummonedPoker.PokerModifiersManager.SetPokerState(PokerState.Inversed);
     }
+
+    private void OnCoolDownTimerTimeout()
+    {
+        summonAnimation.Visible = true;
+        CardSlotModule.IsSlotOpen = true;
+        ReturnToDiscard();
+    }
+    
 }

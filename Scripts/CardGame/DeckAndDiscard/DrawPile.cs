@@ -12,7 +12,6 @@ public partial class DrawPile : Node2D
     private PackedScene pokerPrefab;
     private PokerGameManager pokerGameManagerRef;
     
-
     public override void _Ready()
     {
         CardStorage.StoredPokers = CardGameHelperSingleton.Instance.StartingDeck.SavedPokers;
@@ -63,5 +62,5 @@ public partial class DrawPile : Node2D
         // GD.Print($"Draw Starting Poker: {drawnPokerInfo}");
         CardSystemRef.AddChild(newPoker);
         return newPoker;
-    } 
+    }
 }
