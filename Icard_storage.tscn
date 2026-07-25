@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://dj1uusegwgdp"]
+
+[ext_resource type="Script" uid="uid://cf465j5jowb8e" path="res://Scripts/CardGame/DeckAndDiscard/ICardStorage.cs" id="1_l31qs"]
+
+[node name="CardStorage" type="Node" node_paths=PackedStringArray("HoldActionCoolDownTimer")]
+script = ExtResource("1_l31qs")
+StoredPokers = Array[Object]([])
+HoldActionCoolDownTimer = NodePath("HoldCoolDownTimer")
+HoldTimeRequired = 2.0
+HoldCoolDownTime = 5.0
+
+[node name="HoldCoolDownTimer" type="Timer" parent="."]
+one_shot = true
