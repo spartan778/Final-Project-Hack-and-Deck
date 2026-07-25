@@ -11,6 +11,8 @@ public partial class ICardStorage : Node
     [Export] private Label cardCountLabel;
     [Export] private Area2D interactionArea;
     [Export] public Timer HoldActionCoolDownTimer { get; private set; }
+    [Export] private TextureProgressBar holdProgressBar;
+    [Export] private Node2D progressTextureAnchor;
     [Export] public float HoldTimeRequired {get; private set;}
     [Export] public float HoldCoolDownTime {get; private set;}
     private PokerGameManager pokerGameManagerRef;
@@ -31,6 +33,8 @@ public partial class ICardStorage : Node
         }
         pokerGameManagerRef = CardGameHelperSingleton.Instance.PokerGameManager;
         HoldActionCoolDownTimer.WaitTime = HoldCoolDownTime;
+        // holdProgressBar.Value = 100;
+        holdProgressBar.Visible = false;
         ConnectSignals();
     }
     private void ConnectSignals()
@@ -59,24 +63,60 @@ public partial class ICardStorage : Node
     
     public override void _PhysicsProcess(double delta)
     {
+        if (IsJustStartedHolding() && !isHoldOnCoolDown)
+        {
+            holdProgressBar.Visible = true;
+        }
+        
         HoldInteractionProcess(delta);
     }
 
+    private bool IsJustStartedHolding()
+    {
+        if (Input.IsActionJustPressed("card_poker_hold"))
+        {
+            GD.Print("just started holding");
+            return true;
+        }
+        return false;
+    }
+
+    private bool IsJustStoppedHolding()
+    {
+        if (Input.IsActionJustReleased("card_poker_hold"))
+        {
+            GD.Print("just released");
+            return true;
+        }
+        return false;
+    }
     private void HoldInteractionProcess(double delta)
     {
-        if(!IsMouseOverArea || isHoldOnCoolDown) return;
+        if(!IsMouseOverArea || isHoldOnCoolDown)
+        { 
+            holdProgressBar.Visible = false;
+            holdProgressBar.Value = 0;
+            return;
+        }
         if (Input.IsActionPressed("card_poker_hold"))
         {
             interactionProgress += delta;
+            holdProgressBar.Value = interactionProgress/HoldTimeRequired * 100;
+            progressTextureAnchor.Position = progressTextureAnchor.GetGlobalMousePosition();
+            GD.Print($"{holdProgressBar.GlobalPosition}");
+            GD.Print($"{holdProgressBar.Value}");
             if (!(interactionProgress >= HoldTimeRequired)) return;
             HoldActionCompleted?.Invoke();
             GD.Print($"{GetParent().Name}: Hold action completed");
+            holdProgressBar.Visible = false;
             isHoldOnCoolDown = true;
             HoldActionCoolDownTimer.Start();
         }
-        else
+        if (Input.IsActionJustReleased("card_poker_hold"))
         {
-            interactionProgress -= delta;
+            holdProgressBar.Visible = false;
+            holdProgressBar.Value = 0;
+            return;
         }
     }
     
