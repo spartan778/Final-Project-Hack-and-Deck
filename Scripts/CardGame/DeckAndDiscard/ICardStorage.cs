@@ -100,7 +100,8 @@ public partial class ICardStorage : Node
     }
     private void HoldInteractionProcess(double delta)
     {
-        if(!IsMouseOverArea || isHoldOnCoolDown)
+        if(isHoldOnCoolDown || !holdProgressBar.Visible) return;
+        if(!IsMouseOverArea)
         { 
             holdProgressBar.Visible = false;
             holdProgressBar.Value = 0;
@@ -120,7 +121,7 @@ public partial class ICardStorage : Node
             isHoldOnCoolDown = true;
             HoldActionCoolDownTimer.Start();
         }
-        if (Input.IsActionJustReleased("card_poker_hold"))
+        else if (Input.IsActionJustReleased("card_poker_hold"))
         {
             holdProgressBar.Visible = false;
             holdProgressBar.Value = 0;
