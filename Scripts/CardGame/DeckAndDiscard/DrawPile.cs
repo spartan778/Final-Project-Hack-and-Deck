@@ -16,7 +16,8 @@ public partial class DrawPile : Node2D
     {
         CardStorage.StoredPokers = CardGameHelperSingleton.Instance.StartingDeck.SavedPokers;
         pokerPrefab = CardGameHelperSingleton.Instance.PokerPrefab;
-        deckArea.IsClicked += DrawPoker;
+        // deckArea.IsClicked += DrawPoker;
+        CardStorage.HoldActionCompleted += DrawPoker;
         CardStorage.ReshufflePokers();
         pokerGameManagerRef = CardGameHelperSingleton.Instance.PokerGameManager;
     }

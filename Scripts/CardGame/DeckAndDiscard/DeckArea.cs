@@ -28,7 +28,7 @@ public partial class DeckArea : Area2D
         if (!isHovered) return;
         switch (@event)
         {
-            case InputEventMouseButton { ButtonIndex: MouseButton.Right }:
+            case InputEventMouseButton { ButtonIndex: MouseButton.Right }: //mostly used for debugging
             {
                 if(@event.IsPressed())
                 {

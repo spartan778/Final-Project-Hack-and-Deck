@@ -20,7 +20,15 @@ public partial class ICardStorage : Node
     private bool isHoldOnCoolDown = false;
     public Action HoldActionCompleted;
     public bool IsMouseOverArea { get; private set; }
-    public int CardCount => StoredPokers.Count;
+    public int CardCount
+    {
+        get
+        {
+            UpdateCardCountDisplay();
+            return StoredPokers.Count;
+        }
+    }
+
     private double interactionProgress;
     
 
@@ -169,7 +177,7 @@ public partial class ICardStorage : Node
         GD.Print($"{GetParent().Name}: Inserted, current pokers: {StoredPokers}");
     }
 
-    public void InsertAtBack(PokerInfo poker)
+    public void InsertAtBack(PokerInfo poker) // insert the poker at the back of the list
     {
         var targetIndex = StoredPokers.Count - 1;
         StoredPokers.Insert(targetIndex, poker);
@@ -185,6 +193,21 @@ public partial class ICardStorage : Node
     public void RefreshPokers(PokerArray pokerArray)
     {
         StoredPokers = pokerArray.SavedPokers;
+    }
+
+    public Array<PokerInfo> DrawAllPokers(bool isRandom = true)
+    {
+        var tempArray = new Array<PokerInfo>();
+        if (isRandom)
+        {
+            ReshufflePokers();
+        }
+        foreach (var poker in StoredPokers)
+        {
+            tempArray.Add(poker);
+        }
+        StoredPokers.Clear();
+        return tempArray;
     }
     
     public void UpdateCardCountDisplay()

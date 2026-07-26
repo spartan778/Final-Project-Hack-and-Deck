@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 
 public partial class DiscardPile : Node2D
 {
@@ -13,6 +14,7 @@ public partial class DiscardPile : Node2D
     {
         pokerGameManagerRef = CardGameHelperSingleton.Instance.PokerGameManager;
         inputArea.IsClicked += RefillRandomToDrawPile;
+        DiscardStorage.HoldActionCompleted += RefillAllToDrawPile;
         UpdateDiscardDisplay();
     }
 
@@ -42,8 +44,19 @@ public partial class DiscardPile : Node2D
             drawPileRef.CardStorage.InsertAtBack(drawnPoker);
             UpdateDiscardDisplay();
         }
-
     }
+
+    public void RefillAllToDrawPile()
+    {
+        var drawnPokers= DiscardStorage.DrawAllPokers();
+        if (drawnPokers == null || drawnPokers.Count == 0) return;
+        foreach (var drawnPoker in drawnPokers)
+        {
+            drawPileRef.CardStorage.InsertAtBack(drawnPoker);
+        }
+        UpdateDiscardDisplay();
+    }
+    
     public void UpdateDiscardDisplay()
     {
         discardPileSprite.Visible = DiscardStorage.CardCount > 0;
