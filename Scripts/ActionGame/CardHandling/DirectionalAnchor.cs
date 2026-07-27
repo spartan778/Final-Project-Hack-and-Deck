@@ -23,6 +23,7 @@ public partial class DirectionalAnchor : Node2D
     private void ConnectSignals()
     {
         actionRpcHandlerRef.SummonPokerAction += OnSummonPoker;
+        actionRpcHandlerRef.SummonedPokerTimeOutAction += OnSummonedPokerTimeOut;
     }
 
     private void OnSummonPoker(PokerInfo pokerInfo, PokerState pokerState)
@@ -30,6 +31,11 @@ public partial class DirectionalAnchor : Node2D
         summonedPokerInfo = pokerInfo;
         summonedPokerState = pokerState;
         isPokerSummoned = true;
+    }
+
+    private void OnSummonedPokerTimeOut()
+    {
+        isPokerSummoned = false;
     }
 
     public override void _Process(double delta)

@@ -1,7 +1,8 @@
-[gd_scene load_steps=40 format=3 uid="uid://b18mj00imbv7"]
+[gd_scene load_steps=41 format=3 uid="uid://b18mj00imbv7"]
 
 [ext_resource type="Script" uid="uid://fkcmkhn8mgr2" path="res://Scripts/CardGame/CardGameBase.cs" id="1_64jno"]
 [ext_resource type="Script" uid="uid://ds5ea665i8jo4" path="res://Scripts/CardGame/CardGameUIManager.cs" id="1_y7kd2"]
+[ext_resource type="Script" uid="uid://cd6be46quhhgh" path="res://Scripts/CardGame/CardRpcHandler.cs" id="3_mt5kn"]
 [ext_resource type="Script" uid="uid://cj2eg6pahkjfe" path="res://Scripts/CardGame/PokerGameManager.cs" id="4_64jno"]
 [ext_resource type="Script" uid="uid://bgjke2o6okd5u" path="res://Scripts/CardGame/InputManager.cs" id="4_mmq6p"]
 [ext_resource type="Texture2D" uid="uid://d3tmnel32vlk0" path="res://Assets/CardGame/green_mat_texture_-_base_texture.png" id="4_oyi1v"]
@@ -119,6 +120,9 @@ NetworkTickTimer = NodePath("GameTimers/NetworkTickTimer")
 [node name="InputManager" type="Node" parent="." node_paths=PackedStringArray("pokerGameManager")]
 script = ExtResource("4_mmq6p")
 pokerGameManager = NodePath("../GameBase2D/CardSystem/PokerGameManager")
+
+[node name="CardRpcHandler" type="Node" parent="."]
+script = ExtResource("3_mt5kn")
 
 [node name="UI_Base" type="Control" parent="." node_paths=PackedStringArray("testLabel")]
 layout_mode = 3
@@ -415,11 +419,12 @@ organizeArea = NodePath("../HandPanel")
 handSlots = NodePath("..")
 pokerSpacing = 100.0
 
-[node name="SummonSystem" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("CardSlotModule", "discardPileRef", "networkTickTimer", "inverseTimer", "coolDownTimer", "summonAnimation")]
+[node name="SummonSystem" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("CardSlotModule", "discardPileRef", "cardRpcHandlerRef", "networkTickTimer", "inverseTimer", "coolDownTimer", "summonAnimation")]
 position = Vector2(1163, 322)
 script = ExtResource("22_ib4bk")
 CardSlotModule = NodePath("CardSlotModule")
 discardPileRef = NodePath("../CardSystem/PokerDeck/DiscardPile")
+cardRpcHandlerRef = NodePath("../../CardRpcHandler")
 networkTickTimer = NodePath("../../GameTimers/NetworkTickTimer")
 inverseTimer = NodePath("Timers/InverseTimer")
 coolDownTimer = NodePath("Timers/CoolDownTimer")

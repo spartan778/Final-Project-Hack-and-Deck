@@ -10,6 +10,7 @@ public partial class RpcManager : Node
     public static RpcManager Instance {get; private set;}
     private MultiplayerPeer multiplayerPeer;
     private ActionRpcHandler actionRpcHandler;
+    private CardRpcHandler cardRpcHandler;
     
     public int AddCount { get; private set; } = 0;
     public Action<int> TestNumberChanged;
@@ -28,6 +29,12 @@ public partial class RpcManager : Node
     {
         actionRpcHandler = handler;
     }
+    public void SetCardRpcHandler(CardRpcHandler handler)
+    {
+        cardRpcHandler = handler;
+    }
+
+    #region TestAndDebug
     [Rpc(RpcMode.AnyPeer)]
     private void TestRpc_Add()
     {
@@ -45,7 +52,8 @@ public partial class RpcManager : Node
     {
         GD.Print($"Mouse Pos: {pokerPlacement}");
     }
-
+    #endregion
+    
     #region SlotPoker
     public void SlotPokerRpc(PokerInfo pokerInfo, Dictionary modifiers)
     {
@@ -102,19 +110,17 @@ public partial class RpcManager : Node
         var pokerInfo = pokerBase.PokerContent.PokerInfo;
         TriggerSummonPoker_Send(pokerInfo.ToVector2(), pokerBase.PokerState);
     }
-
     private void TriggerSummonPoker_Send(Vector2 pokerInfo, PokerState pokerState)
     {
         Rpc(nameof(TriggerSummonPoker_Receive), pokerInfo, (int)pokerState);
     }
-
     [Rpc(RpcMode.AnyPeer)]
     private void TriggerSummonPoker_Receive(Vector2 pokerInfo, PokerState pokerState)
     {
         // GD.Print($"Summoning: {pokerInfo}: {pokerState}");
         actionRpcHandler.HandleTriggerSummonPoker(pokerInfo, pokerState);
     }
-
+    
     public void SyncPokerSummonRpc_Send(Vector2 pokerPlacementRatio)
     {
         Rpc(nameof(SyncPokerSummonRpc_Receive), pokerPlacementRatio);
@@ -125,8 +131,27 @@ public partial class RpcManager : Node
         // GD.Print($"(RPC) Vector:{ pokerPlacementRatio}");
         actionRpcHandler.SyncSummonedPokerPosition(pokerPlacementRatio);
     }
-    
-    
+
+    public void SummonedPokerTimeOut_Send()
+    {
+        Rpc(nameof(SummonedPokerTimeOut_Receive));
+    }
+    [Rpc(RpcMode.AnyPeer)]
+    private void SummonedPokerTimeOut_Receive()
+    {
+        actionRpcHandler.HandleSummonedPokerTimeOut();
+    }
+
+    public void SummonedPokerUsedUp_Send()
+    {
+        Rpc(nameof(SummonedPokerUsedUp_Receive));
+    }
+
+    [Rpc(RpcMode.AnyPeer)]
+    private void SummonedPokerUsedUp_Receive()
+    {
+        cardRpcHandler.HandleSummonPokerUsedUp();
+    }
     #endregion
     
     #region ReleaseHandSlots

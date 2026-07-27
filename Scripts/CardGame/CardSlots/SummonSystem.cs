@@ -5,6 +5,7 @@ public partial class SummonSystem : Node2D, ICardSlotModule
 {
     [Export] public CardSlotModule CardSlotModule { get;private set; }
     [Export] private DiscardPile discardPileRef;
+    [Export] private CardRpcHandler cardRpcHandlerRef;
     [Export] private Timer networkTickTimer, inverseTimer, coolDownTimer;
     [Export] private float inverseTime = 5f;
     [Export] private float coolDownTime = 15f;
@@ -13,6 +14,7 @@ public partial class SummonSystem : Node2D, ICardSlotModule
     public PokerDragging DraggedPoker;
     public PokerBase SummonedPoker{ get;private set; }
     private RpcManager rpcManager;
+    
 
     public override void _Ready()
     {
@@ -31,7 +33,7 @@ public partial class SummonSystem : Node2D, ICardSlotModule
         networkTickTimer.Timeout += OnNetworkTick;
         inverseTimer.Timeout += OnInverseTimerTimeout;
         coolDownTimer.Timeout += OnCoolDownTimerTimeout;
-        // CardGameBase.Instance.PokerGameManager.ReleasingPoker += OnReleasingPoker;
+        cardRpcHandlerRef.SummonPokerUsedUpAction += OnSummonPokerUsedUp;
     }
 
     private void OnPokerSlotted(PokerDragging poker)
@@ -54,16 +56,10 @@ public partial class SummonSystem : Node2D, ICardSlotModule
         summonAnimation.Visible = false;
         CardSlotModule.IsSlotOpen = false;
     }
-    
-    private void OnReleasingPoker(PokerBase poker)
-    {
-        if(poker != SummonedPoker) return;
-    }
 
-    public void ReturnToDiscard()
+    public void ReturnToDiscard() // send summoned poker to discard pile
     {
         if(SummonedPoker == null) return;
-        //TODO handle summon poker return
         discardPileRef.AddToDiscardPile(SummonedPoker);
         SummonedPoker.QueueFree();
         SummonedPoker = null;
@@ -86,6 +82,13 @@ public partial class SummonSystem : Node2D, ICardSlotModule
     {
         summonAnimation.Visible = true;
         CardSlotModule.IsSlotOpen = true;
+        rpcManager.SummonedPokerTimeOut_Send();
+        ReturnToDiscard();
+    }
+
+    private void OnSummonPokerUsedUp()
+    {
+        GD.Print("Poker Used Up");
         ReturnToDiscard();
     }
     

@@ -82,7 +82,6 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1280, 720)
 
 [node name="Player" parent="2DGameBase" instance=ExtResource("3_8mwp0")]
-position = Vector2(640, 450)
 
 [node name="BulletCleaner" type="Area2D" parent="2DGameBase/Player"]
 

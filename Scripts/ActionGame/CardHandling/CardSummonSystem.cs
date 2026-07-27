@@ -37,6 +37,7 @@ public partial class CardSummonSystem : Node2D
     {
         actionRpcHandlerRef.SummonPokerAction += OnSummonPoker;
         actionRpcHandlerRef.SyncSummonedPokerPositionAction += OnSyncSummonedPokerPosition;
+        actionRpcHandlerRef.SummonedPokerTimeOutAction += OnSummonedPokerTimeOut;
     }
 
     private void OnSummonPoker(PokerInfo pokerInfo, PokerState pokerState)
@@ -52,7 +53,15 @@ public partial class CardSummonSystem : Node2D
     private void OnSyncSummonedPokerPosition(Vector2 summonedPokerPosition)
     {
         if(SummonedActionPoker == null) return;
-        var offset = new Vector2(0, 100); // to properly align card placement on both screens
-        SummonedActionPoker.Position = summonedPokerPosition - playerManagerRef.Position + offset;
+        var offset = GetViewport().GetVisibleRect().Size/2; // to properly align card placement on both screens
+        // SummonedActionPoker.Position = summonedPokerPosition - playerManagerRef.Position + offset;
+        // SummonedActionPoker.Position = summonedPokerPosition + offset;
+        SummonedActionPoker.Position = summonedPokerPosition - offset;
+    }
+
+    private void OnSummonedPokerTimeOut()
+    {
+        SummonedActionPoker.QueueFree();
+        SummonedActionPoker = null;
     }
 }

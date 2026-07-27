@@ -8,6 +8,7 @@ public partial class ActionRpcHandler : Node
     public Action<PokerInfo, Dictionary> SlotPokerAction, TriggerPokerAction;
     public Action<PokerInfo, PokerState> SummonPokerAction;
     public Action<Vector2> SyncSummonedPokerPositionAction;
+    public Action SummonedPokerTimeOutAction;
     
 
     public override void _EnterTree()
@@ -41,6 +42,11 @@ public partial class ActionRpcHandler : Node
         var screenSize = GetScreenPosByRatio(pokerPlacementRatio);
         // GD.Print($"Syncing Summoned Poker Position: {screenSize}");
         SyncSummonedPokerPositionAction?.Invoke(screenSize);
+    }
+
+    public void HandleSummonedPokerTimeOut()
+    {
+        SummonedPokerTimeOutAction?.Invoke();
     }
     
     public Vector2 GetScreenPosByRatio(Vector2 ratioVector) // helper for any cross-game position syncing
