@@ -30,3 +30,5 @@ Ninja Adventure - Asset Pack
 License: CC0 
 https://pixel-boy.itch.io/ninja-adventure-asset-pack 
 Pixel-Boy and AAA 
+
+Ethan Walton - playtester
