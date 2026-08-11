@@ -115,15 +115,16 @@ script = ExtResource("9_i4xmh")
 actionGamePokerPrefab = ExtResource("10_0l2bn")
 playerManagerRef = NodePath("..")
 
-[node name="DirectionalAnchor" type="Node2D" parent="CardSummonSystem" node_paths=PackedStringArray("cardSummonSystem", "playerManagerRef")]
+[node name="DirectionalAnchor" type="Node2D" parent="CardSummonSystem" node_paths=PackedStringArray("cardSummonSystem", "playerManagerRef", "arrowSprite")]
 script = ExtResource("11_5yi2e")
 cardSummonSystem = NodePath("..")
 playerManagerRef = NodePath("../..")
+arrowSprite = NodePath("SkillSlot/ArrowSprite")
 
 [node name="SkillSlot" type="Node2D" parent="CardSummonSystem/DirectionalAnchor"]
 position = Vector2(58, 2)
 
-[node name="Sprite2D" type="Sprite2D" parent="CardSummonSystem/DirectionalAnchor/SkillSlot"]
+[node name="ArrowSprite" type="Sprite2D" parent="CardSummonSystem/DirectionalAnchor/SkillSlot"]
 rotation = 1.5708
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("11_elfip")

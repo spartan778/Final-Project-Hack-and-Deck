@@ -23,7 +23,6 @@ public partial class CardSummonSystem : Node2D
             GD.PrintErr("Could not instantiate ActionPoker");
             return;
         }
-        // pokerBase.QueueFree();
         actionPoker.QueueFree();
         
     }
@@ -54,8 +53,6 @@ public partial class CardSummonSystem : Node2D
     {
         if(SummonedActionPoker == null) return;
         var offset = GetViewport().GetVisibleRect().Size/2; // to properly align card placement on both screens
-        // SummonedActionPoker.Position = summonedPokerPosition - playerManagerRef.Position + offset;
-        // SummonedActionPoker.Position = summonedPokerPosition + offset;
         SummonedActionPoker.Position = summonedPokerPosition - offset;
     }
 

@@ -4,3 +4,4 @@
 
 [node name="NetworkManager" type="Node"]
 script = ExtResource("1_2w8rp")
+timesToRetry = 3

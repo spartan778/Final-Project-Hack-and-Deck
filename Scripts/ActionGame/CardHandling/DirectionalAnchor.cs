@@ -5,6 +5,7 @@ public partial class DirectionalAnchor : Node2D
 {
     [Export] private CardSummonSystem cardSummonSystem;
     [Export] private PlayerManager playerManagerRef;
+    [Export] private Sprite2D arrowSprite;
     private ActionGamePoker actionGamePokerRef;
     private ActionRpcHandler actionRpcHandlerRef;
     
@@ -17,6 +18,7 @@ public partial class DirectionalAnchor : Node2D
     public override void _Ready()
     {
         actionRpcHandlerRef = ActionRpcHandler.Instance;
+        arrowSprite.Visible = false;
         ConnectSignals();
     }
 
@@ -31,11 +33,13 @@ public partial class DirectionalAnchor : Node2D
         summonedPokerInfo = pokerInfo;
         summonedPokerState = pokerState;
         isPokerSummoned = true;
+        arrowSprite.Visible = true;
     }
 
     private void OnSummonedPokerTimeOut()
     {
         isPokerSummoned = false;
+        arrowSprite.Visible = false;
     }
 
     public override void _Process(double delta)

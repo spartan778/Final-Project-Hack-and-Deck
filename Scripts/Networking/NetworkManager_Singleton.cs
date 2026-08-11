@@ -25,6 +25,7 @@ public partial class NetworkManager_Singleton : Node
 	[Export] private bool testLocal;
 	private bool offerHandled;
 	[Export] private string roomName = "PlayRoom";
+	[Export] private int timesToRetry;
 	private int deviceId;
 	private int peerId;
 
@@ -270,6 +271,12 @@ public partial class NetworkManager_Singleton : Node
 		webSocket.ConnectToUrl(GetServerAddress());
 		while (webSocket.GetReadyState() != WebSocketPeer.State.Open) //wait until Web Socket is Open
 		{
+			var readyState = webSocket.GetReadyState();
+			if (readyState is WebSocketPeer.State.Closed or WebSocketPeer.State.Closing)
+			{
+				GD.PrintErr("Connection closed or failed");
+				return;
+			}
 			await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 		}
 		GD.Print("Signal Server connected");
