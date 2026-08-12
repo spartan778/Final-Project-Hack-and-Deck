@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxqfaobmpf55w"]
+
+[ext_resource type="Script" uid="uid://ly73530cu7o5" path="res://TouchScreenButtonModule.cs" id="1_l53mp"]
+
+[node name="TouchScreenButtonModule" type="Node"]
+script = ExtResource("1_l53mp")

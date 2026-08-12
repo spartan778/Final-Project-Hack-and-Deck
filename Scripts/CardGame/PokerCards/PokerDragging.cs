@@ -34,7 +34,7 @@ public partial class PokerDragging : Area2D
 		if (!IsDragging) return;
 		switch (@event)
 		{
-			case InputEventMouseMotion: // triggered everytime(frame) when there is mouse motion
+			/*case InputEventMouseMotion: // triggered everytime(frame) when there is mouse motion
 			{
 				var finalMousePosition = CardGameHelperSingleton.Instance.CheckScreenBoundaries(GetGlobalMousePosition());
 				PokerBaseRef.GlobalPosition = finalMousePosition + PickUpOffset; // offset the card to avoid snapping to card center
@@ -43,6 +43,24 @@ public partial class PokerDragging : Area2D
 			case InputEventMouseButton { ButtonIndex: MouseButton.Left }:
 			{
 				if (@event.IsReleased())
+				{
+					IsDragging = false;
+					pokerGameManager.ReleasingPoker?.Invoke(PokerBaseRef);
+				}
+				GetViewport().SetInputAsHandled();
+				break;
+			}*/
+			
+			case InputEventScreenDrag dragEvent: // same feature as "InputEventMouseMotion"
+			{
+				// var finalDragPosition = CardGameHelperSingleton.Instance.CheckScreenBoundaries(GetGlobalMousePosition());
+				var finalDragPosition = CardGameHelperSingleton.Instance.CheckScreenBoundaries(dragEvent.Position);
+				PokerBaseRef.GlobalPosition = finalDragPosition + PickUpOffset;
+				break;
+			}
+			case InputEventScreenTouch touchEvent: // same feature as "InputEventMouseButton"
+			{
+				if (touchEvent.IsReleased() && touchEvent.Index == 0)
 				{
 					IsDragging = false;
 					pokerGameManager.ReleasingPoker?.Invoke(PokerBaseRef);

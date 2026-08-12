@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bcm0cjq03sytx"]
+[gd_scene load_steps=8 format=3 uid="uid://bcm0cjq03sytx"]
 
 [ext_resource type="Script" uid="uid://cslkqx04wp673" path="res://Scenes/SharedScenes/ConnectionMenu.cs" id="1_tspjj"]
 [ext_resource type="Theme" uid="uid://c2vahx613qbmy" path="res://UI_Themes/BasicColorTheme.tres" id="2_7yh3l"]
+[ext_resource type="PackedScene" uid="uid://dxqfaobmpf55w" path="res://Prefabs/Shared/touch_screen_button_module.tscn" id="3_607fs"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7yh3l"]
 bg_color = Color(0.151276, 0.151276, 0.151276, 1)
@@ -109,6 +110,8 @@ focus_mode = 0
 theme = SubResource("Theme_aei5g")
 text = "Join Room"
 
+[node name="TouchScreenButtonModule" parent="MainPanel/JoinRoomButton" instance=ExtResource("3_607fs")]
+
 [node name="StartGameButton" type="Button" parent="MainPanel"]
 layout_mode = 1
 anchors_preset = 8
@@ -124,7 +127,10 @@ grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 theme = SubResource("Theme_aei5g")
+button_mask = 5
 text = "Start Game"
+
+[node name="TouchScreenButtonModule" parent="MainPanel/StartGameButton" instance=ExtResource("3_607fs")]
 
 [node name="TestOffline" type="Button" parent="MainPanel"]
 layout_mode = 1
@@ -142,3 +148,5 @@ grow_vertical = 2
 focus_mode = 0
 theme = SubResource("Theme_aei5g")
 text = "Test Offline"
+
+[node name="TouchScreenButtonModule" parent="MainPanel/TestOffline" instance=ExtResource("3_607fs")]
