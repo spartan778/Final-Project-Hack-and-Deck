@@ -89,7 +89,7 @@ public partial class PokerGameManager : Node2D
     {
         switch (@event)
         {
-            case InputEventMouseButton {ButtonIndex: MouseButton.Left}:
+            /*case InputEventMouseButton {ButtonIndex: MouseButton.Left}: // pick up poker logic (Mouse)
             {
                 if(@event.IsPressed())
                 {
@@ -102,6 +102,24 @@ public partial class PokerGameManager : Node2D
                     }
                     draggedPoker.PokerDraggingRef.IsDragging = true;
                     draggedPoker.PokerDraggingRef.PickUpOffset = draggedPoker.GlobalPosition - GetGlobalMousePosition();
+                    HoldingPoker?.Invoke(draggedPoker);
+                }
+                break;
+            }*/
+            case InputEventScreenTouch screenTouch:
+            {
+                if (screenTouch.IsPressed())
+                {
+                    var screenTouchPosition = screenTouch.Position; // record screen position of touch
+                    var draggedPoker = DetectPokerRayCast_Touch(screenTouchPosition);
+                    if(draggedPoker == null) return;
+                    if(draggedPoker.IsLocked)
+                    {
+                        GD.Print($"Poker:{draggedPoker.PokerContent.PokerInfo} is locked");
+                        return;
+                    }
+                    draggedPoker.PokerDraggingRef.IsDragging = true;
+                    draggedPoker.PokerDraggingRef.PickUpOffset = draggedPoker.GlobalPosition - screenTouchPosition;
                     HoldingPoker?.Invoke(draggedPoker);
                 }
                 break;
@@ -151,6 +169,40 @@ public partial class PokerGameManager : Node2D
             var topCard = detectedPokers.OrderByDescending(card => card.GetIndex()).First(); // get the card with the lowest index
             // GD.Print($"{detectedPokers.Count} cards detected");
             // GD.Print($"picking with index: {topCard.GetIndex()}");
+            return topCard;
+        }
+        return null;
+    }
+
+    public PokerBase DetectPokerRayCast_Touch(Vector2 screenPos)
+    {
+        GD.Print("Detecting poker ray cast from touch");
+        var spaceState = GetWorld2D().DirectSpaceState;
+        var parameters = new PhysicsPointQueryParameters2D(); // setup detection parameters
+        parameters.Position = screenPos;
+        parameters.CollideWithAreas = true;
+        parameters.CollisionMask = 9; // checking layer 1 and 4 = (1+8) (using bitmask)
+        var results = spaceState.IntersectPoint(parameters);
+        
+        if (results == null)
+        {
+            GD.Print("No card found");
+            return null;
+        };
+        
+        List<PokerBase> detectedPokers = new List<PokerBase>(); //temp list to filter out all pokers
+        foreach (var result in results)
+        {
+            var collider = (Node)result["collider"];
+            var tempNode = collider.GetParent();
+            if (tempNode is PokerBase poker)
+            {
+                detectedPokers.Add(poker);
+            }
+        }
+        if (detectedPokers.Count > 0)
+        {
+            var topCard = detectedPokers.OrderByDescending(card => card.GetIndex()).First(); // get the card with the lowest index
             return topCard;
         }
         return null;

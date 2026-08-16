@@ -20,6 +20,7 @@ public partial class ICardStorage : Node
     private bool isHoldOnCoolDown = false;
     public Action HoldActionCompleted;
     public bool IsMouseOverArea { get; private set; }
+    public bool IsTouchOverArea { get; private set; }
     public int CardCount
     {
         get
@@ -50,6 +51,7 @@ public partial class ICardStorage : Node
         interactionArea.MouseEntered += OnMouseEntered;
         interactionArea.MouseExited += OnMouseExited;
         HoldActionCoolDownTimer.Timeout += OnHoldCoolDownTimer_Timeout;
+        interactionArea.InputEvent += OnInteractionAreaTouching;
     }
     
     private void OnMouseEntered()
@@ -61,6 +63,22 @@ public partial class ICardStorage : Node
     {
         IsMouseOverArea = false;
         interactionProgress = 0;
+    }
+
+    private void OnInteractionAreaTouching(Node viewport, InputEvent @event, long shapeIdx) // match signature to area2D._InputEvent
+    {
+        if (@event is InputEventScreenTouch screenTouch) // touch screen input
+        {
+            if (screenTouch.Pressed)
+            {
+                IsTouchOverArea = true;
+            }else if (!screenTouch.Pressed) // detect the moment (frame) that a touch is "released"
+            {
+                IsTouchOverArea = false;
+                interactionProgress = 0;
+            }
+            
+        }
     }
 
     private void OnHoldCoolDownTimer_Timeout()
@@ -85,6 +103,11 @@ public partial class ICardStorage : Node
         {
             GD.Print("just started holding");
             return true;
+        }
+
+        if (IsMouseOverArea)
+        {
+            GD.Print("just started holding");
         }
         return false;
     }
