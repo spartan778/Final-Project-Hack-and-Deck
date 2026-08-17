@@ -15,12 +15,15 @@ public partial class ICardStorage : Node
     [Export] private Node2D progressTextureAnchor;
     [Export] public float HoldTimeRequired {get; private set;}
     [Export] public float HoldCoolDownTime {get; private set;}
+    [Export] private float holdBoundary = 50;
     private PokerGameManager pokerGameManagerRef;
 
     private bool isHoldOnCoolDown = false;
     public Action HoldActionCompleted;
     public bool IsMouseOverArea { get; private set; }
-    public bool IsTouchOverArea { get; private set; }
+    public bool IsPressingTouchArea { get; private set; }
+    private int holdTouchIndex;
+    private Vector2 holdStartPosition;
     public int CardCount
     {
         get
@@ -48,10 +51,9 @@ public partial class ICardStorage : Node
     }
     private void ConnectSignals()
     {
-        interactionArea.MouseEntered += OnMouseEntered;
-        interactionArea.MouseExited += OnMouseExited;
+        // interactionArea.MouseEntered += OnMouseEntered;
+        // interactionArea.MouseExited += OnMouseExited;
         HoldActionCoolDownTimer.Timeout += OnHoldCoolDownTimer_Timeout;
-        interactionArea.InputEvent += OnInteractionAreaTouching;
     }
     
     private void OnMouseEntered()
@@ -65,20 +67,74 @@ public partial class ICardStorage : Node
         interactionProgress = 0;
     }
 
-    private void OnInteractionAreaTouching(Node viewport, InputEvent @event, long shapeIdx) // match signature to area2D._InputEvent
+    public override void _Input(InputEvent @event)
     {
-        if (@event is InputEventScreenTouch screenTouch) // touch screen input
+        
+    }
+
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (@event is InputEventScreenTouch touch)
         {
-            if (screenTouch.Pressed)
+            if( touch.Pressed && IsPosInsideArea(touch.Position) )
             {
-                IsTouchOverArea = true;
-            }else if (!screenTouch.Pressed) // detect the moment (frame) that a touch is "released"
-            {
-                IsTouchOverArea = false;
+                IsPressingTouchArea = true;
                 interactionProgress = 0;
+                holdTouchIndex = touch.Index;
+                holdStartPosition = touch.Position;
+                GD.Print("Started holding");
             }
-            
+            if (touch.IsReleased())
+            {
+                IsPressingTouchArea = false;
+                interactionProgress = 0;
+                holdProgressBar.Visible = false;
+            }
         }
+        if(!IsPressingTouchArea) return; // only tracks dragging when area is pressed
+        if (@event is InputEventScreenDrag screenDrag && screenDrag.Index == holdTouchIndex) // tracks the indexed touch input
+        {
+            if (!IsInBoundary(screenDrag.Position))
+            {
+                IsPressingTouchArea = false;
+                interactionProgress = 0;
+                holdProgressBar.Visible = false;
+                GD.Print("drag out of bound");
+            }
+        }
+    }
+
+
+    private bool IsInBoundary(Vector2 currentPosition, float range = -1) // check if the touch is within the boundary (bubble)
+    {
+        if (range < 0)
+        {
+            range = holdBoundary;
+        }
+        // if(Mathf.Abs(currentPosition.X - holdStartPosition.X) > range) return false; (Mathf version)
+        // if(Mathf.Abs(currentPosition.Y - holdStartPosition.Y) > range) return false;
+        return currentPosition.DistanceTo(holdStartPosition) <= range;
+    }
+    
+    private bool IsPosInsideArea(Vector2 pos) // raycast to detect if touch hits the interaction area
+    {
+        var spaceState = interactionArea.GetWorld2D().DirectSpaceState; // get reference to the physical state
+        var query = new PhysicsPointQueryParameters2D // set raycast to detect Area2D ONLY
+        {
+            Position = pos,
+            CollideWithAreas = true,
+            CollideWithBodies = false
+        };
+        var results = spaceState.IntersectPoint(query); // the actual raycast query
+
+        foreach (var result in results)
+        {
+            if (result["collider"].As<Node>() == interactionArea) // find node from collider
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void OnHoldCoolDownTimer_Timeout()
@@ -89,26 +145,27 @@ public partial class ICardStorage : Node
     
     public override void _PhysicsProcess(double delta)
     {
-        if (IsJustStartedHolding() && !isHoldOnCoolDown)
+        if ( (IsJustStartedHolding() || IsPressingTouchArea) && !isHoldOnCoolDown)
         {
             holdProgressBar.Visible = true;
+            // GD.Print(holdProgressBar.Value);
         }
-        
         HoldInteractionProcess(delta);
     }
 
     private bool IsJustStartedHolding()
     {
+        if (!IsMouseOverArea)
+        {
+            // GD.Print("mouse is Hovering");
+            return false;
+        }
         if (Input.IsActionJustPressed("card_poker_hold"))
         {
             GD.Print("just started holding");
             return true;
         }
-
-        if (IsMouseOverArea)
-        {
-            GD.Print("just started holding");
-        }
+        
         return false;
     }
 
@@ -124,19 +181,20 @@ public partial class ICardStorage : Node
     private void HoldInteractionProcess(double delta)
     {
         if(isHoldOnCoolDown || !holdProgressBar.Visible) return;
-        if(!IsMouseOverArea)
+        if(!IsMouseOverArea && !IsPressingTouchArea)
         { 
+            // GD.Print("Resetting");
             holdProgressBar.Visible = false;
             holdProgressBar.Value = 0;
             return;
         }
-        if (Input.IsActionPressed("card_poker_hold"))
+        if (Input.IsActionPressed("card_poker_hold") || IsPressingTouchArea)
         {
             interactionProgress += delta;
             holdProgressBar.Value = interactionProgress/HoldTimeRequired * 100;
-            progressTextureAnchor.Position = progressTextureAnchor.GetGlobalMousePosition();
-            GD.Print($"{holdProgressBar.GlobalPosition}");
-            GD.Print($"{holdProgressBar.Value}");
+            progressTextureAnchor.Position = holdStartPosition;
+            // GD.Print($"{holdProgressBar.GlobalPosition}");
+            // GD.Print($"{holdProgressBar.Value}");
             if (!(interactionProgress >= HoldTimeRequired)) return;
             HoldActionCompleted?.Invoke();
             GD.Print($"{GetParent().Name}: Hold action completed");
@@ -144,7 +202,7 @@ public partial class ICardStorage : Node
             isHoldOnCoolDown = true;
             HoldActionCoolDownTimer.Start();
         }
-        else if (Input.IsActionJustReleased("card_poker_hold"))
+        else if (Input.IsActionJustReleased("card_poker_hold") || !IsPressingTouchArea)
         {
             holdProgressBar.Visible = false;
             holdProgressBar.Value = 0;

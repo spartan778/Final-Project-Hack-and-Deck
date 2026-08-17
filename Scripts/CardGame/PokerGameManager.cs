@@ -189,7 +189,6 @@ public partial class PokerGameManager : Node2D
             GD.Print("No card found");
             return null;
         };
-        
         List<PokerBase> detectedPokers = new List<PokerBase>(); //temp list to filter out all pokers
         foreach (var result in results)
         {
