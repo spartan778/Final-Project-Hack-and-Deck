@@ -23,7 +23,13 @@ public partial class TouchScreenButtonModule : Node // component-like module to 
     {
         if (@touchEvent is InputEventScreenTouch screenTouch && screenTouch.IsPressed())
         {
+            if (button.ToggleMode) // special handling for CheckButton due to "ToggleMode" value
+            {
+                button.ButtonPressed = !button.ButtonPressed; 
+                GD.Print(button.ButtonPressed ? "Pressed" : "Released");
+            }
             button.EmitSignal(BaseButton.SignalName.Pressed); // shorthand(string) for "pressed" signal
+            GD.Print($"{button.Name} pressed:");
             button.AcceptEvent(); // mark as handled event
         }
     }

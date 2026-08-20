@@ -92,6 +92,10 @@ offset_bottom = 134.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(5, 5)
+action_mode = 0
+button_mask = 0
+
+[node name="TouchScreenButtonModule" parent="MainPanel/InfoLabel/IsHostButton" instance=ExtResource("3_607fs")]
 
 [node name="JoinRoomButton" type="Button" parent="MainPanel"]
 layout_mode = 1
