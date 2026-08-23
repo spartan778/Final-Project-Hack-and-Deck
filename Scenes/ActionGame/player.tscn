@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://0s7odp1g51tv"]
+[gd_scene load_steps=23 format=3 uid="uid://0s7odp1g51tv"]
 
 [ext_resource type="Texture2D" uid="uid://c4eglj7rf3os3" path="res://icon.svg" id="1_0mflq"]
 [ext_resource type="Script" uid="uid://cv62dao6bnc30" path="res://Scripts/ActionGame/PlayerManager.cs" id="1_mhocx"]
@@ -18,6 +18,8 @@
 [ext_resource type="PackedScene" uid="uid://dbgh8rfar0wng" path="res://Prefabs/ActionGame/action_game_poker.tscn" id="10_0l2bn"]
 [ext_resource type="Script" uid="uid://sdciksy81bk8" path="res://Scripts/ActionGame/CardHandling/DirectionalAnchor.cs" id="11_5yi2e"]
 [ext_resource type="Texture2D" uid="uid://dne4vwrg08ea4" path="res://Assets/UI/Vector_UI_Pack_dobo_ui/Arrows/arrow_blue.png" id="11_elfip"]
+[ext_resource type="Script" uid="uid://dauumhst0a6n" path="res://Scenes/ActionGame/OrbitSystem.cs" id="14_hb8xh"]
+[ext_resource type="Script" uid="uid://bowdmgn8oelbp" path="res://Scenes/ActionGame/OrbitAttack.cs" id="15_pg3mh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0mflq"]
 size = Vector2(40, 40)
@@ -61,7 +63,7 @@ interval = 0.2
 [node name="TriggeredAction" type="Node" parent="PokerSystem" node_paths=PackedStringArray("PlayerManagerRef", "basicAttackRef", "healthSystemRef")]
 script = ExtResource("7_um666")
 PlayerManagerRef = NodePath("../..")
-basicAttackRef = NodePath("../../PlayerSystems/AttackSystem/BasicAttack")
+basicAttackRef = NodePath("../../PlayerSystems/AttackSystem_Offensive/BasicAttack")
 triggeredBulletPrefab = ExtResource("8_um666")
 healthSystemRef = NodePath("../../PlayerSystems/HealthSystem")
 
@@ -69,9 +71,9 @@ healthSystemRef = NodePath("../../PlayerSystems/HealthSystem")
 script = ExtResource("9_bnihk")
 PlayerManagerRef = NodePath("../..")
 healthSystemRef = NodePath("../../PlayerSystems/HealthSystem")
-magicBulletAttackRef = NodePath("../../PlayerSystems/AttackSystem/MagicBulletAttack")
+magicBulletAttackRef = NodePath("../../PlayerSystems/AttackSystem_Offensive/MagicBulletAttack")
 
-[node name="PlayerSystems" type="Node" parent="."]
+[node name="PlayerSystems" type="Node2D" parent="."]
 
 [node name="HealthSystem" parent="PlayerSystems" node_paths=PackedStringArray("HealthBar") instance=ExtResource("3_e6f3n")]
 CurrentHealth = 100.0
@@ -85,9 +87,9 @@ playerManagerRef = NodePath("../../..")
 Speed = 100.0
 DashSpeed = 300.0
 
-[node name="AttackSystem" type="Node" parent="PlayerSystems"]
+[node name="AttackSystem_Offensive" type="Node" parent="PlayerSystems"]
 
-[node name="BasicAttack" type="Node" parent="PlayerSystems/AttackSystem" node_paths=PackedStringArray("PlayerManagerRef", "basicAttackTimer")]
+[node name="BasicAttack" type="Node" parent="PlayerSystems/AttackSystem_Offensive" node_paths=PackedStringArray("PlayerManagerRef", "basicAttackTimer")]
 script = ExtResource("3_25hhx")
 PlayerManagerRef = NodePath("../../..")
 basicBulletPrefab = ExtResource("6_rq88u")
@@ -96,13 +98,28 @@ BasicAttackFrequency = 3.0
 TimeBetweenShots = 0.33
 basicAttackTimer = NodePath("BasicAttackTimer")
 
-[node name="BasicAttackTimer" type="Timer" parent="PlayerSystems/AttackSystem/BasicAttack"]
+[node name="BasicAttackTimer" type="Timer" parent="PlayerSystems/AttackSystem_Offensive/BasicAttack"]
 
-[node name="MagicBulletAttack" type="Node" parent="PlayerSystems/AttackSystem" node_paths=PackedStringArray("playerManagerRef")]
+[node name="MagicBulletAttack" type="Node" parent="PlayerSystems/AttackSystem_Offensive" node_paths=PackedStringArray("playerManagerRef")]
 script = ExtResource("7_e6f3n")
 magicBulletPrefab = ExtResource("8_um666")
 playerManagerRef = NodePath("../../..")
 AttackArc = 45.0
+
+[node name="AttackSystem_Defensive" type="Node2D" parent="PlayerSystems"]
+
+[node name="OrbitSystem" type="Node2D" parent="PlayerSystems/AttackSystem_Defensive" node_paths=PackedStringArray("orbitAnchor")]
+script = ExtResource("14_hb8xh")
+orbitAnchor = NodePath("OrbitAttack")
+
+[node name="OrbitAttack" type="Node2D" parent="PlayerSystems/AttackSystem_Defensive/OrbitSystem"]
+script = ExtResource("15_pg3mh")
+
+[node name="BasicBullet" parent="PlayerSystems/AttackSystem_Defensive/OrbitSystem/OrbitAttack" instance=ExtResource("6_rq88u")]
+
+[node name="BasicBullet2" parent="PlayerSystems/AttackSystem_Defensive/OrbitSystem/OrbitAttack" instance=ExtResource("6_rq88u")]
+
+[node name="BasicBullet3" parent="PlayerSystems/AttackSystem_Defensive/OrbitSystem/OrbitAttack" instance=ExtResource("6_rq88u")]
 
 [node name="CharacterSprite" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
