@@ -176,7 +176,7 @@ public partial class CardSlots : Node2D
         {
             pokerRanks.Add(card.PokerContent.PokerInfo.Rank);
         }
-        var pokersInOrder = pokerRanks.OrderByDescending(rank => rank).ToList();
+        var pokersInOrder = pokerRanks.OrderByDescending(rank => rank).ToList(); // built-in LINQ function
         bool isContinuous = true;
         for (var i = 0; i < pokersInOrder.Count-1; i++)
         {
@@ -188,6 +188,38 @@ public partial class CardSlots : Node2D
             PokerHandArray.Add(PokerHandBase.Straight);
             GD.Print("Straight: " + PokerHandArray.Count);
         }
+    }
+    private void ScanCardColor() // scan and count card color in slots
+    {
+        SlottedPokerArray.Clear();
+        foreach (var cardSlot in CardSlotControls)
+        {
+            if (cardSlot.CardSlotBase.SlottedPoker != null)
+            {
+                SlottedPokerArray.Add(cardSlot.CardSlotBase.SlottedPoker);
+            }
+        }
+        if(SlottedPokerArray.Count == 0)
+        {
+            GD.Print("No Poker in slots");
+            return;
+        }
+        var blackCount = 0;
+        var redCount = 0;
+        foreach (var card in SlottedPokerArray)
+        {
+            if (card.PokerContent.PokerInfo.Suit is CardSuit.Clubs or CardSuit.Spades)
+            {
+                blackCount++;
+            }
+
+            if (card.PokerContent.PokerInfo.Suit is CardSuit.Diamonds or CardSuit.Hearts)
+            {
+                redCount++;
+            }
+        }
+        GD.Print($"Black Count: {blackCount} \n Red Count: {redCount}");
+        rpcManagerRef.SendSlottedColorCountRpc(blackCount, redCount);
     }
     
     public void SetSlotCheckInterval(float interval)
@@ -224,6 +256,7 @@ public partial class CardSlots : Node2D
     private void TriggerAllSlots()
     {
         Co.Run(TriggerAllSlotsCoroutine);
+        ScanCardColor();
     }
     private IEnumerator TriggerAllSlotsCoroutine() // same pattern as Unity Coroutine using HCoroutine plugin
     {

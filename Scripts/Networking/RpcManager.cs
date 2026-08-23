@@ -101,6 +101,22 @@ public partial class RpcManager : Node
         actionRpcHandler.HandlePokerSlotTriggered(pokerInfo, modifiers);
         
     }
+    public void SendSlottedColorCountRpc(int blackCount, int redCount)
+    {
+        SlottedColorCount_Send(blackCount, redCount);
+    }
+    private void SlottedColorCount_Send(int blackCount, int redCount)
+    {
+        Rpc(nameof(SlottedColorCount_Receive), blackCount, redCount);
+    }
+
+    [Rpc(RpcMode.AnyPeer)]
+    private void SlottedColorCount_Receive(int blackCount, int redCount)
+    {
+        GD.Print($"Received black count: {blackCount}");
+        GD.Print($"Received red count: {redCount}");
+        
+    }
     #endregion
     
     #region SummonPoker
