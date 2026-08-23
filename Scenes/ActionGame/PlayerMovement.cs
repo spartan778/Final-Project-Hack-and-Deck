@@ -9,9 +9,13 @@ public partial class PlayerMovement : Node //testing for component style coding
     
     [Export] public float Speed { get; private set; }
     [Export] public float DashSpeed { get; private set; }
+    [Export] public float DefenceFormSpeedMod { get; private set; } = 1.5f;
+    [Export] public float AggressiveFormSpeedMod { get; private set; } = 1f;
+    
     
     private PlayerForm playerForm;
     private bool isAllowPlayerInput, isAllowMovement, isDashing;
+    private float currentSpeedMod = 1;
 
     public override void _Ready()
     {
@@ -57,7 +61,7 @@ public partial class PlayerMovement : Node //testing for component style coding
         // Apply movement
         if (direction != Vector2.Zero)
         {
-            playerManagerRef.Velocity = direction * Speed;
+            playerManagerRef.Velocity = direction * Speed * currentSpeedMod;
         }
         else
         {
@@ -105,7 +109,6 @@ public partial class PlayerMovement : Node //testing for component style coding
         isDashing = true;
         var rollVector = playerManagerRef.Velocity.Normalized();
         playerManagerRef.Velocity = rollVector * DashSpeed;
-        // playerManagerRef.MoveAndSlide();
         yield return Co.Wait(duration);
         isAllowPlayerInput = true;
         isDashing = false;
@@ -113,6 +116,40 @@ public partial class PlayerMovement : Node //testing for component style coding
     private void OnPlayerFormChange(PlayerForm form)
     {
         playerForm = form;
+        switch (playerForm)
+        {
+            case PlayerForm.Defensive:
+            {
+                currentSpeedMod = DefenceFormSpeedMod;
+                break;
+            }
+            case PlayerForm.Aggressive:
+            {
+                currentSpeedMod = AggressiveFormSpeedMod;
+                break;
+            }
+        }
+    }
+
+    public void ChangeFormSpeedMod(PlayerForm targetForm, float value)
+    {
+        switch (targetForm)
+        {
+            case PlayerForm.Defensive:
+            {
+                DefenceFormSpeedMod = value;
+                break;
+            }
+            case PlayerForm.Aggressive:
+            {
+                AggressiveFormSpeedMod = value;
+                break;
+            }
+        }
+        if (targetForm == playerManagerRef.PlayerForm) // speed mod should apply immediately if the form matches
+        {
+            currentSpeedMod = value;
+        }
     }
 
     private void OnSettingAllowPlayerInput(bool value)
