@@ -18,7 +18,7 @@ func _ready() -> void:
 	target_sprite = animated_sprite if animated_sprite else sprite_2d #assign either sprite2d or animatedSprite as the target
 	
 func _on_health_system_damage_effect(oldHealth: float, newHealth: float) -> void:
-	print("old health: ", oldHealth, "\n new health: ", newHealth)
+	#print("old health: ", oldHealth, "\n new health: ", newHealth)
 	if(!target_sprite): return #return if there is no targeted sprite
 	duration_timer.start()
 	interval_timer.start()

@@ -22,8 +22,8 @@ public partial class BasicAttack : Node
         bulletManagerRef = ActionGameBase.Instance.BulletManagerRef;
         actionRpcHandler = ActionRpcHandler.Instance;
         basicAttackTimer.WaitTime = BasicAttackFrequency;
-        basicAttackTimer.Start();
         ConnectSignals();
+        UpdateAttackBehaviour();
     }
     private void ConnectSignals()
     {
@@ -65,6 +65,20 @@ public partial class BasicAttack : Node
     private void OnPlayerFormChange(PlayerForm form)
     {
         playerForm = form;
+        UpdateAttackBehaviour();
+    }
+
+    private void UpdateAttackBehaviour()
+    {
+        if (playerForm is PlayerForm.Aggressive)
+        {
+            basicAttackTimer.Start();
+            MakeBasicAttack();
+        }
+        else
+        {
+            basicAttackTimer.Stop(); // basic attack should only work when in offensive mode
+        }
     }
 
     private void OnSettingAllowPlayerInput(bool value)

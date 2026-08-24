@@ -61,7 +61,7 @@ public partial class HealthSystem : Node
         CurrentHealth -= amount;
         TakingDamage?.Invoke(amount);
         EmitSignal(SignalName.DamageEffect, (currentHealth + amount), currentHealth);
-        GD.Print($"{GetParent().Name}:Taking damage: {amount}");
+        // GD.Print($"{GetParent().Name}:Taking damage: {amount}");
         if (CurrentHealth <= 0)
         {
             Dying?.Invoke();
@@ -72,7 +72,7 @@ public partial class HealthSystem : Node
     {
         CurrentHealth += amount;
         Healing?.Invoke(amount);
-        GD.Print($"{GetParent().Name}:Healing: {amount}");
+        // GD.Print($"{GetParent().Name}:Healing: {amount}");
         EmitSignalHealingEffect(amount); // godot generated (c#) helper
     }
 

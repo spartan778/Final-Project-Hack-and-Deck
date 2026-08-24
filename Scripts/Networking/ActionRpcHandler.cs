@@ -9,6 +9,7 @@ public partial class ActionRpcHandler : Node
     public Action<PokerInfo, PokerState> SummonPokerAction;
     public Action<Vector2> SyncSummonedPokerPositionAction;
     public Action SummonedPokerTimeOutAction;
+    public Action<int, int> SlottedColorCountAction;
     
 
     public override void _EnterTree()
@@ -47,6 +48,11 @@ public partial class ActionRpcHandler : Node
     public void HandleSummonedPokerTimeOut()
     {
         SummonedPokerTimeOutAction?.Invoke();
+    }
+
+    public void HandleSlottedColorCount(int blackCount, int redCount)
+    { 
+        SlottedColorCountAction?.Invoke(blackCount, redCount);
     }
     
     public Vector2 GetScreenPosByRatio(Vector2 ratioVector) // helper for any cross-game position syncing

@@ -56,7 +56,7 @@ public partial class RangeAttackModule : Node
       projectile.GlobalPosition = attackerNode.GlobalPosition;
       projectile.InitBullet(bulletVector);
       bulletManagerRef.BulletSpawned?.Invoke(projectile);
-      GD.Print($"Shooting from: {attackerNode.Name}");
+      // GD.Print($"Shooting from: {attackerNode.Name}");
    }
 
    public override void _ExitTree()

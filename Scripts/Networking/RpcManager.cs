@@ -115,6 +115,7 @@ public partial class RpcManager : Node
     {
         GD.Print($"Received black count: {blackCount}");
         GD.Print($"Received red count: {redCount}");
+        actionRpcHandler.HandleSlottedColorCount(blackCount, redCount);
         
     }
     #endregion

@@ -124,7 +124,6 @@ public abstract partial class BulletBase : Area2D, IBlockable //base class for b
         
         SetCollisionMaskValue(IBlockable.DefaultBlockableLayer, IsAbsorbing || IsBlockable); 
         SetCollisionLayerValue(IBlockable.DefaultBlockableLayer, IsAbsorbing || IsBlockable);
-        
     }
 }
 

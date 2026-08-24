@@ -36,13 +36,21 @@ public partial class TriggeredAction : Node
             {
                 GD.Print($"Trigger support Poker, Strength {pokerInfo.Rank + 1}");
                 //TODO reduce mana / cooldown
+                if (playerForm is PlayerForm.Defensive)
+                {
+                    GD.Print("(Defensive) Support Poker Triggered");
+                    GD.Print($"Poker: {pokerInfo}");
+                }
                 break;
             }
             case CardSuit.Spades or CardSuit.Clubs:
             {
                 var bulletCount = pokerInfo.Rank + 1;
                 // GD.Print("Triggered ATTACK");
-                basicAttackRef.MakeBasicAttack(bulletCount);
+                if(playerForm is PlayerForm.Aggressive)
+                {
+                    basicAttackRef.MakeBasicAttack(bulletCount);
+                }
                 break;
             }
         }

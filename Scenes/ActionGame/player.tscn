@@ -30,6 +30,7 @@ size = Vector2(64, 64)
 [node name="PlayerManager" type="CharacterBody2D"]
 motion_mode = 1
 script = ExtResource("1_mhocx")
+PlayerForm = 1
 
 [node name="PlayerCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_0mflq")
@@ -87,7 +88,7 @@ playerManagerRef = NodePath("../../..")
 Speed = 100.0
 DashSpeed = 300.0
 
-[node name="AttackSystem_Offensive" type="Node" parent="PlayerSystems"]
+[node name="AttackSystem_Offensive" type="Node2D" parent="PlayerSystems"]
 
 [node name="BasicAttack" type="Node" parent="PlayerSystems/AttackSystem_Offensive" node_paths=PackedStringArray("PlayerManagerRef", "basicAttackTimer")]
 script = ExtResource("3_25hhx")
@@ -108,18 +109,16 @@ AttackArc = 45.0
 
 [node name="AttackSystem_Defensive" type="Node2D" parent="PlayerSystems"]
 
-[node name="OrbitSystem" type="Node2D" parent="PlayerSystems/AttackSystem_Defensive" node_paths=PackedStringArray("orbitAnchor")]
+[node name="OrbitSystem" type="Node2D" parent="PlayerSystems/AttackSystem_Defensive" node_paths=PackedStringArray("basicOrbitAttack", "playerManagerRef")]
 script = ExtResource("14_hb8xh")
-orbitAnchor = NodePath("OrbitAttack")
+basicOrbitAttack = NodePath("BasicOrbitAttack")
+playerManagerRef = NodePath("../../..")
 
-[node name="OrbitAttack" type="Node2D" parent="PlayerSystems/AttackSystem_Defensive/OrbitSystem"]
+[node name="BasicOrbitAttack" type="Node2D" parent="PlayerSystems/AttackSystem_Defensive/OrbitSystem"]
 script = ExtResource("15_pg3mh")
+bulletPrefab = ExtResource("6_rq88u")
 
-[node name="BasicBullet" parent="PlayerSystems/AttackSystem_Defensive/OrbitSystem/OrbitAttack" instance=ExtResource("6_rq88u")]
-
-[node name="BasicBullet2" parent="PlayerSystems/AttackSystem_Defensive/OrbitSystem/OrbitAttack" instance=ExtResource("6_rq88u")]
-
-[node name="BasicBullet3" parent="PlayerSystems/AttackSystem_Defensive/OrbitSystem/OrbitAttack" instance=ExtResource("6_rq88u")]
+[node name="OrbitResetTimer" type="Timer" parent="PlayerSystems/AttackSystem_Defensive/OrbitSystem/BasicOrbitAttack"]
 
 [node name="CharacterSprite" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
