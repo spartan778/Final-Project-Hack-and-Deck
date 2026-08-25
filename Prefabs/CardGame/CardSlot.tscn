@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://4spdyrwd1t8h"]
+[gd_scene load_steps=8 format=3 uid="uid://4spdyrwd1t8h"]
 
 [ext_resource type="Script" uid="uid://dn3my5vkj40sf" path="res://Prefabs/CardGame/CardSlotControl.cs" id="1_f4jdp"]
 [ext_resource type="Script" uid="uid://d0biawvx2werp" path="res://Scripts/CardGame/CardSlots/CardSlotBase.cs" id="1_km50l"]
 [ext_resource type="Texture2D" uid="uid://b4lxy8von0qev" path="res://Assets/CardGame/Top-Down-Cards/Cards/PokerSlot_Image.png" id="2_f4jdp"]
 [ext_resource type="PackedScene" uid="uid://3km5mref7efe" path="res://Prefabs/CardGame/card_slot_module.tscn" id="3_oj02t"]
+[ext_resource type="PackedScene" uid="uid://cktb4u7gtc32b" path="res://Prefabs/Shaders/Blink/BlinkShader.tscn" id="5_katvv"]
+[ext_resource type="Material" uid="uid://chegesvjx5m4" path="res://Prefabs/Shaders/Blink/red_blink.tres" id="6_ks8v5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7nhsq"]
 size = Vector2(60, 80)
@@ -26,9 +28,17 @@ SlotArea = NodePath("../SlotArea")
 [node name="PokerSlotImage" type="Sprite2D" parent="CardSlotBase"]
 texture = ExtResource("2_f4jdp")
 
+[node name="BlinkShader" parent="CardSlotBase" node_paths=PackedStringArray("sprite_2d") instance=ExtResource("5_katvv")]
+shaderMat = ExtResource("6_ks8v5")
+sprite_2d = NodePath("../PokerSlotImage")
+duration = 1.0
+interval = 0.5
+
 [node name="SlotArea" type="Area2D" parent="CardSlotBase"]
 collision_layer = 2
 collision_mask = 3
 
 [node name="Collider" type="CollisionShape2D" parent="CardSlotBase/SlotArea"]
 shape = SubResource("RectangleShape2D_7nhsq")
+
+[connection signal="OnTriggerPoker" from="CardSlotBase" to="CardSlotBase/BlinkShader" method="_on_card_slot_base_on_trigger_poker"]

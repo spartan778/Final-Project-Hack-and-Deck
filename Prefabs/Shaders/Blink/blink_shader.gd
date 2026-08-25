@@ -17,13 +17,20 @@ func _ready() -> void:
 	interval_timer.wait_time = interval
 	target_sprite = animated_sprite if animated_sprite else sprite_2d #assign either sprite2d or animatedSprite as the target
 	
+func _run_shader() -> void:
+	if(!target_sprite): return
+	target_sprite.material = shaderMat
+	duration_timer.start()
+	interval_timer.start()
+	print("shader running")
+
 func _on_health_system_damage_effect(oldHealth: float, newHealth: float) -> void:
 	#print("old health: ", oldHealth, "\n new health: ", newHealth)
 	if(!target_sprite): return #return if there is no targeted sprite
 	duration_timer.start()
 	interval_timer.start()
 
-func _on_interval_timer_timeout() -> void:
+func _on_interval_timer_timeout() -> void: #toggle (on/off) shader effect
 	if(target_sprite.material == shaderMat):
 		target_sprite.material = null
 	else:
@@ -40,3 +47,8 @@ func _on_health_system_healing_effect(healedValue: float) -> void:
 	target_sprite.material = shaderMat
 	duration_timer.start()
 	interval_timer.start()
+
+
+func _on_card_slot_base_on_trigger_poker() -> void:
+	_run_shader()
+	print("Triggered by poker slot")

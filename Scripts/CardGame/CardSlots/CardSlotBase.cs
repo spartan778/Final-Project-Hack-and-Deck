@@ -5,6 +5,9 @@ public partial class CardSlotBase : Node2D, ICardSlotModule
 {
     [Export] public Area2D SlotArea { get; private set;}
     [Export] public CardSlotModule CardSlotModule { get; private set;}
+
+    [Signal]
+    public delegate void OnTriggerPokerEventHandler();
     public PokerBase SlottedPoker => CardSlotModule.SlottedPoker;
     private PokerGameManager pokerGameManagerRef;
     private RpcManager rpcManager;
@@ -38,9 +41,11 @@ public partial class CardSlotBase : Node2D, ICardSlotModule
     
     public void TriggerPoker()
     {
+        EmitSignalOnTriggerPoker(); // Engine (auto)generated method call to emit TriggerPoker Signal for GD Script
         if(SlottedPoker is null) return;
         rpcManager.TriggerPokerRpc(SlottedPoker.PokerContent.PokerInfo,
             SlottedPoker.PokerModifiersManager.ToDictionary());
+        // GD.Print("Poker Triggered");
     }
 
     

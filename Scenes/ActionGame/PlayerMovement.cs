@@ -11,16 +11,21 @@ public partial class PlayerMovement : Node //testing for component style coding
     [Export] public float DashSpeed { get; private set; }
     [Export] public float DefenceFormSpeedMod { get; private set; } = 1.5f;
     [Export] public float AggressiveFormSpeedMod { get; private set; } = 1f;
-    
+
+    public Action<Vector2> ChangeFacingDirection;
+    public Vector2 CurrentFacingDirection { get; private set; }
     
     private PlayerForm playerForm;
     private bool isAllowPlayerInput, isAllowMovement, isDashing;
     private float currentSpeedMod = 1;
+    
 
     public override void _Ready()
     {
         ConnectSignals();
         playerForm = playerManagerRef.PlayerForm;
+        CurrentFacingDirection = Vector2.Zero;
+        ChangeFacingDirection?.Invoke(CurrentFacingDirection);
     }
 
     public void ConnectSignals()
@@ -40,7 +45,6 @@ public partial class PlayerMovement : Node //testing for component style coding
             MovementSkillProcess();
         }
     }
-
     private void MovementProcess()
     {
         if(!isAllowMovement) return; // stop if input is not allowed
@@ -70,7 +74,18 @@ public partial class PlayerMovement : Node //testing for component style coding
         }
         // Move the character and handle collisions
         playerManagerRef.MoveAndSlide();
+        UpdateCurrentFacingDirection(direction);
     }
+
+    private void UpdateCurrentFacingDirection(Vector2 newDirection)
+    {
+        if (CurrentFacingDirection != newDirection)
+        {
+            CurrentFacingDirection = newDirection;
+            ChangeFacingDirection?.Invoke(CurrentFacingDirection);
+        }
+    }
+        
     private void MovementSkillProcess()
     {
         switch (playerForm)

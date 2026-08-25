@@ -8,8 +8,8 @@ public partial class HealthSystem : Node
     public Action HealthChanged;
     [Signal] 
     public delegate void DamageEffectEventHandler(float oldHealth, float newHealth); // special event (signal) type for gdScript
-   [Signal]
-   public delegate void HealingEffectEventHandler(float healedValue);
+    [Signal]
+    public delegate void HealingEffectEventHandler(float healedValue);
     [Export] public float CurrentHealth
     {
         get => currentHealth;

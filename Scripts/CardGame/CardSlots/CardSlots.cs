@@ -202,6 +202,7 @@ public partial class CardSlots : Node2D
         if(SlottedPokerArray.Count == 0)
         {
             GD.Print("No Poker in slots");
+            rpcManagerRef.SendSlottedColorCountRpc(0, 0); // this call resets the orbit attack
             return;
         }
         var blackCount = 0;
