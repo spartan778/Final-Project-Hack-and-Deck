@@ -7,17 +7,14 @@ public partial class CardSummonSystem : Node2D
     [Export] private PlayerManager playerManagerRef;
     public ActionGamePoker SummonedActionPoker{get; private set;}
 
+    public Action SummonPokerUsedUp;
+    
+    private RpcManager rpcManager;
     private ActionRpcHandler actionRpcHandlerRef;
 
     public override void _EnterTree()
     {
-        // var pokerBase = pokerBasePrefab.InstantiateOrNull<PokerBase>();
         var actionPoker = actionGamePokerPrefab.InstantiateOrNull<ActionGamePoker>();
-        // if (pokerBase == null)
-        // {
-        //     GD.PrintErr("Could not instantiate PokerBase");
-        //     return;
-        // }
         if (actionPoker == null)
         {
             GD.PrintErr("Could not instantiate ActionPoker");
@@ -29,6 +26,7 @@ public partial class CardSummonSystem : Node2D
     public override void _Ready()
     {
         actionRpcHandlerRef = ActionRpcHandler.Instance;
+        rpcManager = RpcManager.Instance;
         ConnectSignals();
     }
 
@@ -37,6 +35,7 @@ public partial class CardSummonSystem : Node2D
         actionRpcHandlerRef.SummonPokerAction += OnSummonPoker;
         actionRpcHandlerRef.SyncSummonedPokerPositionAction += OnSyncSummonedPokerPosition;
         actionRpcHandlerRef.SummonedPokerTimeOutAction += OnSummonedPokerTimeOut;
+        SummonPokerUsedUp += OnSummonPokerUsedUp;
     }
 
     private void OnSummonPoker(PokerInfo pokerInfo, PokerState pokerState)
@@ -47,6 +46,7 @@ public partial class CardSummonSystem : Node2D
         pokerTemp.PokerModifiersManager.SetPokerState(pokerState);
         SummonedActionPoker = pokerTemp;
         playerManagerRef.AddChild(SummonedActionPoker);
+        SummonedActionPoker.SetCardSummonSystem(this);
     }
 
     private void OnSyncSummonedPokerPosition(Vector2 summonedPokerPosition)
@@ -58,7 +58,14 @@ public partial class CardSummonSystem : Node2D
 
     private void OnSummonedPokerTimeOut()
     {
+        if(SummonedActionPoker == null) return;
         SummonedActionPoker.QueueFree();
         SummonedActionPoker = null;
+    }
+
+    private void OnSummonPokerUsedUp()
+    {
+        SummonedActionPoker = null;
+        rpcManager.SummonedPokerUsedUp_Send();
     }
 }

@@ -26,6 +26,7 @@ public partial class DirectionalAnchor : Node2D
     {
         actionRpcHandlerRef.SummonPokerAction += OnSummonPoker;
         actionRpcHandlerRef.SummonedPokerTimeOutAction += OnSummonedPokerTimeOut;
+        cardSummonSystem.SummonPokerUsedUp += OnSummonedPokerUsedUp;
     }
 
     private void OnSummonPoker(PokerInfo pokerInfo, PokerState pokerState)
@@ -37,6 +38,12 @@ public partial class DirectionalAnchor : Node2D
     }
 
     private void OnSummonedPokerTimeOut()
+    {
+        isPokerSummoned = false;
+        arrowSprite.Visible = false;
+    }
+
+    private void OnSummonedPokerUsedUp()
     {
         isPokerSummoned = false;
         arrowSprite.Visible = false;

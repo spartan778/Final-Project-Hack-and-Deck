@@ -419,10 +419,11 @@ organizeArea = NodePath("../HandPanel")
 handSlots = NodePath("..")
 pokerSpacing = 100.0
 
-[node name="SummonSystem" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("CardSlotModule", "discardPileRef", "cardRpcHandlerRef", "networkTickTimer", "inverseTimer", "coolDownTimer", "summonAnimation")]
+[node name="SummonSystem" type="Node2D" parent="GameBase2D" node_paths=PackedStringArray("CardSlotModule", "drawPileRef", "discardPileRef", "cardRpcHandlerRef", "networkTickTimer", "inverseTimer", "coolDownTimer", "summonAnimation")]
 position = Vector2(1163, 322)
 script = ExtResource("22_ib4bk")
 CardSlotModule = NodePath("CardSlotModule")
+drawPileRef = NodePath("../CardSystem/PokerDeck/DrawPile")
 discardPileRef = NodePath("../CardSystem/PokerDeck/DiscardPile")
 cardRpcHandlerRef = NodePath("../../CardRpcHandler")
 networkTickTimer = NodePath("../../GameTimers/NetworkTickTimer")

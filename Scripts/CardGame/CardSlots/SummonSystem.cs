@@ -4,6 +4,7 @@ using System;
 public partial class SummonSystem : Node2D, ICardSlotModule
 {
     [Export] public CardSlotModule CardSlotModule { get;private set; }
+    [Export] private DrawPile drawPileRef;
     [Export] private DiscardPile discardPileRef;
     [Export] private CardRpcHandler cardRpcHandlerRef;
     [Export] private Timer networkTickTimer, inverseTimer, coolDownTimer;
@@ -51,16 +52,82 @@ public partial class SummonSystem : Node2D, ICardSlotModule
         inverseTimer.Stop();
         poker.PokerDraggingRef.SetCollisionLayer(0); // make this card unscannable by card slots
         poker.PokerDraggingRef.SetCollisionLayerValue(4, true); // turn detection back on layer 4 ONLY
-        GD.Print("PokerUnslotted Poker");
         coolDownTimer.Start();
         summonAnimation.Visible = false;
         CardSlotModule.IsSlotOpen = false;
     }
 
-    public void ReturnToDiscard() // send summoned poker to discard pile
+    private void ReturnToDiscard()
     {
         if(SummonedPoker == null) return;
+        switch (SummonedPoker.PokerModifiersManager.PokerState)
+        {
+            // send summoned poker to discard pile and decrease rank by 1
+            case PokerState.Inversed:
+            {
+                if (SummonedPoker.PokerContent.PokerInfo.Rank == 0)
+                {
+                    SummonedPoker.PokerContent.PokerInfo.Rank = 12; // convert an "A" into a "K" (overflow)
+                }
+                else
+                {
+                    SummonedPoker.PokerContent.PokerInfo.Rank--;
+                }
+                break;
+            }
+            // send summoned poker to discard pile and increase rank by 1
+            case PokerState.Normal:
+            {
+                if (SummonedPoker.PokerContent.PokerInfo.Rank == 12)
+                {
+                    SummonedPoker.PokerContent.PokerInfo.Rank = 0; // convert an "K" into a "A" (overflow)
+                }
+                else
+                {
+                    SummonedPoker.PokerContent.PokerInfo.Rank++;
+                }
+                break;
+            }
+        }
+
         discardPileRef.AddToDiscardPile(SummonedPoker);
+        SummonedPoker.QueueFree();
+        SummonedPoker = null;
+    }
+
+    private void AddToDraw()
+    {
+        if(SummonedPoker == null) return;
+        switch (SummonedPoker.PokerModifiersManager.PokerState)
+        {
+            // send summoned poker to draw pile and decrease rank by 1
+            case PokerState.Inversed:
+            {
+                if (SummonedPoker.PokerContent.PokerInfo.Rank == 0)
+                {
+                    SummonedPoker.PokerContent.PokerInfo.Rank = 12; // convert an "A" into a "K" (overflow)
+                }
+                else
+                {
+                    SummonedPoker.PokerContent.PokerInfo.Rank--;
+                }
+                break;
+            }
+            // send summoned poker to draw pile and increase rank by 1
+            case PokerState.Normal:
+            {
+                if (SummonedPoker.PokerContent.PokerInfo.Rank == 12)
+                {
+                    SummonedPoker.PokerContent.PokerInfo.Rank = 0; // convert an "K" into a "A" (overflow)
+                }
+                else
+                {
+                    SummonedPoker.PokerContent.PokerInfo.Rank++;
+                }
+                break;
+            }
+        }
+        drawPileRef.CardStorage.InsertPoker(SummonedPoker.PokerContent.PokerInfo);
         SummonedPoker.QueueFree();
         SummonedPoker = null;
     }
@@ -83,13 +150,14 @@ public partial class SummonSystem : Node2D, ICardSlotModule
         summonAnimation.Visible = true;
         CardSlotModule.IsSlotOpen = true;
         rpcManager.SummonedPokerTimeOut_Send();
-        ReturnToDiscard();
+        AddToDraw();
     }
 
     private void OnSummonPokerUsedUp()
     {
-        GD.Print("Poker Used Up");
+        GD.Print("(Received RPC) Poker Used Up");
         ReturnToDiscard();
     }
+    
     
 }

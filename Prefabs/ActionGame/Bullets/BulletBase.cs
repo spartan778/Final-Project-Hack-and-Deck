@@ -48,7 +48,6 @@ public abstract partial class BulletBase : Area2D, IBlockable //base class for b
     }
     public void SetBulletSpeed(float bulletSpeed){
         BulletSpeed = bulletSpeed;
-        
     }
     public void SetDamage(float damage){
         Damage = damage;
