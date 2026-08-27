@@ -9,10 +9,14 @@ public partial class PlayerMovement : Node //testing for component style coding
     
     [Export] public float Speed { get; private set; }
     [Export] public float DashSpeed { get; private set; }
+    [Export] public float DefaultDashDuration { get; private set; } = 0.5f;
+    public float CurrentDashDuration { get; private set; }
     [Export] public float DefenceFormSpeedMod { get; private set; } = 1.5f;
     [Export] public float AggressiveFormSpeedMod { get; private set; } = 1f;
 
     public Action<Vector2> ChangeFacingDirection;
+
+    public Action<float> StartDashing;
     public Vector2 CurrentFacingDirection { get; private set; }
     
     private PlayerForm playerForm;
@@ -109,10 +113,8 @@ public partial class PlayerMovement : Node //testing for component style coding
         isAllowPlayerInput = false;
         isDashing = true;
         var dashVector = playerManagerRef.GetMouseToPlayerVector();
-        // GD.Print(dashVector);
         playerManagerRef.Velocity = dashVector * DashSpeed;
-        // GD.Print(playerManagerRef.Velocity);
-        // playerManagerRef.MoveAndSlide();
+        StartDashing?.Invoke(duration);
         yield return Co.Wait(duration);
         isAllowPlayerInput = true;
         isDashing = false;
@@ -166,10 +168,14 @@ public partial class PlayerMovement : Node //testing for component style coding
             currentSpeedMod = value;
         }
     }
-
     private void OnSettingAllowPlayerInput(bool value)
     {
         isAllowPlayerInput =  value;
         isAllowMovement = value;
+    }
+
+    public void SetCurrentDashDuration(float value)
+    {
+        CurrentDashDuration = value;
     }
 }

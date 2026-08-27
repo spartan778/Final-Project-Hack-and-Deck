@@ -304,12 +304,17 @@ PlayerForm = 1
 [node name="PlayerCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_0mflq")
 
-[node name="PlayerHitbox" type="Area2D" parent="." node_paths=PackedStringArray("HealthSystem")]
+[node name="PlayerHitbox" type="Area2D" parent="." node_paths=PackedStringArray("HealthSystem", "playerMovementRef", "InvincibilityTimer")]
 script = ExtResource("2_g7csx")
 HealthSystem = NodePath("../PlayerSystems/HealthSystem")
+playerMovementRef = NodePath("../PlayerSystems/MovementSystem/PlayerMovement")
+InvincibilityTimer = NodePath("InvincibilityTimer")
 
 [node name="HitBoxArea" type="CollisionShape2D" parent="PlayerHitbox"]
 shape = SubResource("RectangleShape2D_g7csx")
+
+[node name="InvincibilityTimer" type="Timer" parent="PlayerHitbox"]
+one_shot = true
 
 [node name="VFXs" type="Node" parent="."]
 
@@ -393,7 +398,7 @@ bulletPrefab = ExtResource("6_rq88u")
 texture_filter = 1
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_pc7lx")
-animation = &"move_back"
+animation = &"move_right"
 
 [node name="MovementAnimation" type="Node" parent="CharacterSprite" node_paths=PackedStringArray("playerMovement", "playerAnimatedSprite")]
 script = ExtResource("18_12jw6")

@@ -110,7 +110,7 @@ public partial class OrbitAttack : Node2D
             if (tempPointer.GetType() != bullet.GetType())
             {
                 GD.PrintErr("Bullet doesn't match, is this intentional?");
-                return true;
+                // return true;
             }
         }
         return true;
@@ -133,7 +133,6 @@ public partial class OrbitAttack : Node2D
                 bullet.QueueFree();
             }
         }
-        GD.Print("Children Count: "+ children);
     }
     
 }

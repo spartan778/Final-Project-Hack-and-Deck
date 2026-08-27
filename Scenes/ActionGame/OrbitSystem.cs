@@ -35,14 +35,12 @@ public partial class OrbitSystem : Node2D
         {
             basicOrbitAttack.SetProcessMode(ProcessModeEnum.Disabled); // disable the basic orbit attack
             basicOrbitAttack.Visible = false;
-            GD.Print("basic orbit disabled");
         }
         else
         {
             basicOrbitAttack.SetProcessMode(ProcessModeEnum.Inherit); // return to default behavior
             basicOrbitAttack.Visible = true;
             basicOrbitAttack.UpdateOrbit();
-            GD.Print("basic orbit enabled");
         }
     }
 

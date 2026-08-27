@@ -1,16 +1,20 @@
-[gd_scene load_steps=8 format=3 uid="uid://dw62403pk1am3"]
+[gd_scene load_steps=9 format=3 uid="uid://dw62403pk1am3"]
 
 [ext_resource type="Script" uid="uid://c6ld6es5jitrw" path="res://Prefabs/ActionGame/Bullets/BasicBullet/BasicBullet.cs" id="1_js6ii"]
-[ext_resource type="Texture2D" uid="uid://cuxeie36cc21j" path="res://Assets/ActionGame/BulletSprite/Kinetic_Bullet_V2.png" id="2_heflx"]
+[ext_resource type="Texture2D" uid="uid://dt7u5a17mvof" path="res://Assets/ActionGame/PlayerAssets/Projectiles/Shuriken.png" id="2_avu88"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f66vs"]
 radius = 13.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d6k3u"]
+atlas = ExtResource("2_avu88")
+region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_okh2y"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_heflx")
+"texture": SubResource("AtlasTexture_d6k3u")
 }],
 "loop": true,
 "name": &"BasicBullet",
@@ -70,7 +74,8 @@ shape = SubResource("CircleShape2D_f66vs")
 [node name="SpriteAnchor" type="Node2D" parent="."]
 
 [node name="BulletSprite" type="AnimatedSprite2D" parent="SpriteAnchor"]
-scale = Vector2(0.5, 0.5)
+texture_filter = 1
+scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_okh2y")
 animation = &"BasicBullet"
 
