@@ -52,7 +52,7 @@ public partial class EnemyBase : CharacterBody2D
 
     protected virtual void OnDying()
     {
-        GD.Print($"Deleting: {Name}");
+        // GD.Print($"Deleting: {Name}");
         QueueFree();
     }
     protected virtual void OnTakingDamage(float damage)

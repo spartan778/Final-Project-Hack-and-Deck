@@ -73,7 +73,7 @@ public abstract partial class BulletBase : Area2D, IBlockable //base class for b
     protected virtual void HandleBlockingProcess(Area2D hitArea)
     {
         if(hitArea is not IBlockable blockable) return;
-        GD.Print("Bullet collision");
+        // GD.Print("Bullet collision");
         if (IsFromEnemy && blockable.IsFromEnemy) // no interaction as both are enemy attacks
         {
             return;

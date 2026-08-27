@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://0s7odp1g51tv"]
+[gd_scene load_steps=67 format=3 uid="uid://0s7odp1g51tv"]
 
 [ext_resource type="Script" uid="uid://cv62dao6bnc30" path="res://Scripts/ActionGame/PlayerManager.cs" id="1_mhocx"]
 [ext_resource type="Script" uid="uid://bhm867opqujus" path="res://Scripts/ActionGame/PlayerHitbox.cs" id="2_g7csx"]
@@ -19,7 +19,9 @@
 [ext_resource type="Texture2D" uid="uid://dne4vwrg08ea4" path="res://Assets/UI/Vector_UI_Pack_dobo_ui/Arrows/arrow_blue.png" id="11_elfip"]
 [ext_resource type="Script" uid="uid://dauumhst0a6n" path="res://Scenes/ActionGame/OrbitSystem.cs" id="14_hb8xh"]
 [ext_resource type="Script" uid="uid://bowdmgn8oelbp" path="res://Scenes/ActionGame/OrbitAttack.cs" id="15_pg3mh"]
+[ext_resource type="Script" uid="uid://b4ibu7i8v7h82" path="res://Scenes/ActionGame/QiSlashAttack.cs" id="16_1xckp"]
 [ext_resource type="Texture2D" uid="uid://wiru15hsc3op" path="res://Assets/ActionGame/PlayerAssets/Ninja/Idle.png" id="16_pg3mh"]
+[ext_resource type="Texture2D" uid="uid://cjc116b6jar66" path="res://Assets/ActionGame/PlayerAssets/SlashAttack/SpriteSheetSlash02.png" id="17_5q6du"]
 [ext_resource type="Texture2D" uid="uid://b843d2vt5b2f3" path="res://Assets/ActionGame/PlayerAssets/Ninja/Walk.png" id="17_n4u5m"]
 [ext_resource type="Script" uid="uid://ophnhxbntgua" path="res://Scenes/ActionGame/MovementAnimation.cs" id="18_12jw6"]
 
@@ -28,6 +30,56 @@ size = Vector2(40, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g7csx"]
 size = Vector2(64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1sp28"]
+atlas = ExtResource("17_5q6du")
+region = Rect2(0, 0, 66, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rdu6b"]
+atlas = ExtResource("17_5q6du")
+region = Rect2(66, 0, 66, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_twtqw"]
+atlas = ExtResource("17_5q6du")
+region = Rect2(132, 0, 66, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gb5du"]
+atlas = ExtResource("17_5q6du")
+region = Rect2(198, 0, 66, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_81sib"]
+atlas = ExtResource("17_5q6du")
+region = Rect2(264, 0, 66, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j00s8"]
+atlas = ExtResource("17_5q6du")
+region = Rect2(330, 0, 66, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gsfwh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1sp28")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rdu6b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_twtqw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gb5du")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_81sib")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j00s8")
+}],
+"loop": false,
+"name": &"SlashAnimation",
+"speed": 12.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n4u5m"]
 atlas = ExtResource("16_pg3mh")
@@ -362,6 +414,8 @@ playerManagerRef = NodePath("../../..")
 Speed = 100.0
 DashSpeed = 300.0
 
+[node name="MovementCooldown" type="Timer" parent="PlayerSystems/MovementSystem"]
+
 [node name="AttackSystem_Offensive" type="Node2D" parent="PlayerSystems"]
 
 [node name="BasicAttack" type="Node" parent="PlayerSystems/AttackSystem_Offensive" node_paths=PackedStringArray("PlayerManagerRef", "basicAttackTimer")]
@@ -381,6 +435,8 @@ magicBulletPrefab = ExtResource("8_um666")
 playerManagerRef = NodePath("../../..")
 AttackArc = 45.0
 
+[node name="QiBlastAttack" type="Node2D" parent="PlayerSystems/AttackSystem_Offensive"]
+
 [node name="AttackSystem_Defensive" type="Node2D" parent="PlayerSystems"]
 
 [node name="OrbitSystem" type="Node2D" parent="PlayerSystems/AttackSystem_Defensive" node_paths=PackedStringArray("basicOrbitAttack", "playerManagerRef")]
@@ -393,6 +449,33 @@ script = ExtResource("15_pg3mh")
 bulletPrefab = ExtResource("6_rq88u")
 
 [node name="OrbitResetTimer" type="Timer" parent="PlayerSystems/AttackSystem_Defensive/OrbitSystem/BasicOrbitAttack"]
+
+[node name="QiSlashAttack" type="Node2D" parent="PlayerSystems/AttackSystem_Defensive" node_paths=PackedStringArray("playerManagerRef", "slashAnimation", "hitArea")]
+script = ExtResource("16_1xckp")
+playerManagerRef = NodePath("../../..")
+slashAnimation = NodePath("HitArea/SlashAnimation")
+hitArea = NodePath("HitArea")
+
+[node name="HitArea" type="Area2D" parent="PlayerSystems/AttackSystem_Defensive/QiSlashAttack"]
+collision_layer = 3
+collision_mask = 3
+monitoring = false
+monitorable = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlayerSystems/AttackSystem_Defensive/QiSlashAttack/HitArea"]
+position = Vector2(29.3415, -11.3457)
+scale = Vector2(0.41174, 0.433018)
+polygon = PackedVector2Array(155.58, 21.5828, 94.8621, 160.145, -58.1472, 157.836, -58.1472, -119.289, 90.0046, -119.289)
+
+[node name="SlashAnimation" type="AnimatedSprite2D" parent="PlayerSystems/AttackSystem_Defensive/QiSlashAttack/HitArea"]
+position = Vector2(36.4, 0)
+rotation = -1.5708
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_gsfwh")
+animation = &"SlashAnimation"
+autoplay = "SlashAnimation"
+frame = 2
+flip_h = true
 
 [node name="CharacterSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

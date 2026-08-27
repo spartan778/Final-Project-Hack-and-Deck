@@ -11,6 +11,7 @@ public partial class PlayerMovement : Node //testing for component style coding
     [Export] public float DashSpeed { get; private set; }
     [Export] public float DefaultDashDuration { get; private set; } = 0.5f;
     public float CurrentDashDuration { get; private set; }
+    [Export]public float MovementSkillCoolDown { get; private set; } = 10f;
     [Export] public float DefenceFormSpeedMod { get; private set; } = 1.5f;
     [Export] public float AggressiveFormSpeedMod { get; private set; } = 1f;
 

@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dt7u5a17mvof" path="res://Assets/ActionGame/PlayerAssets/Projectiles/Shuriken.png" id="2_avu88"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f66vs"]
-radius = 13.0
+radius = 17.0294
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d6k3u"]
 atlas = ExtResource("2_avu88")
@@ -75,7 +75,7 @@ shape = SubResource("CircleShape2D_f66vs")
 
 [node name="BulletSprite" type="AnimatedSprite2D" parent="SpriteAnchor"]
 texture_filter = 1
-scale = Vector2(1.5, 1.5)
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_okh2y")
 animation = &"BasicBullet"
 
