@@ -25,7 +25,7 @@ public partial class SlottedAction : Node
         PlayerManagerRef.PlayerFormChanged += OnPlayerFormChange;
         actionRpcHandler.SlotPokerAction += OnPokerSlotted;
     }
-    private void OnPokerSlotted(PokerInfo pokerInfo, Dictionary modifiers)
+    private async void OnPokerSlotted(PokerInfo pokerInfo, Dictionary modifiers)
     {
         switch (pokerInfo.Suit)
         {
@@ -33,12 +33,22 @@ public partial class SlottedAction : Node
             {
                 GD.Print($"Slotted support Poker, Strength {pokerInfo.Rank + 1}");
                 healthSystemRef.Heal(pokerInfo.Rank + 1);
+                if (PlayerManagerRef.PlayerForm is PlayerForm.Defensive) // heals again after short delay if in Defensive mode
+                {
+                    await ToSignal(GetTree().CreateTimer(1f), SceneTreeTimer.SignalName.Timeout);
+                    healthSystemRef.Heal(pokerInfo.Rank + 1);
+                }
                 break;
             }
             case CardSuit.Spades or CardSuit.Clubs:
             {
                 var bulletCount = pokerInfo.Rank + 1;
                 magicBulletAttackRef.MakeMagicAttack(bulletCount);
+                if (PlayerManagerRef.PlayerForm is PlayerForm.Aggressive) // attack again if in Aggressive mode
+                {
+                    await ToSignal(GetTree().CreateTimer(.5f), SceneTreeTimer.SignalName.Timeout);
+                    magicBulletAttackRef.MakeMagicAttack(bulletCount);
+                }
                 break;
             }
         }
