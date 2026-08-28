@@ -14,6 +14,8 @@ public partial class QiSystem : Node2D
     public float QiBaseRegenModifier = 1f;
     public float QiRegenBonusModifier = 0f;
     
+    public Action QiRegenAction;
+    
     [Export] private QiBlastAttack qiBlastAttack;
     [Export] private QiSlashAttack qiSlashAttack;
 
@@ -73,6 +75,16 @@ public partial class QiSystem : Node2D
     public void ConsumeQi(float value)
     {
         CurrentQi -= value;
+    }
+
+    public void RegenQi(float value)
+    {
+        CurrentQi += value;
+        if (CurrentQi >= MaxQi)
+        {
+            CurrentQi = MaxQi;
+        };
+        QiRegenAction?.Invoke();
     }
     
     public void SetMaxQi(float value)

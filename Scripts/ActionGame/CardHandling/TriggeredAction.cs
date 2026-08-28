@@ -8,6 +8,7 @@ public partial class TriggeredAction : Node
     [Export] private BasicAttack basicAttackRef;
     [Export] private PackedScene triggeredBulletPrefab;
     [Export] private HealthSystem healthSystemRef;
+    [Export] private QiSystem qiSystemRef;
     
     private BulletManager bulletManagerRef;
     private ActionRpcHandler actionRpcHandler;
@@ -19,7 +20,6 @@ public partial class TriggeredAction : Node
         bulletManagerRef = ActionGameBase.Instance.BulletManagerRef;
         actionRpcHandler = ActionRpcHandler.Instance;
         ConnectSignals();
-        
     }
 
     private void ConnectSignals()
@@ -34,19 +34,17 @@ public partial class TriggeredAction : Node
         {
             case CardSuit.Hearts or CardSuit.Diamonds:
             {
-                GD.Print($"Trigger support Poker, Strength {pokerInfo.Rank + 1}");
-                //TODO reduce mana / cooldown
+                var regenValue = pokerInfo.Rank + 1;
                 if (playerForm is PlayerForm.Defensive)
                 {
-                    GD.Print("(Defensive) Support Poker Triggered");
-                    GD.Print($"Poker: {pokerInfo}");
+                    regenValue *= 2;
                 }
+                qiSystemRef.RegenQi(regenValue);
                 break;
             }
             case CardSuit.Spades or CardSuit.Clubs:
             {
                 var bulletCount = pokerInfo.Rank + 1;
-                // GD.Print("Triggered ATTACK");
                 if(playerForm is PlayerForm.Aggressive)
                 {
                     basicAttackRef.MakeBasicAttack(bulletCount);

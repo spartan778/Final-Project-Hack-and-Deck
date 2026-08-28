@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://0s7odp1g51tv"]
+[gd_scene load_steps=84 format=3 uid="uid://0s7odp1g51tv"]
 
 [ext_resource type="Script" uid="uid://cv62dao6bnc30" path="res://Scripts/ActionGame/PlayerManager.cs" id="1_mhocx"]
 [ext_resource type="Script" uid="uid://bhm867opqujus" path="res://Scripts/ActionGame/PlayerHitbox.cs" id="2_g7csx"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://cktb4u7gtc32b" path="res://Prefabs/Shaders/Blink/BlinkShader.tscn" id="4_36vhm"]
 [ext_resource type="PackedScene" uid="uid://cpo25l2tgufg" path="res://Prefabs/ActionGame/health_bar.tscn" id="4_roci8"]
 [ext_resource type="Material" uid="uid://chegesvjx5m4" path="res://Prefabs/Shaders/Blink/red_blink.tres" id="5_0n75y"]
+[ext_resource type="Script" uid="uid://p4efhrdqo70w" path="res://Scenes/ActionGame/QiRegenVfx.cs" id="5_6t47i"]
+[ext_resource type="Texture2D" uid="uid://beoj0q0x2y70i" path="res://Assets/ActionGame/PlayerAssets/Ninja/Boost.png" id="5_8o8eh"]
 [ext_resource type="Texture2D" uid="uid://2p5ohaqum4be" path="res://Assets/ActionGame/PlayerAssets/Qi Indicatior/BackgroundIron2.png" id="5_nlank"]
 [ext_resource type="Texture2D" uid="uid://csu0s31xdlh5q" path="res://Assets/ActionGame/PlayerAssets/Qi Indicatior/ProgressMana.png" id="6_cnu1a"]
 [ext_resource type="PackedScene" uid="uid://dw62403pk1am3" path="res://Prefabs/ActionGame/Bullets/BasicBullet/basic_bullet.tscn" id="6_rq88u"]
@@ -36,6 +38,70 @@ size = Vector2(40, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g7csx"]
 size = Vector2(64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gsfwh"]
+atlas = ExtResource("5_8o8eh")
+region = Rect2(0, 0, 53, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vjjef"]
+atlas = ExtResource("5_8o8eh")
+region = Rect2(53, 0, 53, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qfrau"]
+atlas = ExtResource("5_8o8eh")
+region = Rect2(106, 0, 53, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bcec4"]
+atlas = ExtResource("5_8o8eh")
+region = Rect2(159, 0, 53, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ynmbq"]
+atlas = ExtResource("5_8o8eh")
+region = Rect2(212, 0, 53, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4yajn"]
+atlas = ExtResource("5_8o8eh")
+region = Rect2(265, 0, 53, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_snu7w"]
+atlas = ExtResource("5_8o8eh")
+region = Rect2(318, 0, 53, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0wykp"]
+atlas = ExtResource("5_8o8eh")
+region = Rect2(371, 0, 53, 35)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ynmbq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gsfwh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vjjef")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qfrau")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bcec4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ynmbq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4yajn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_snu7w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0wykp")
+}],
+"loop": false,
+"name": &"QiRegen",
+"speed": 16.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1sp28"]
 atlas = ExtResource("17_5q6du")
@@ -374,7 +440,7 @@ shape = SubResource("RectangleShape2D_g7csx")
 [node name="InvincibilityTimer" type="Timer" parent="PlayerHitbox"]
 one_shot = true
 
-[node name="VFXs" type="Node" parent="."]
+[node name="VFXs" type="Node2D" parent="."]
 
 [node name="DamageBlinkShader" parent="VFXs" node_paths=PackedStringArray("healthSystem", "animated_sprite") instance=ExtResource("4_36vhm")]
 healthSystem = NodePath("../../PlayerSystems/HealthSystem")
@@ -388,6 +454,16 @@ healthSystem = NodePath("../../PlayerSystems/HealthSystem")
 animated_sprite = NodePath("../../CharacterSprite")
 duration = 1.0
 interval = 0.2
+
+[node name="QiRegenVFX" type="AnimatedSprite2D" parent="VFXs" node_paths=PackedStringArray("qiSystemRef")]
+z_index = 500
+position = Vector2(0, 1)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_ynmbq")
+animation = &"QiRegen"
+frame_progress = 0.819647
+script = ExtResource("5_6t47i")
+qiSystemRef = NodePath("../../PlayerSystems/QiSystem")
 
 [node name="PlayerInfos" type="Control" parent="."]
 z_index = 1000
@@ -441,12 +517,13 @@ offset_bottom = -20.0
 
 [node name="PokerSystem" type="Node" parent="."]
 
-[node name="TriggeredAction" type="Node" parent="PokerSystem" node_paths=PackedStringArray("PlayerManagerRef", "basicAttackRef", "healthSystemRef")]
+[node name="TriggeredAction" type="Node" parent="PokerSystem" node_paths=PackedStringArray("PlayerManagerRef", "basicAttackRef", "healthSystemRef", "qiSystemRef")]
 script = ExtResource("7_um666")
 PlayerManagerRef = NodePath("../..")
 basicAttackRef = NodePath("../../PlayerSystems/AttackSystem_Offensive/BasicAttack")
 triggeredBulletPrefab = ExtResource("8_um666")
 healthSystemRef = NodePath("../../PlayerSystems/HealthSystem")
+qiSystemRef = NodePath("../../PlayerSystems/QiSystem")
 
 [node name="SlottedAction" type="Node" parent="PokerSystem" node_paths=PackedStringArray("PlayerManagerRef", "healthSystemRef", "magicBulletAttackRef")]
 script = ExtResource("9_bnihk")
