@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://0s7odp1g51tv"]
+[gd_scene load_steps=73 format=3 uid="uid://0s7odp1g51tv"]
 
 [ext_resource type="Script" uid="uid://cv62dao6bnc30" path="res://Scripts/ActionGame/PlayerManager.cs" id="1_mhocx"]
 [ext_resource type="Script" uid="uid://bhm867opqujus" path="res://Scripts/ActionGame/PlayerHitbox.cs" id="2_g7csx"]
@@ -8,7 +8,10 @@
 [ext_resource type="PackedScene" uid="uid://cktb4u7gtc32b" path="res://Prefabs/Shaders/Blink/BlinkShader.tscn" id="4_36vhm"]
 [ext_resource type="PackedScene" uid="uid://cpo25l2tgufg" path="res://Prefabs/ActionGame/health_bar.tscn" id="4_roci8"]
 [ext_resource type="Material" uid="uid://chegesvjx5m4" path="res://Prefabs/Shaders/Blink/red_blink.tres" id="5_0n75y"]
+[ext_resource type="Texture2D" uid="uid://2p5ohaqum4be" path="res://Assets/ActionGame/PlayerAssets/Qi Indicatior/BackgroundIron2.png" id="5_nlank"]
+[ext_resource type="Texture2D" uid="uid://csu0s31xdlh5q" path="res://Assets/ActionGame/PlayerAssets/Qi Indicatior/ProgressMana.png" id="6_cnu1a"]
 [ext_resource type="PackedScene" uid="uid://dw62403pk1am3" path="res://Prefabs/ActionGame/Bullets/BasicBullet/basic_bullet.tscn" id="6_rq88u"]
+[ext_resource type="Script" uid="uid://c4n8w38waxl8d" path="res://Scenes/ActionGame/QiIndicatorDisplay.cs" id="7_cnu1a"]
 [ext_resource type="Script" uid="uid://3ver75t7ymwg" path="res://Scripts/ActionGame/MagicBulletAttack.cs" id="7_e6f3n"]
 [ext_resource type="Script" uid="uid://by2bm21xikwd2" path="res://Scripts/ActionGame/CardHandling/TriggeredAction.cs" id="7_um666"]
 [ext_resource type="PackedScene" uid="uid://do7g64n8bmqa8" path="res://Prefabs/ActionGame/Bullets/MagicBullet/magic_bullet.tscn" id="8_um666"]
@@ -17,9 +20,12 @@
 [ext_resource type="PackedScene" uid="uid://dbgh8rfar0wng" path="res://Prefabs/ActionGame/action_game_poker.tscn" id="10_0l2bn"]
 [ext_resource type="Script" uid="uid://sdciksy81bk8" path="res://Scripts/ActionGame/CardHandling/DirectionalAnchor.cs" id="11_5yi2e"]
 [ext_resource type="Texture2D" uid="uid://dne4vwrg08ea4" path="res://Assets/UI/Vector_UI_Pack_dobo_ui/Arrows/arrow_blue.png" id="11_elfip"]
+[ext_resource type="Script" uid="uid://cn0k8tnoq87ee" path="res://Scenes/ActionGame/QiBlastAttack.cs" id="14_4itpj"]
 [ext_resource type="Script" uid="uid://dauumhst0a6n" path="res://Scenes/ActionGame/OrbitSystem.cs" id="14_hb8xh"]
+[ext_resource type="PackedScene" uid="uid://b7wthn4bqjplu" path="res://Prefabs/ActionGame/Bullets/QiBlast/qi_blast.tscn" id="15_a274y"]
 [ext_resource type="Script" uid="uid://bowdmgn8oelbp" path="res://Scenes/ActionGame/OrbitAttack.cs" id="15_pg3mh"]
 [ext_resource type="Script" uid="uid://b4ibu7i8v7h82" path="res://Scenes/ActionGame/QiSlashAttack.cs" id="16_1xckp"]
+[ext_resource type="Script" uid="uid://dql8qqevudwyo" path="res://Scenes/ActionGame/QiSystem.cs" id="16_n20tr"]
 [ext_resource type="Texture2D" uid="uid://wiru15hsc3op" path="res://Assets/ActionGame/PlayerAssets/Ninja/Idle.png" id="16_pg3mh"]
 [ext_resource type="Texture2D" uid="uid://cjc116b6jar66" path="res://Assets/ActionGame/PlayerAssets/SlashAttack/SpriteSheetSlash02.png" id="17_5q6du"]
 [ext_resource type="Texture2D" uid="uid://b843d2vt5b2f3" path="res://Assets/ActionGame/PlayerAssets/Ninja/Walk.png" id="17_n4u5m"]
@@ -383,7 +389,55 @@ animated_sprite = NodePath("../../CharacterSprite")
 duration = 1.0
 interval = 0.2
 
-[node name="HealthBar" parent="." instance=ExtResource("4_roci8")]
+[node name="PlayerInfos" type="Control" parent="."]
+z_index = 1000
+layout_mode = 3
+anchors_preset = 0
+
+[node name="QiIndicatorAnchor" type="HBoxContainer" parent="PlayerInfos"]
+layout_mode = 0
+offset_left = -31.0
+offset_top = -67.0
+offset_right = 125.0
+offset_bottom = -27.0
+scale = Vector2(0.5, 0.5)
+theme_override_constants/separation = 15
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="PlayerInfos/QiIndicatorAnchor"]
+texture_filter = 1
+layout_mode = 2
+fill_mode = 5
+texture_under = ExtResource("5_nlank")
+texture_progress = ExtResource("6_cnu1a")
+texture_progress_offset = Vector2(5, 5)
+
+[node name="TextureProgressBar2" type="TextureProgressBar" parent="PlayerInfos/QiIndicatorAnchor"]
+texture_filter = 1
+layout_mode = 2
+fill_mode = 5
+texture_under = ExtResource("5_nlank")
+texture_progress = ExtResource("6_cnu1a")
+texture_progress_offset = Vector2(5, 5)
+
+[node name="TextureProgressBar3" type="TextureProgressBar" parent="PlayerInfos/QiIndicatorAnchor"]
+texture_filter = 1
+layout_mode = 2
+fill_mode = 5
+texture_under = ExtResource("5_nlank")
+texture_progress = ExtResource("6_cnu1a")
+texture_progress_offset = Vector2(5, 5)
+
+[node name="QiIndicatorDisplay" type="Node" parent="PlayerInfos/QiIndicatorAnchor" node_paths=PackedStringArray("QiProgressBars", "qiSystemRef")]
+script = ExtResource("7_cnu1a")
+QiProgressBars = [NodePath("../TextureProgressBar"), NodePath("../TextureProgressBar2"), NodePath("../TextureProgressBar3")]
+qiSystemRef = NodePath("../../../PlayerSystems/QiSystem")
+
+[node name="HealthBar" parent="PlayerInfos" instance=ExtResource("4_roci8")]
+layout_mode = 0
+offset_left = -31.0
+offset_top = -47.0
+offset_right = 95.0
+offset_bottom = -20.0
 
 [node name="PokerSystem" type="Node" parent="."]
 
@@ -404,7 +458,7 @@ magicBulletAttackRef = NodePath("../../PlayerSystems/AttackSystem_Offensive/Magi
 
 [node name="HealthSystem" parent="PlayerSystems" node_paths=PackedStringArray("HealthBar") instance=ExtResource("3_e6f3n")]
 CurrentHealth = 100.0
-HealthBar = NodePath("../../HealthBar")
+HealthBar = NodePath("../../PlayerInfos/HealthBar")
 
 [node name="MovementSystem" type="Node" parent="PlayerSystems"]
 
@@ -435,8 +489,6 @@ magicBulletPrefab = ExtResource("8_um666")
 playerManagerRef = NodePath("../../..")
 AttackArc = 45.0
 
-[node name="QiBlastAttack" type="Node2D" parent="PlayerSystems/AttackSystem_Offensive"]
-
 [node name="AttackSystem_Defensive" type="Node2D" parent="PlayerSystems"]
 
 [node name="OrbitSystem" type="Node2D" parent="PlayerSystems/AttackSystem_Defensive" node_paths=PackedStringArray("basicOrbitAttack", "playerManagerRef")]
@@ -450,24 +502,35 @@ bulletPrefab = ExtResource("6_rq88u")
 
 [node name="OrbitResetTimer" type="Timer" parent="PlayerSystems/AttackSystem_Defensive/OrbitSystem/BasicOrbitAttack"]
 
-[node name="QiSlashAttack" type="Node2D" parent="PlayerSystems/AttackSystem_Defensive" node_paths=PackedStringArray("playerManagerRef", "slashAnimation", "hitArea")]
+[node name="QiSystem" type="Node2D" parent="PlayerSystems" node_paths=PackedStringArray("playerManagerRef", "qiBlastAttack", "qiSlashAttack")]
+script = ExtResource("16_n20tr")
+playerManagerRef = NodePath("../..")
+qiBlastAttack = NodePath("QiBlastAttack")
+qiSlashAttack = NodePath("QiSlashAttack")
+
+[node name="QiBlastAttack" type="Node2D" parent="PlayerSystems/QiSystem" node_paths=PackedStringArray("playerManagerRef")]
+script = ExtResource("14_4itpj")
+qiBlastPrefab = ExtResource("15_a274y")
+playerManagerRef = NodePath("../../..")
+
+[node name="QiSlashAttack" type="Node2D" parent="PlayerSystems/QiSystem" node_paths=PackedStringArray("playerManagerRef", "slashAnimation", "hitArea")]
 script = ExtResource("16_1xckp")
 playerManagerRef = NodePath("../../..")
 slashAnimation = NodePath("HitArea/SlashAnimation")
 hitArea = NodePath("HitArea")
 
-[node name="HitArea" type="Area2D" parent="PlayerSystems/AttackSystem_Defensive/QiSlashAttack"]
+[node name="HitArea" type="Area2D" parent="PlayerSystems/QiSystem/QiSlashAttack"]
 collision_layer = 3
 collision_mask = 3
 monitoring = false
 monitorable = false
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlayerSystems/AttackSystem_Defensive/QiSlashAttack/HitArea"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlayerSystems/QiSystem/QiSlashAttack/HitArea"]
 position = Vector2(29.3415, -11.3457)
 scale = Vector2(0.41174, 0.433018)
 polygon = PackedVector2Array(155.58, 21.5828, 94.8621, 160.145, -58.1472, 157.836, -58.1472, -119.289, 90.0046, -119.289)
 
-[node name="SlashAnimation" type="AnimatedSprite2D" parent="PlayerSystems/AttackSystem_Defensive/QiSlashAttack/HitArea"]
+[node name="SlashAnimation" type="AnimatedSprite2D" parent="PlayerSystems/QiSystem/QiSlashAttack/HitArea"]
 position = Vector2(36.4, 0)
 rotation = -1.5708
 scale = Vector2(2, 2)

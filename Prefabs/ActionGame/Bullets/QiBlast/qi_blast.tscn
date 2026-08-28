@@ -1,0 +1,66 @@
+[gd_scene load_steps=9 format=3 uid="uid://b7wthn4bqjplu"]
+
+[ext_resource type="Script" uid="uid://cjjebuti1muft" path="res://Prefabs/ActionGame/Bullets/QiBlast/QiBlast.cs" id="1_8joun"]
+[ext_resource type="Texture2D" uid="uid://b7rg4ucdr5jeh" path="res://Assets/ActionGame/PlayerAssets/Projectiles/BigEnergyBall.png" id="1_k16fr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f66vs"]
+radius = 24.0208
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8joun"]
+atlas = ExtResource("1_k16fr")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ixqnw"]
+atlas = ExtResource("1_k16fr")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2v1yq"]
+atlas = ExtResource("1_k16fr")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wjm0e"]
+atlas = ExtResource("1_k16fr")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_okh2y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8joun")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ixqnw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2v1yq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wjm0e")
+}],
+"loop": true,
+"name": &"QiBlast",
+"speed": 12.0
+}]
+
+[node name="QiBlast" type="Area2D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_8joun")
+BulletSpeed = 200.0
+Damage = 50.0
+PassThroughCount = 10
+IsAbsorbing = true
+IsFromPlayer = true
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_f66vs")
+
+[node name="SpriteAnchor" type="Node2D" parent="."]
+
+[node name="BulletSprite" type="AnimatedSprite2D" parent="SpriteAnchor"]
+texture_filter = 1
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_okh2y")
+animation = &"QiBlast"
+autoplay = "QiBlast"
+frame_progress = 0.466334

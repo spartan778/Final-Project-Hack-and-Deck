@@ -26,16 +26,7 @@ public partial class QiSlashAttack : Node2D
         hitArea.AreaEntered += OnSlashHit;
         slashAnimation.AnimationFinished += slashAnimation.Hide; // hide sprites when animation is finished
     }
-
-    public override void _UnhandledInput(InputEvent @event)
-    {
-        if(playerManagerRef.PlayerForm != PlayerForm.Defensive) return; // ignore if not in Defensive Mode
-        if (@event.IsActionPressed("action_activeAttack") && IsAttackReady)
-        {
-            MakeSlashAttack();
-        }
-    }
-
+    
     public async void MakeSlashAttack()
     {
         GD.Print("Making Slash Attack");
