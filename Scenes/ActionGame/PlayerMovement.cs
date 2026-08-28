@@ -6,11 +6,14 @@ using HCoroutines;
 public partial class PlayerMovement : Node //testing for component style coding
 {
     [Export] private PlayerManager playerManagerRef;
+    [Export] private QiSystem qiSystemRef;
     
     [Export] public float Speed { get; private set; }
     [Export] public float DashSpeed { get; private set; }
     [Export] public float DefaultDashDuration { get; private set; } = 0.5f;
     public float CurrentDashDuration { get; private set; }
+    [Export] public float DefaultDashCost { get; private set; } = 50f;
+    public float CurrentDashCost;
     [Export]public float MovementSkillCoolDown { get; private set; } = 10f;
     [Export] public float DefenceFormSpeedMod { get; private set; } = 1.5f;
     [Export] public float AggressiveFormSpeedMod { get; private set; } = 1f;
@@ -31,6 +34,7 @@ public partial class PlayerMovement : Node //testing for component style coding
         playerForm = playerManagerRef.PlayerForm;
         CurrentFacingDirection = Vector2.Zero;
         ChangeFacingDirection?.Invoke(CurrentFacingDirection);
+        CurrentDashCost = DefaultDashCost;
     }
 
     public void ConnectSignals()
@@ -96,13 +100,17 @@ public partial class PlayerMovement : Node //testing for component style coding
         switch (playerForm)
         {
             case PlayerForm.Defensive:
-            { 
+            {
+                if(!qiSystemRef.HasEnoughQi(CurrentDashCost)) return;
+                qiSystemRef.ConsumeQi(CurrentDashCost);
                 Co.Run(DashCoroutine());
                 break;
             }
             case PlayerForm.Aggressive:
             {
                 if(playerManagerRef.Velocity == Vector2.Zero) break; // can not roll if not moving
+                if(!qiSystemRef.HasEnoughQi(CurrentDashCost)) return;
+                qiSystemRef.ConsumeQi(CurrentDashCost);
                 Co.Run(RollCoroutine());
                 break;
             }

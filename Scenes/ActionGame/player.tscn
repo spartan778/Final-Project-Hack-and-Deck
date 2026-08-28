@@ -462,9 +462,10 @@ HealthBar = NodePath("../../PlayerInfos/HealthBar")
 
 [node name="MovementSystem" type="Node" parent="PlayerSystems"]
 
-[node name="PlayerMovement" type="Node" parent="PlayerSystems/MovementSystem" node_paths=PackedStringArray("playerManagerRef")]
+[node name="PlayerMovement" type="Node" parent="PlayerSystems/MovementSystem" node_paths=PackedStringArray("playerManagerRef", "qiSystemRef")]
 script = ExtResource("2_sw6lw")
 playerManagerRef = NodePath("../../..")
+qiSystemRef = NodePath("../../QiSystem")
 Speed = 100.0
 DashSpeed = 300.0
 

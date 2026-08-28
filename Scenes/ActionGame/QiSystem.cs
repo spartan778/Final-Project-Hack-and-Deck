@@ -64,8 +64,17 @@ public partial class QiSystem : Node2D
     {
         if(CurrentQi >= MaxQi) return;
         CurrentQi += CurrentQiRegen * (QiBaseRegenModifier + QiRegenBonusModifier) * (float)delta;
-        GD.Print("Current Qi: " + CurrentQi);
     }
+
+    public bool HasEnoughQi(float value)
+    {
+        return CurrentQi >= value;
+    }
+    public void ConsumeQi(float value)
+    {
+        CurrentQi -= value;
+    }
+    
     public void SetMaxQi(float value)
     {
         MaxQi = value;
