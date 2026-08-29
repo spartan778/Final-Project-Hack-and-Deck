@@ -63,7 +63,8 @@ public partial class QiSlashAttack : Node2D
                 if(blockable.IsFromPlayer) return; // slash attack should not hit player bullets
                 if (blockable.IsFromEnemy && blockable.IsBlockable)
                 {
-                    blockable.Blocked(); // slash attack will "block" enemy attacks
+                    // blockable.Blocked(); // slash attack will "block" enemy attacks
+                    blockable.Reflected();
                 }
                 break;
             }

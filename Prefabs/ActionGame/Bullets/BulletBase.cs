@@ -8,9 +8,12 @@ public interface IBlockable // General interface for a blockable (destroyable) b
     bool IsFromEnemy {get;set;}
     bool IsFromPlayer {get;set;}
     void Blocked();
+    void Reflected();
 
     void SetBlockingCollision(bool isBlockable, bool isAbsorbing);
-    public static int DefaultBlockableLayer { get; } = 5;
+    public static int DefaultBlockableLayer => 5;
+    public static int DefaultPlayerLayer => 1;
+    public static int DefaultEnemyLayer => 2;
 }
 
 public abstract partial class BulletBase : Area2D, IBlockable //base class for bullets
@@ -79,7 +82,7 @@ public abstract partial class BulletBase : Area2D, IBlockable //base class for b
             return;
         }
 
-        if (IsFromPlayer && blockable.IsFromPlayer)
+        if (IsFromPlayer && blockable.IsFromPlayer) // no interaction as both are player attacks
         {
             return;
         }
@@ -116,6 +119,23 @@ public abstract partial class BulletBase : Area2D, IBlockable //base class for b
         QueueFree();
     }
 
+    public void Reflected()
+    {
+        IsFromPlayer = !IsFromPlayer; // flip bullet owner
+        IsFromEnemy = !IsFromEnemy;
+        
+        Direction = -Direction; // flip bullet vector
+        RotateToDirection();
+        
+        SetCollisionMaskValue(IBlockable.DefaultEnemyLayer, IsFromPlayer); // set if bullet should hit enemy (layer)
+        SetCollisionLayerValue(IBlockable.DefaultEnemyLayer, IsFromPlayer);
+        
+        SetCollisionMaskValue(IBlockable.DefaultPlayerLayer, IsFromEnemy); // set if bullet should hit player (layer)
+        SetCollisionLayerValue(IBlockable.DefaultPlayerLayer, IsFromEnemy);
+        
+        
+    }
+
     public void SetBlockingCollision(bool isBlockable, bool isAbsorbing)
     {
         IsBlockable = isBlockable;
@@ -124,5 +144,6 @@ public abstract partial class BulletBase : Area2D, IBlockable //base class for b
         SetCollisionMaskValue(IBlockable.DefaultBlockableLayer, IsAbsorbing || IsBlockable); 
         SetCollisionLayerValue(IBlockable.DefaultBlockableLayer, IsAbsorbing || IsBlockable);
     }
+    
 }
 

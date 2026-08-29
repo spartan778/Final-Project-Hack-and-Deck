@@ -583,6 +583,7 @@ bulletPrefab = ExtResource("6_rq88u")
 [node name="QiSystem" type="Node2D" parent="PlayerSystems" node_paths=PackedStringArray("playerManagerRef", "qiBlastAttack", "qiSlashAttack")]
 script = ExtResource("16_n20tr")
 playerManagerRef = NodePath("../..")
+DefaultQiRegen = 100.0
 qiBlastAttack = NodePath("QiBlastAttack")
 qiSlashAttack = NodePath("QiSlashAttack")
 
