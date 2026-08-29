@@ -4,13 +4,22 @@ using System;
 public partial class PlayerManager : CharacterBody2D
 {
     [Export] public PlayerForm PlayerForm { get; private set; }
+    public static PlayerManager Instance { get; private set; }
     private ActionGameBase actionGameBase;
     private BulletManager bulletManager;
     
 
     public Action<PlayerForm> PlayerFormChanged;
     public Action<bool> SettingAllowPlayerInput;
-    
+
+    public override void _EnterTree()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
+
     public override void _Ready()
     {
         SettingAllowPlayerInput?.Invoke(true); // making sure input is allowed when game is ready

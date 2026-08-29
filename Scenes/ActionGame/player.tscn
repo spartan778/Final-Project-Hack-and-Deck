@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=3 uid="uid://0s7odp1g51tv"]
+[gd_scene load_steps=86 format=3 uid="uid://0s7odp1g51tv"]
 
 [ext_resource type="Script" uid="uid://cv62dao6bnc30" path="res://Scripts/ActionGame/PlayerManager.cs" id="1_mhocx"]
 [ext_resource type="Script" uid="uid://bhm867opqujus" path="res://Scripts/ActionGame/PlayerHitbox.cs" id="2_g7csx"]
@@ -24,7 +24,9 @@
 [ext_resource type="Texture2D" uid="uid://dne4vwrg08ea4" path="res://Assets/UI/Vector_UI_Pack_dobo_ui/Arrows/arrow_blue.png" id="11_elfip"]
 [ext_resource type="Script" uid="uid://cn0k8tnoq87ee" path="res://Scenes/ActionGame/QiBlastAttack.cs" id="14_4itpj"]
 [ext_resource type="Script" uid="uid://dauumhst0a6n" path="res://Scenes/ActionGame/OrbitSystem.cs" id="14_hb8xh"]
+[ext_resource type="Script" uid="uid://c4d7pnpldy3m5" path="res://Scenes/ActionGame/PokerHandsAction.cs" id="14_j1mmq"]
 [ext_resource type="PackedScene" uid="uid://b7wthn4bqjplu" path="res://Prefabs/ActionGame/Bullets/QiBlast/qi_blast.tscn" id="15_a274y"]
+[ext_resource type="Script" uid="uid://nohr41n5mfnc" path="res://Scenes/ActionGame/ChainLightening.cs" id="15_fm3l8"]
 [ext_resource type="Script" uid="uid://bowdmgn8oelbp" path="res://Scenes/ActionGame/OrbitAttack.cs" id="15_pg3mh"]
 [ext_resource type="Script" uid="uid://b4ibu7i8v7h82" path="res://Scenes/ActionGame/QiSlashAttack.cs" id="16_1xckp"]
 [ext_resource type="Script" uid="uid://dql8qqevudwyo" path="res://Scenes/ActionGame/QiSystem.cs" id="16_n20tr"]
@@ -531,6 +533,12 @@ PlayerManagerRef = NodePath("../..")
 healthSystemRef = NodePath("../../PlayerSystems/HealthSystem")
 magicBulletAttackRef = NodePath("../../PlayerSystems/AttackSystem_Offensive/MagicBulletAttack")
 
+[node name="PokerHandsAction" type="Node2D" parent="PokerSystem"]
+script = ExtResource("14_j1mmq")
+
+[node name="ChainLightening" type="Node2D" parent="PokerSystem/PokerHandsAction"]
+script = ExtResource("15_fm3l8")
+
 [node name="PlayerSystems" type="Node2D" parent="."]
 
 [node name="HealthSystem" parent="PlayerSystems" node_paths=PackedStringArray("HealthBar") instance=ExtResource("3_e6f3n")]
@@ -565,7 +573,7 @@ basicAttackTimer = NodePath("BasicAttackTimer")
 script = ExtResource("7_e6f3n")
 magicBulletPrefab = ExtResource("8_um666")
 playerManagerRef = NodePath("../../..")
-AttackArc = 45.0
+AttackArc = 30.0
 
 [node name="AttackSystem_Defensive" type="Node2D" parent="PlayerSystems"]
 
@@ -583,7 +591,6 @@ bulletPrefab = ExtResource("6_rq88u")
 [node name="QiSystem" type="Node2D" parent="PlayerSystems" node_paths=PackedStringArray("playerManagerRef", "qiBlastAttack", "qiSlashAttack")]
 script = ExtResource("16_n20tr")
 playerManagerRef = NodePath("../..")
-DefaultQiRegen = 100.0
 qiBlastAttack = NodePath("QiBlastAttack")
 qiSlashAttack = NodePath("QiSlashAttack")
 

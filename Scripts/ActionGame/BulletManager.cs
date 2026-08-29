@@ -27,7 +27,7 @@ public partial class BulletManager : Node
         if (area is BulletBase bullet)
         {
             area.QueueFree();
-            GD.Print($"{bullet.Name} is out of range");
+            // GD.Print($"{bullet.Name} is out of range");
         }
         // area?.QueueFree();
     }
@@ -36,6 +36,7 @@ public partial class BulletManager : Node
     {
         BulletList.Add(bullet);
         AddChild(bullet);
+        
         // GD.Print($"Bullet Spawned: {bullet.GetType().Name}");
     }
 }

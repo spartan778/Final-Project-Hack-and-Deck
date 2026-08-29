@@ -46,7 +46,7 @@ animations = [{
 
 [node name="RedBullet_Enemy" instance=ExtResource("1_jn0ge")]
 script = ExtResource("2_r10so")
-BulletSpeed = 100.0
+BulletSpeed = 150.0
 Damage = 10.0
 IsBlockable = true
 IsFromEnemy = true

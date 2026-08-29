@@ -8,7 +8,7 @@ public interface IBlockable // General interface for a blockable (destroyable) b
     bool IsFromEnemy {get;set;}
     bool IsFromPlayer {get;set;}
     void Blocked();
-    void Reflected();
+    void Reflected(Node2D source = null);
 
     void SetBlockingCollision(bool isBlockable, bool isAbsorbing);
     public static int DefaultBlockableLayer => 5;
@@ -119,12 +119,19 @@ public abstract partial class BulletBase : Area2D, IBlockable //base class for b
         QueueFree();
     }
 
-    public void Reflected()
+    public void Reflected(Node2D source = null)
     {
         IsFromPlayer = !IsFromPlayer; // flip bullet owner
         IsFromEnemy = !IsFromEnemy;
-        
-        Direction = -Direction; // flip bullet vector
+
+        if (source is null)
+        {
+            Direction = -Direction; // flip bullet vector
+        }
+        else
+        {
+            Direction = PlayerManager.Instance.GetMouseToPlayerVector().Normalized();
+        }
         RotateToDirection();
         
         SetCollisionMaskValue(IBlockable.DefaultEnemyLayer, IsFromPlayer); // set if bullet should hit enemy (layer)
@@ -132,9 +139,9 @@ public abstract partial class BulletBase : Area2D, IBlockable //base class for b
         
         SetCollisionMaskValue(IBlockable.DefaultPlayerLayer, IsFromEnemy); // set if bullet should hit player (layer)
         SetCollisionLayerValue(IBlockable.DefaultPlayerLayer, IsFromEnemy);
-        
-        
     }
+
+    
 
     public void SetBlockingCollision(bool isBlockable, bool isAbsorbing)
     {
