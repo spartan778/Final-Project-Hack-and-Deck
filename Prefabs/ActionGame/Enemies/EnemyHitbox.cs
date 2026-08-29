@@ -5,6 +5,7 @@ public partial class EnemyHitbox : Area2D, IDamageable
 {
     [Export] public HealthSystem HealthSystem { get;private set; }
     [Export] private EnemyBase enemy;
+    public EnemyBase Enemy => enemy;
 
     public override void _Ready()
     {

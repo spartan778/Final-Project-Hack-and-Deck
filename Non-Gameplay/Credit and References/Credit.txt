@@ -20,7 +20,6 @@ License: CC0
 https://luizmelo.itch.io/monsters-creatures-fantasy 
 LuizMelo 
 
-
 Dark Enemies Pack
 Standard Royalty-Free (RF) License 
 https://williamqm.itch.io/dark-enemies-pack 
@@ -30,5 +29,12 @@ Ninja Adventure - Asset Pack
 License: CC0 
 https://pixel-boy.itch.io/ninja-adventure-asset-pack 
 Pixel-Boy and AAA 
+
+2D Spell Effects
+License: CC0
+https://opengameart.org/content/2d-spell-effects
+Martin Jelinek (jelinek.cz@gmail.com)
+
+
 
 Ethan Walton - playtester

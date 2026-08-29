@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=3 uid="uid://0s7odp1g51tv"]
+[gd_scene load_steps=100 format=3 uid="uid://0s7odp1g51tv"]
 
 [ext_resource type="Script" uid="uid://cv62dao6bnc30" path="res://Scripts/ActionGame/PlayerManager.cs" id="1_mhocx"]
 [ext_resource type="Script" uid="uid://bhm867opqujus" path="res://Scripts/ActionGame/PlayerHitbox.cs" id="2_g7csx"]
@@ -26,9 +26,11 @@
 [ext_resource type="Script" uid="uid://dauumhst0a6n" path="res://Scenes/ActionGame/OrbitSystem.cs" id="14_hb8xh"]
 [ext_resource type="Script" uid="uid://c4d7pnpldy3m5" path="res://Scenes/ActionGame/PokerHandsAction.cs" id="14_j1mmq"]
 [ext_resource type="PackedScene" uid="uid://b7wthn4bqjplu" path="res://Prefabs/ActionGame/Bullets/QiBlast/qi_blast.tscn" id="15_a274y"]
+[ext_resource type="Script" uid="uid://dh0gohe3onafg" path="res://Scenes/ActionGame/StraightHand.cs" id="15_aomng"]
 [ext_resource type="Script" uid="uid://nohr41n5mfnc" path="res://Scenes/ActionGame/ChainLightening.cs" id="15_fm3l8"]
 [ext_resource type="Script" uid="uid://bowdmgn8oelbp" path="res://Scenes/ActionGame/OrbitAttack.cs" id="15_pg3mh"]
 [ext_resource type="Script" uid="uid://b4ibu7i8v7h82" path="res://Scenes/ActionGame/QiSlashAttack.cs" id="16_1xckp"]
+[ext_resource type="Texture2D" uid="uid://baasu6b2c715q" path="res://Assets/ActionGame/PlayerAssets/PokerHandAttacks/Lightning.png" id="16_371oj"]
 [ext_resource type="Script" uid="uid://dql8qqevudwyo" path="res://Scenes/ActionGame/QiSystem.cs" id="16_n20tr"]
 [ext_resource type="Texture2D" uid="uid://wiru15hsc3op" path="res://Assets/ActionGame/PlayerAssets/Ninja/Idle.png" id="16_pg3mh"]
 [ext_resource type="Texture2D" uid="uid://cjc116b6jar66" path="res://Assets/ActionGame/PlayerAssets/SlashAttack/SpriteSheetSlash02.png" id="17_5q6du"]
@@ -103,6 +105,87 @@ animations = [{
 "loop": false,
 "name": &"QiRegen",
 "speed": 16.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_aomng"]
+radius = 400.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sk3a0"]
+atlas = ExtResource("16_371oj")
+region = Rect2(0, 0, 64, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3xadc"]
+atlas = ExtResource("16_371oj")
+region = Rect2(64, 0, 64, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jerei"]
+atlas = ExtResource("16_371oj")
+region = Rect2(128, 0, 64, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f4mmu"]
+atlas = ExtResource("16_371oj")
+region = Rect2(192, 0, 64, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebrss"]
+atlas = ExtResource("16_371oj")
+region = Rect2(256, 0, 64, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e3bx1"]
+atlas = ExtResource("16_371oj")
+region = Rect2(320, 0, 64, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ex64s"]
+atlas = ExtResource("16_371oj")
+region = Rect2(384, 0, 64, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5xocf"]
+atlas = ExtResource("16_371oj")
+region = Rect2(448, 0, 64, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oj28b"]
+atlas = ExtResource("16_371oj")
+region = Rect2(512, 0, 64, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jhbug"]
+atlas = ExtResource("16_371oj")
+region = Rect2(576, 0, 64, 160)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g7axk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sk3a0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3xadc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jerei")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f4mmu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebrss")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e3bx1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ex64s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5xocf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oj28b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jhbug")
+}],
+"loop": true,
+"name": &"lightning",
+"speed": 15.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1sp28"]
@@ -536,8 +619,33 @@ magicBulletAttackRef = NodePath("../../PlayerSystems/AttackSystem_Offensive/Magi
 [node name="PokerHandsAction" type="Node2D" parent="PokerSystem"]
 script = ExtResource("14_j1mmq")
 
-[node name="ChainLightening" type="Node2D" parent="PokerSystem/PokerHandsAction"]
+[node name="StraightHand" type="Node2D" parent="PokerSystem/PokerHandsAction" node_paths=PackedStringArray("playerManagerRef", "attackRange", "intervalTimer")]
+script = ExtResource("15_aomng")
+playerManagerRef = NodePath("../../..")
+attackRange = NodePath("AttackRange")
+intervalTimer = NodePath("IntervalTimer")
+
+[node name="AttackRange" type="Area2D" parent="PokerSystem/PokerHandsAction/StraightHand"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PokerSystem/PokerHandsAction/StraightHand/AttackRange"]
+shape = SubResource("CircleShape2D_aomng")
+
+[node name="ChainLightening" type="Node2D" parent="PokerSystem/PokerHandsAction/StraightHand"]
 script = ExtResource("15_fm3l8")
+
+[node name="LightningAnimation" type="AnimatedSprite2D" parent="PokerSystem/PokerHandsAction/StraightHand/ChainLightening"]
+position = Vector2(-16, 0)
+scale = Vector2(0.5, 1)
+sprite_frames = SubResource("SpriteFrames_g7axk")
+animation = &"lightning"
+frame_progress = 0.702795
+centered = false
+
+[node name="IntervalTimer" type="Timer" parent="PokerSystem/PokerHandsAction/StraightHand"]
+wait_time = 5.0
+autostart = true
 
 [node name="PlayerSystems" type="Node2D" parent="."]
 
