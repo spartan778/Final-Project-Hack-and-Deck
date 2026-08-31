@@ -20,4 +20,12 @@ public partial class QiBlastAttack : Node2D
         projectile.InitBullet(finalVector);
         bulletManagerRef.BulletSpawned?.Invoke(projectile);
     }
+    
+    public void MakeQiBlast(Vector2 finalVector)
+    {
+        var projectile = qiBlastPrefab.Instantiate<QiBlast>();
+        projectile.GlobalPosition = playerManagerRef.GetGlobalPosition();
+        projectile.InitBullet(finalVector);
+        bulletManagerRef.BulletSpawned?.Invoke(projectile);
+    }
 }

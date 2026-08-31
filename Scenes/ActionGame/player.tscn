@@ -1,4 +1,4 @@
-[gd_scene load_steps=102 format=3 uid="uid://0s7odp1g51tv"]
+[gd_scene load_steps=104 format=3 uid="uid://0s7odp1g51tv"]
 
 [ext_resource type="Script" uid="uid://cv62dao6bnc30" path="res://Scripts/ActionGame/PlayerManager.cs" id="1_mhocx"]
 [ext_resource type="Script" uid="uid://bhm867opqujus" path="res://Scripts/ActionGame/PlayerHitbox.cs" id="2_g7csx"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://dw62403pk1am3" path="res://Prefabs/ActionGame/Bullets/BasicBullet/basic_bullet.tscn" id="6_rq88u"]
 [ext_resource type="Script" uid="uid://c4n8w38waxl8d" path="res://Scripts/ActionGame/QiSystem/QiIndicatorDisplay.cs" id="7_cnu1a"]
 [ext_resource type="Script" uid="uid://3ver75t7ymwg" path="res://Scripts/ActionGame/MagicBulletAttack.cs" id="7_e6f3n"]
+[ext_resource type="Script" uid="uid://buq2q3eg7ffu1" path="res://Scripts/ActionGame/InvincibleVfx.cs" id="7_pv3md"]
 [ext_resource type="Script" uid="uid://by2bm21xikwd2" path="res://Scripts/ActionGame/CardHandling/TriggeredAction.cs" id="7_um666"]
 [ext_resource type="PackedScene" uid="uid://do7g64n8bmqa8" path="res://Prefabs/ActionGame/Bullets/MagicBullet/magic_bullet.tscn" id="8_um666"]
 [ext_resource type="Script" uid="uid://bqdo7x80n285y" path="res://Scripts/ActionGame/CardHandling/SlottedAction.cs" id="9_bnihk"]
@@ -37,6 +38,7 @@
 [ext_resource type="Texture2D" uid="uid://b843d2vt5b2f3" path="res://Assets/ActionGame/PlayerAssets/Ninja/Walk.png" id="17_n4u5m"]
 [ext_resource type="Script" uid="uid://ophnhxbntgua" path="res://Scenes/ActionGame/MovementAnimation.cs" id="18_12jw6"]
 [ext_resource type="Script" uid="uid://djnifuf1287r0" path="res://Scripts/ActionGame/PokerHandSystem/RedFlushHand.cs" id="18_pc7lx"]
+[ext_resource type="Script" uid="uid://dqn5vucxxjuic" path="res://Scripts/ActionGame/PokerHandSystem/BlackFlushHand.cs" id="19_6yul7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0mflq"]
 size = Vector2(40, 40)
@@ -554,6 +556,11 @@ frame_progress = 0.819647
 script = ExtResource("5_6t47i")
 qiSystemRef = NodePath("../../PlayerSystems/QiSystem")
 
+[node name="InvincibleVFX" type="Node2D" parent="VFXs" node_paths=PackedStringArray("playerSprite", "playerHitboxRef")]
+script = ExtResource("7_pv3md")
+playerSprite = NodePath("../../CharacterSprite")
+playerHitboxRef = NodePath("../../PlayerHitbox")
+
 [node name="PlayerInfos" type="Control" parent="."]
 z_index = 1000
 layout_mode = 3
@@ -674,12 +681,25 @@ position = Vector2(338, 76)
 
 [node name="DurationTimer" type="Timer" parent="PokerSystem/PokerHandsAction/StraightHand"]
 
-[node name="RedFlushHand" type="Node2D" parent="PokerSystem/PokerHandsAction"]
+[node name="RedFlushHand" type="Node2D" parent="PokerSystem/PokerHandsAction" node_paths=PackedStringArray("DurationTimer", "qiSystemRef", "playerHitboxRef")]
 script = ExtResource("18_pc7lx")
-
-[node name="IntervalTimer" type="Timer" parent="PokerSystem/PokerHandsAction/RedFlushHand"]
+DurationTimer = NodePath("DurationTimer")
+DefaultDuration = 30.0
+InvincibleDuration = 5
+qiSystemRef = NodePath("../../../PlayerSystems/QiSystem")
+playerHitboxRef = NodePath("../../../PlayerHitbox")
 
 [node name="DurationTimer" type="Timer" parent="PokerSystem/PokerHandsAction/RedFlushHand"]
+
+[node name="BlackFlushHand" type="Node2D" parent="PokerSystem/PokerHandsAction" node_paths=PackedStringArray("playerManagerRef", "qiBlastAttackRef", "magicBulletAttackRef")]
+script = ExtResource("19_6yul7")
+playerManagerRef = NodePath("../../..")
+qiBlastAttackRef = NodePath("../../../PlayerSystems/QiSystem/QiBlastAttack")
+magicBulletAttackRef = NodePath("../../../PlayerSystems/AttackSystem_Offensive/MagicBulletAttack")
+DefaultBuffDuration = 15.0
+DefaultMagicAttackInterval = 0.5
+TotalBlastAmount = 18
+MagicBulletAmount = 5
 
 [node name="PlayerSystems" type="Node2D" parent="."]
 
@@ -768,19 +788,6 @@ autoplay = "SlashAnimation"
 frame = 2
 flip_h = true
 
-[node name="CharacterSprite" type="AnimatedSprite2D" parent="."]
-texture_filter = 1
-scale = Vector2(4, 4)
-sprite_frames = SubResource("SpriteFrames_pc7lx")
-animation = &"move_right"
-
-[node name="MovementAnimation" type="Node" parent="CharacterSprite" node_paths=PackedStringArray("playerMovement", "playerAnimatedSprite")]
-script = ExtResource("18_12jw6")
-playerMovement = NodePath("../../PlayerSystems/MovementSystem/PlayerMovement")
-playerAnimatedSprite = NodePath("..")
-
-[node name="MainCamera" type="Camera2D" parent="."]
-
 [node name="CardSummonSystem" type="Node2D" parent="." node_paths=PackedStringArray("playerManagerRef")]
 script = ExtResource("9_i4xmh")
 actionGamePokerPrefab = ExtResource("10_0l2bn")
@@ -799,6 +806,19 @@ position = Vector2(58, 2)
 rotation = 1.5708
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("11_elfip")
+
+[node name="CharacterSprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_pc7lx")
+animation = &"move_right"
+
+[node name="MovementAnimation" type="Node" parent="CharacterSprite" node_paths=PackedStringArray("playerMovement", "playerAnimatedSprite")]
+script = ExtResource("18_12jw6")
+playerMovement = NodePath("../../PlayerSystems/MovementSystem/PlayerMovement")
+playerAnimatedSprite = NodePath("..")
+
+[node name="MainCamera" type="Camera2D" parent="."]
 
 [connection signal="DamageEffect" from="PlayerSystems/HealthSystem" to="VFXs/DamageBlinkShader" method="_on_health_system_damage_effect"]
 [connection signal="HealingEffect" from="PlayerSystems/HealthSystem" to="VFXs/HealBlinkShader" method="_on_health_system_healing_effect"]

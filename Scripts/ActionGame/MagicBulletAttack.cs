@@ -31,4 +31,23 @@ public partial class MagicBulletAttack : Node
         }
         GD.Print($"MagicAttack with {bulletAmount} bullet");
     }
+
+    public void MakeMagicAttack(int bulletAmount, Vector2 finalVector)
+    {
+        var separation = AttackArc / bulletAmount; // spread bullets depending on amount
+        var startAngle = -(AttackArc/2); //line up the middle bullet at center
+        
+        for (var i = 0; i < bulletAmount; i++)
+        {
+            var bullet = magicBulletPrefab.Instantiate<MagicBullet>();
+            bullet.GlobalPosition = playerManagerRef.GetGlobalPosition();
+            var rotateInRad = Mathf.DegToRad(startAngle + separation * i);
+            // GD.Print($"Bullet Angle: {Mathf.RadToDeg(rotateInRad)}");
+            finalVector = finalVector.Normalized();
+            bullet.InitBullet(finalVector);
+            // AddChild(bullet);
+            bulletManagerRef.BulletSpawned?.Invoke(bullet);
+        }
+        GD.Print($"MagicAttack (Directional) with {bulletAmount} bullet");
+    }
 }

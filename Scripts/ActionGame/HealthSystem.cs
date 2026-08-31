@@ -71,6 +71,10 @@ public partial class HealthSystem : Node
     public void Heal(float amount)
     {
         CurrentHealth += amount;
+        if (CurrentHealth > MaxHealth)
+        {
+            CurrentHealth = MaxHealth;
+        }
         Healing?.Invoke(amount);
         // GD.Print($"{GetParent().Name}:Healing: {amount}");
         EmitSignalHealingEffect(amount); // godot generated (c#) helper
