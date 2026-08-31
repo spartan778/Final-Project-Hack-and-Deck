@@ -189,6 +189,7 @@ public partial class RpcManager : Node
     {
         GD.Print($"Receiving Poker hand type: {(PokerHandBase)packedVector.X}");
         GD.Print($"Release Mode: {(ReleaseMode)packedVector.Y}");
+        actionRpcHandler.HandleReleasedPokerHand((PokerHandBase)packedVector.X,(ReleaseMode)packedVector.Y);
     }
     #endregion
     public override void _Input(InputEvent @event)

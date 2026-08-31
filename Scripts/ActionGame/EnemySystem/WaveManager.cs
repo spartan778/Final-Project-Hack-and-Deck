@@ -14,5 +14,9 @@ public partial class WaveManager : Node
         WaveTimer.WaitTime = WaveInterval;
         WaveTimer.Start();
     }
-    
+
+    public void UpdateWaveInterval(float interval)
+    {
+        WaveTimer.WaitTime = interval;
+    }
 }

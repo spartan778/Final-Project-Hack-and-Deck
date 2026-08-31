@@ -80,8 +80,8 @@ public partial class OrbitAttack : Node2D
             Bullets[i].Position = Position + offset;
             Bullets[i].SetBulletSpeed(0f); // orbiting bullets does not require linear speed
         }
-        GD.Print($"Orbit Count: {Bullets.Count}");
-        GD.Print($"Current Bullet Count: {CurrentBulletCount}");
+        // GD.Print($"Orbit Count: {Bullets.Count}");
+        // GD.Print($"Current Bullet Count: {CurrentBulletCount}");
     }
 
     private void OrbitProcess(double delta)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=100 format=3 uid="uid://0s7odp1g51tv"]
+[gd_scene load_steps=101 format=3 uid="uid://0s7odp1g51tv"]
 
 [ext_resource type="Script" uid="uid://cv62dao6bnc30" path="res://Scripts/ActionGame/PlayerManager.cs" id="1_mhocx"]
 [ext_resource type="Script" uid="uid://bhm867opqujus" path="res://Scripts/ActionGame/PlayerHitbox.cs" id="2_g7csx"]
@@ -8,12 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://cktb4u7gtc32b" path="res://Prefabs/Shaders/Blink/BlinkShader.tscn" id="4_36vhm"]
 [ext_resource type="PackedScene" uid="uid://cpo25l2tgufg" path="res://Prefabs/ActionGame/health_bar.tscn" id="4_roci8"]
 [ext_resource type="Material" uid="uid://chegesvjx5m4" path="res://Prefabs/Shaders/Blink/red_blink.tres" id="5_0n75y"]
-[ext_resource type="Script" uid="uid://p4efhrdqo70w" path="res://Scenes/ActionGame/QiRegenVfx.cs" id="5_6t47i"]
+[ext_resource type="Script" uid="uid://p4efhrdqo70w" path="res://Scripts/ActionGame/QiSystem/QiRegenVfx.cs" id="5_6t47i"]
 [ext_resource type="Texture2D" uid="uid://beoj0q0x2y70i" path="res://Assets/ActionGame/PlayerAssets/Ninja/Boost.png" id="5_8o8eh"]
 [ext_resource type="Texture2D" uid="uid://2p5ohaqum4be" path="res://Assets/ActionGame/PlayerAssets/Qi Indicatior/BackgroundIron2.png" id="5_nlank"]
 [ext_resource type="Texture2D" uid="uid://csu0s31xdlh5q" path="res://Assets/ActionGame/PlayerAssets/Qi Indicatior/ProgressMana.png" id="6_cnu1a"]
 [ext_resource type="PackedScene" uid="uid://dw62403pk1am3" path="res://Prefabs/ActionGame/Bullets/BasicBullet/basic_bullet.tscn" id="6_rq88u"]
-[ext_resource type="Script" uid="uid://c4n8w38waxl8d" path="res://Scenes/ActionGame/QiIndicatorDisplay.cs" id="7_cnu1a"]
+[ext_resource type="Script" uid="uid://c4n8w38waxl8d" path="res://Scripts/ActionGame/QiSystem/QiIndicatorDisplay.cs" id="7_cnu1a"]
 [ext_resource type="Script" uid="uid://3ver75t7ymwg" path="res://Scripts/ActionGame/MagicBulletAttack.cs" id="7_e6f3n"]
 [ext_resource type="Script" uid="uid://by2bm21xikwd2" path="res://Scripts/ActionGame/CardHandling/TriggeredAction.cs" id="7_um666"]
 [ext_resource type="PackedScene" uid="uid://do7g64n8bmqa8" path="res://Prefabs/ActionGame/Bullets/MagicBullet/magic_bullet.tscn" id="8_um666"]
@@ -22,16 +22,16 @@
 [ext_resource type="PackedScene" uid="uid://dbgh8rfar0wng" path="res://Prefabs/ActionGame/action_game_poker.tscn" id="10_0l2bn"]
 [ext_resource type="Script" uid="uid://sdciksy81bk8" path="res://Scripts/ActionGame/CardHandling/DirectionalAnchor.cs" id="11_5yi2e"]
 [ext_resource type="Texture2D" uid="uid://dne4vwrg08ea4" path="res://Assets/UI/Vector_UI_Pack_dobo_ui/Arrows/arrow_blue.png" id="11_elfip"]
-[ext_resource type="Script" uid="uid://cn0k8tnoq87ee" path="res://Scenes/ActionGame/QiBlastAttack.cs" id="14_4itpj"]
-[ext_resource type="Script" uid="uid://dauumhst0a6n" path="res://Scenes/ActionGame/OrbitSystem.cs" id="14_hb8xh"]
-[ext_resource type="Script" uid="uid://c4d7pnpldy3m5" path="res://Scenes/ActionGame/PokerHandsAction.cs" id="14_j1mmq"]
+[ext_resource type="Script" uid="uid://cn0k8tnoq87ee" path="res://Scripts/ActionGame/QiSystem/QiBlastAttack.cs" id="14_4itpj"]
+[ext_resource type="Script" uid="uid://dauumhst0a6n" path="res://Scripts/ActionGame/OrbitSystem/OrbitSystem.cs" id="14_hb8xh"]
+[ext_resource type="Script" uid="uid://c4d7pnpldy3m5" path="res://Scripts/ActionGame/PokerHandSystem/PokerHandsAction.cs" id="14_j1mmq"]
 [ext_resource type="PackedScene" uid="uid://b7wthn4bqjplu" path="res://Prefabs/ActionGame/Bullets/QiBlast/qi_blast.tscn" id="15_a274y"]
-[ext_resource type="Script" uid="uid://dh0gohe3onafg" path="res://Scenes/ActionGame/StraightHand.cs" id="15_aomng"]
-[ext_resource type="Script" uid="uid://nohr41n5mfnc" path="res://Scenes/ActionGame/ChainLightening.cs" id="15_fm3l8"]
-[ext_resource type="Script" uid="uid://bowdmgn8oelbp" path="res://Scenes/ActionGame/OrbitAttack.cs" id="15_pg3mh"]
-[ext_resource type="Script" uid="uid://b4ibu7i8v7h82" path="res://Scenes/ActionGame/QiSlashAttack.cs" id="16_1xckp"]
+[ext_resource type="Script" uid="uid://dh0gohe3onafg" path="res://Scripts/ActionGame/PokerHandSystem/StraightHand.cs" id="15_aomng"]
+[ext_resource type="Script" uid="uid://nohr41n5mfnc" path="res://Scripts/ActionGame/PokerHandSystem/ChainLightening.cs" id="15_fm3l8"]
+[ext_resource type="Script" uid="uid://bowdmgn8oelbp" path="res://Scripts/ActionGame/OrbitSystem/OrbitAttack.cs" id="15_pg3mh"]
+[ext_resource type="Script" uid="uid://b4ibu7i8v7h82" path="res://Scripts/ActionGame/QiSystem/QiSlashAttack.cs" id="16_1xckp"]
 [ext_resource type="Texture2D" uid="uid://baasu6b2c715q" path="res://Assets/ActionGame/PlayerAssets/PokerHandAttacks/Lightning.png" id="16_371oj"]
-[ext_resource type="Script" uid="uid://dql8qqevudwyo" path="res://Scenes/ActionGame/QiSystem.cs" id="16_n20tr"]
+[ext_resource type="Script" uid="uid://dql8qqevudwyo" path="res://Scripts/ActionGame/QiSystem/QiSystem.cs" id="16_n20tr"]
 [ext_resource type="Texture2D" uid="uid://wiru15hsc3op" path="res://Assets/ActionGame/PlayerAssets/Ninja/Idle.png" id="16_pg3mh"]
 [ext_resource type="Texture2D" uid="uid://cjc116b6jar66" path="res://Assets/ActionGame/PlayerAssets/SlashAttack/SpriteSheetSlash02.png" id="17_5q6du"]
 [ext_resource type="Texture2D" uid="uid://b843d2vt5b2f3" path="res://Assets/ActionGame/PlayerAssets/Ninja/Walk.png" id="17_n4u5m"]
@@ -108,7 +108,10 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_aomng"]
-radius = 400.0
+radius = 300.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pc7lx"]
+radius = 300.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sk3a0"]
 atlas = ExtResource("16_371oj")
@@ -183,7 +186,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jhbug")
 }],
-"loop": true,
+"loop": false,
 "name": &"lightning",
 "speed": 15.0
 }]
@@ -600,7 +603,7 @@ offset_top = -47.0
 offset_right = 95.0
 offset_bottom = -20.0
 
-[node name="PokerSystem" type="Node" parent="."]
+[node name="PokerSystem" type="Node2D" parent="."]
 
 [node name="TriggeredAction" type="Node" parent="PokerSystem" node_paths=PackedStringArray("PlayerManagerRef", "basicAttackRef", "healthSystemRef", "qiSystemRef")]
 script = ExtResource("7_um666")
@@ -619,11 +622,15 @@ magicBulletAttackRef = NodePath("../../PlayerSystems/AttackSystem_Offensive/Magi
 [node name="PokerHandsAction" type="Node2D" parent="PokerSystem"]
 script = ExtResource("14_j1mmq")
 
-[node name="StraightHand" type="Node2D" parent="PokerSystem/PokerHandsAction" node_paths=PackedStringArray("playerManagerRef", "attackRange", "intervalTimer")]
+[node name="StraightHand" type="Node2D" parent="PokerSystem/PokerHandsAction" node_paths=PackedStringArray("playerManagerRef", "attackRange", "IntervalTimer", "DurationTimer", "chainLighteningAttack")]
 script = ExtResource("15_aomng")
 playerManagerRef = NodePath("../../..")
 attackRange = NodePath("AttackRange")
-intervalTimer = NodePath("IntervalTimer")
+IntervalTimer = NodePath("IntervalTimer")
+DurationTimer = NodePath("DurationTimer")
+DefaultInterval = 3.0
+DefaultDuration = 30.0
+chainLighteningAttack = NodePath("ChainLightening")
 
 [node name="AttackRange" type="Area2D" parent="PokerSystem/PokerHandsAction/StraightHand"]
 collision_layer = 0
@@ -632,20 +639,45 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PokerSystem/PokerHandsAction/StraightHand/AttackRange"]
 shape = SubResource("CircleShape2D_aomng")
 
-[node name="ChainLightening" type="Node2D" parent="PokerSystem/PokerHandsAction/StraightHand"]
+[node name="ChainLightening" type="Node2D" parent="PokerSystem/PokerHandsAction/StraightHand" node_paths=PackedStringArray("lightningSprite", "chainRange", "nextTarget")]
 script = ExtResource("15_fm3l8")
+lightningSprite = NodePath("LightningAnimation")
+chainRange = NodePath("ChainRange")
+DefaultDamage = 50.0
+DefaultChainAmount = 3
+nextTarget = NodePath("TestDummy")
+
+[node name="ChainRange" type="Area2D" parent="PokerSystem/PokerHandsAction/StraightHand/ChainLightening"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PokerSystem/PokerHandsAction/StraightHand/ChainLightening/ChainRange"]
+shape = SubResource("CircleShape2D_pc7lx")
 
 [node name="LightningAnimation" type="AnimatedSprite2D" parent="PokerSystem/PokerHandsAction/StraightHand/ChainLightening"]
-position = Vector2(-16, 0)
+visible = false
+z_index = 500
+rotation = -1.5708
 scale = Vector2(0.5, 1)
 sprite_frames = SubResource("SpriteFrames_g7axk")
 animation = &"lightning"
-frame_progress = 0.702795
+frame = 9
+frame_progress = 1.0
 centered = false
+offset = Vector2(-32, 30)
+
+[node name="TestDummy" type="Node2D" parent="PokerSystem/PokerHandsAction/StraightHand/ChainLightening"]
+position = Vector2(338, 76)
 
 [node name="IntervalTimer" type="Timer" parent="PokerSystem/PokerHandsAction/StraightHand"]
-wait_time = 5.0
-autostart = true
+
+[node name="DurationTimer" type="Timer" parent="PokerSystem/PokerHandsAction/StraightHand"]
+
+[node name="RedFlushHand" type="Node2D" parent="PokerSystem/PokerHandsAction"]
+
+[node name="IntervalTimer" type="Timer" parent="PokerSystem/PokerHandsAction/RedFlushHand"]
+
+[node name="DurationTimer" type="Timer" parent="PokerSystem/PokerHandsAction/RedFlushHand"]
 
 [node name="PlayerSystems" type="Node2D" parent="."]
 
