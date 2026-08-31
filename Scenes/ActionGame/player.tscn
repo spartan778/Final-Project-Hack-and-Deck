@@ -1,4 +1,4 @@
-[gd_scene load_steps=101 format=3 uid="uid://0s7odp1g51tv"]
+[gd_scene load_steps=102 format=3 uid="uid://0s7odp1g51tv"]
 
 [ext_resource type="Script" uid="uid://cv62dao6bnc30" path="res://Scripts/ActionGame/PlayerManager.cs" id="1_mhocx"]
 [ext_resource type="Script" uid="uid://bhm867opqujus" path="res://Scripts/ActionGame/PlayerHitbox.cs" id="2_g7csx"]
@@ -36,6 +36,7 @@
 [ext_resource type="Texture2D" uid="uid://cjc116b6jar66" path="res://Assets/ActionGame/PlayerAssets/SlashAttack/SpriteSheetSlash02.png" id="17_5q6du"]
 [ext_resource type="Texture2D" uid="uid://b843d2vt5b2f3" path="res://Assets/ActionGame/PlayerAssets/Ninja/Walk.png" id="17_n4u5m"]
 [ext_resource type="Script" uid="uid://ophnhxbntgua" path="res://Scenes/ActionGame/MovementAnimation.cs" id="18_12jw6"]
+[ext_resource type="Script" uid="uid://djnifuf1287r0" path="res://Scripts/ActionGame/PokerHandSystem/RedFlushHand.cs" id="18_pc7lx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0mflq"]
 size = Vector2(40, 40)
@@ -674,6 +675,7 @@ position = Vector2(338, 76)
 [node name="DurationTimer" type="Timer" parent="PokerSystem/PokerHandsAction/StraightHand"]
 
 [node name="RedFlushHand" type="Node2D" parent="PokerSystem/PokerHandsAction"]
+script = ExtResource("18_pc7lx")
 
 [node name="IntervalTimer" type="Timer" parent="PokerSystem/PokerHandsAction/RedFlushHand"]
 
