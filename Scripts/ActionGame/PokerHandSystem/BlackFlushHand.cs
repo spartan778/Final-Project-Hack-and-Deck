@@ -13,7 +13,7 @@ public partial class BlackFlushHand : Node2D
     
     [Export] public int TotalBlastAmount, MagicBulletAmount;
     private ActionRpcHandler actionRpcHandlerRef;
-    private float qiBlastVortexCompleteTIme = 2f;
+    private float qiBlastVortexCompleteTime = 2f;
     private bool isBonusActive;
 
     public override void _Ready()
@@ -60,7 +60,7 @@ public partial class BlackFlushHand : Node2D
     private IEnumerator QiVortexCoroutine()
     {
         var startingVector = playerManagerRef.GetMouseToPlayerVector();
-        var interval = qiBlastVortexCompleteTIme / TotalBlastAmount;
+        var interval = qiBlastVortexCompleteTime / TotalBlastAmount;
         for (var i = 0; i < TotalBlastAmount; i++)
         {
             float timer = 0;

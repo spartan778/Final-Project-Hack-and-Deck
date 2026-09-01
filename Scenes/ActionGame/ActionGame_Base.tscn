@@ -137,22 +137,16 @@ WaveInterval = 10.0
 script = ExtResource("6_okh2y")
 
 [node name="BasicRat" parent="." instance=ExtResource("7_gmcek")]
-position = Vector2(275, 303)
-
-[node name="RedSkull" parent="." instance=ExtResource("13_eoyb5")]
-position = Vector2(1038, 302)
+position = Vector2(275, 445)
 
 [node name="BasicRat2" parent="." instance=ExtResource("7_gmcek")]
-position = Vector2(486, 303)
+position = Vector2(486, 439)
 
-[node name="BasicRat3" parent="." instance=ExtResource("7_gmcek")]
-position = Vector2(275, 434)
+[node name="RedSkull" parent="." instance=ExtResource("13_eoyb5")]
+position = Vector2(723, 302)
 
-[node name="BasicRat4" parent="." instance=ExtResource("7_gmcek")]
-position = Vector2(105, 317)
-
-[node name="BasicRat5" parent="." instance=ExtResource("7_gmcek")]
-position = Vector2(426, 145)
+[node name="RedSkull2" parent="." instance=ExtResource("13_eoyb5")]
+position = Vector2(166, 604)
 
 [editable path="BasicRat"]
 [editable path="BasicRat/EnemyHitbox"]
@@ -160,12 +154,3 @@ position = Vector2(426, 145)
 [editable path="BasicRat2"]
 [editable path="BasicRat2/EnemyHitbox"]
 [editable path="BasicRat2/BumpAttackModule"]
-[editable path="BasicRat3"]
-[editable path="BasicRat3/EnemyHitbox"]
-[editable path="BasicRat3/BumpAttackModule"]
-[editable path="BasicRat4"]
-[editable path="BasicRat4/EnemyHitbox"]
-[editable path="BasicRat4/BumpAttackModule"]
-[editable path="BasicRat5"]
-[editable path="BasicRat5/EnemyHitbox"]
-[editable path="BasicRat5/BumpAttackModule"]

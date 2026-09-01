@@ -1,4 +1,4 @@
-[gd_scene load_steps=104 format=3 uid="uid://0s7odp1g51tv"]
+[gd_scene load_steps=118 format=3 uid="uid://0s7odp1g51tv"]
 
 [ext_resource type="Script" uid="uid://cv62dao6bnc30" path="res://Scripts/ActionGame/PlayerManager.cs" id="1_mhocx"]
 [ext_resource type="Script" uid="uid://bhm867opqujus" path="res://Scripts/ActionGame/PlayerHitbox.cs" id="2_g7csx"]
@@ -39,6 +39,8 @@
 [ext_resource type="Script" uid="uid://ophnhxbntgua" path="res://Scenes/ActionGame/MovementAnimation.cs" id="18_12jw6"]
 [ext_resource type="Script" uid="uid://djnifuf1287r0" path="res://Scripts/ActionGame/PokerHandSystem/RedFlushHand.cs" id="18_pc7lx"]
 [ext_resource type="Script" uid="uid://dqn5vucxxjuic" path="res://Scripts/ActionGame/PokerHandSystem/BlackFlushHand.cs" id="19_6yul7"]
+[ext_resource type="Script" uid="uid://ct4fqywl5gnpc" path="res://Scripts/ActionGame/PokerHandSystem/ThreeOfAKindHand.cs" id="21_0qjkg"]
+[ext_resource type="Texture2D" uid="uid://xcxslrq84ehn" path="res://Assets/ActionGame/PlayerAssets/Ninja/WaterWave.png" id="22_uc4tf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0mflq"]
 size = Vector2(40, 40)
@@ -192,6 +194,87 @@ animations = [{
 "loop": false,
 "name": &"lightning",
 "speed": 15.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0qjkg"]
+radius = 300.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g7axk"]
+atlas = ExtResource("22_uc4tf")
+region = Rect2(0, 0, 44, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_esgk4"]
+atlas = ExtResource("22_uc4tf")
+region = Rect2(44, 0, 44, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k141q"]
+atlas = ExtResource("22_uc4tf")
+region = Rect2(88, 0, 44, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bmef8"]
+atlas = ExtResource("22_uc4tf")
+region = Rect2(132, 0, 44, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yknhy"]
+atlas = ExtResource("22_uc4tf")
+region = Rect2(176, 0, 44, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_su1yg"]
+atlas = ExtResource("22_uc4tf")
+region = Rect2(220, 0, 44, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grno6"]
+atlas = ExtResource("22_uc4tf")
+region = Rect2(264, 0, 44, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_igkf0"]
+atlas = ExtResource("22_uc4tf")
+region = Rect2(308, 0, 44, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hhtge"]
+atlas = ExtResource("22_uc4tf")
+region = Rect2(352, 0, 44, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ovia"]
+atlas = ExtResource("22_uc4tf")
+region = Rect2(396, 0, 44, 33)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0qjkg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g7axk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_esgk4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k141q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bmef8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yknhy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_su1yg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grno6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_igkf0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hhtge")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ovia")
+}],
+"loop": false,
+"name": &"ShockWave",
+"speed": 10.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1sp28"]
@@ -700,6 +783,33 @@ DefaultBuffDuration = 15.0
 DefaultMagicAttackInterval = 0.5
 TotalBlastAmount = 18
 MagicBulletAmount = 5
+
+[node name="ThreeOfAKindHand" type="Node2D" parent="PokerSystem/PokerHandsAction" node_paths=PackedStringArray("shockWaveArea", "shockWaveAnimation", "durationTimer")]
+script = ExtResource("21_0qjkg")
+shockWaveArea = NodePath("shockWaveArea")
+shockWaveAnimation = NodePath("ShockWaveAnimation")
+ShockWaveStrength = 50.0
+durationTimer = NodePath("DurationTimer")
+DefaultDuration = 20.0
+shockWaveInterval = 2.0
+
+[node name="shockWaveArea" type="Area2D" parent="PokerSystem/PokerHandsAction/ThreeOfAKindHand"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PokerSystem/PokerHandsAction/ThreeOfAKindHand/shockWaveArea"]
+shape = SubResource("CircleShape2D_0qjkg")
+
+[node name="DurationTimer" type="Timer" parent="PokerSystem/PokerHandsAction/ThreeOfAKindHand"]
+
+[node name="ShockWaveAnimation" type="AnimatedSprite2D" parent="PokerSystem/PokerHandsAction/ThreeOfAKindHand"]
+visible = false
+z_index = 100
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_0qjkg")
+animation = &"ShockWave"
+frame = 9
+frame_progress = 1.0
 
 [node name="PlayerSystems" type="Node2D" parent="."]
 

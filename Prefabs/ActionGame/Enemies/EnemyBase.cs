@@ -85,9 +85,6 @@ public partial class EnemyBase : CharacterBody2D
         FlipToPlayer();
         MoveAndSlide();
     }
-    
-    
-
     protected virtual void FlipToPlayer() // Abs function used to avoid vector and value confusion
     {
         if (VectorToPlayer.X < 0) // flip to left
@@ -98,6 +95,12 @@ public partial class EnemyBase : CharacterBody2D
         {
             enemySpriteBase.Scale = new Vector2(Mathf.Abs(enemySpriteBase.Scale.X), enemySpriteBase.Scale.Y);
         }
+    }
+    
+    public void KnockAwayFromPlayer(float strength)
+    {
+        var pushVector = -VectorToPlayer;
+        MoveAndCollide(pushVector.Normalized() * strength);
     }
 }
 

@@ -23,4 +23,9 @@ public partial class EnemyHitbox : Area2D, IDamageable
            hitbox.TakeDamage(enemy.CurrentDamage); 
         }
     }
+
+    public void KnockBack(float strength)
+    {
+        enemy.KnockAwayFromPlayer(strength);
+    }
 }
