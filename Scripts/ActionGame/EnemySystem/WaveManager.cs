@@ -7,7 +7,7 @@ public partial class WaveManager : Node
     [Export] private EnemySpawner enemySpawnerRef;
     [Export] public Timer WaveTimer{ get; private set; }
     [Export] public float WaveInterval;
-    public int WaveNumber {get; private set;}
+    public int WaveNumber;
 
     public override void _Ready()
     {
@@ -19,4 +19,6 @@ public partial class WaveManager : Node
     {
         WaveTimer.WaitTime = interval;
     }
+    
+    
 }

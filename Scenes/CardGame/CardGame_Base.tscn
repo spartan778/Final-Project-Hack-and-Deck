@@ -124,7 +124,7 @@ pokerGameManager = NodePath("../GameBase2D/CardSystem/PokerGameManager")
 [node name="CardRpcHandler" type="Node" parent="."]
 script = ExtResource("3_mt5kn")
 
-[node name="UI_Base" type="Control" parent="." node_paths=PackedStringArray("testLabel")]
+[node name="UI_Base" type="Control" parent="." node_paths=PackedStringArray("mainLabel", "subLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -134,7 +134,8 @@ offset_bottom = -720.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_y7kd2")
-testLabel = NodePath("Main Label/Sub Label")
+mainLabel = NodePath("Main Label")
+subLabel = NodePath("Main Label/Sub Label")
 
 [node name="Background" type="TextureRect" parent="UI_Base"]
 z_index = -1000

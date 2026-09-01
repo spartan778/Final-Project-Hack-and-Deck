@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_hwoi7")
 EnemyPrefab = ExtResource("1_60i87")
-SpawnValue = 3.0
+SpawnValue = 5.0
 ThreatLevel = 0
 IsElite = false
 metadata/_custom_type_script = "uid://c7huxfai1w0q3"

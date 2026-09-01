@@ -120,6 +120,8 @@ EnemySpawnerRef = NodePath("EnemySpawner")
 script = ExtResource("8_eoyb5")
 enemySystemRef = NodePath("..")
 DifficultyValue = 30.0
+DifficultyIncreaseInterval = 3
+DifficultyIncreaseValue = 5
 
 [node name="EnemySpawner" type="Node" parent="2DGameBase/EnemySystem" node_paths=PackedStringArray("playerManager")]
 script = ExtResource("6_8kvql")
@@ -129,7 +131,7 @@ playerManager = NodePath("../../Player")
 script = ExtResource("7_yco5m")
 enemySpawnerRef = NodePath("../EnemySpawner")
 WaveTimer = NodePath("WaveTimer")
-WaveInterval = 10.0
+WaveInterval = 20.0
 
 [node name="WaveTimer" type="Timer" parent="2DGameBase/EnemySystem/WaveManager"]
 
