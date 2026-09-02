@@ -22,7 +22,7 @@ func _run_shader() -> void:
 	target_sprite.material = shaderMat
 	duration_timer.start()
 	interval_timer.start()
-	print("shader running")
+	#print("shader running")
 
 func _on_health_system_damage_effect(oldHealth: float, newHealth: float) -> void:
 	#print("old health: ", oldHealth, "\n new health: ", newHealth)
@@ -51,4 +51,4 @@ func _on_health_system_healing_effect(healedValue: float) -> void:
 
 func _on_card_slot_base_on_trigger_poker() -> void:
 	_run_shader()
-	print("Triggered by poker slot")
+	#print("Triggered by poker slot")

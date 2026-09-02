@@ -96,8 +96,8 @@ public partial class RpcManager : Node
     [Rpc(RpcMode.AnyPeer)]
     private void TriggerPoker_Receive(Vector2 pokerInfo, Dictionary modifiers)
     {
-        GD.Print($"Normal Poker Triggered: {pokerInfo}");
-        GD.Print($"Modifiers: {modifiers}");
+        // GD.Print($"Normal Poker Triggered: {pokerInfo}");
+        // GD.Print($"Modifiers: {modifiers}");
         actionRpcHandler.HandlePokerSlotTriggered(pokerInfo, modifiers);
         
     }
@@ -113,8 +113,8 @@ public partial class RpcManager : Node
     [Rpc(RpcMode.AnyPeer)]
     private void SlottedColorCount_Receive(int blackCount, int redCount)
     {
-        GD.Print($"Received black count: {blackCount}");
-        GD.Print($"Received red count: {redCount}");
+        // GD.Print($"Received black count: {blackCount}");
+        // GD.Print($"Received red count: {redCount}");
         actionRpcHandler.HandleSlottedColorCount(blackCount, redCount);
         
     }
@@ -187,8 +187,8 @@ public partial class RpcManager : Node
     [Rpc(RpcMode.AnyPeer)]
     private void ReleaseHandSlots_Receive(Vector2 packedVector)
     {
-        GD.Print($"Receiving Poker hand type: {(PokerHandBase)packedVector.X}");
-        GD.Print($"Release Mode: {(ReleaseMode)packedVector.Y}");
+        // GD.Print($"Receiving Poker hand type: {(PokerHandBase)packedVector.X}");
+        // GD.Print($"Release Mode: {(ReleaseMode)packedVector.Y}");
         actionRpcHandler.HandleReleasedPokerHand((PokerHandBase)packedVector.X,(ReleaseMode)packedVector.Y);
     }
     #endregion

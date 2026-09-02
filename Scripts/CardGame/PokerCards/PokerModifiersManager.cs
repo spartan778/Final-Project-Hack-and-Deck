@@ -45,7 +45,7 @@ public Dictionary ToDictionary() //turn card info into RPC friendly format
             { nameof(PokerState), (int)PokerState },
             { nameof(PokerType), (int)PokerType },
         };
-        GD.Print(enumDict);
+        // GD.Print(enumDict);
         return enumDict;
     }
 }

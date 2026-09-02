@@ -32,7 +32,7 @@ public partial class CardSlotModule : Node
         if (SlottedPoker is null) return; 
         if (IsLockingPoker)
         {
-            GD.Print($"Slot is locked with {SlottedPoker.PokerContent.PokerInfo}");
+            // GD.Print($"Slot is locked with {SlottedPoker.PokerContent.PokerInfo}");
             return;
         }
         if (SlottedPoker != poker) return; // only care if the Slotted poker is picked
@@ -64,7 +64,7 @@ public partial class CardSlotModule : Node
     private void SlotPoker(PokerDragging poker)
     {
         SlottedPoker = poker.PokerBaseRef;
-        GD.Print($"Slotted: {poker.PokerBaseRef.Name} at {parentNode2D.Name}");
+        // GD.Print($"Slotted: {poker.PokerBaseRef.Name} at {parentNode2D.Name}");
         SlottedPoker.Position = parentNode2D.GlobalPosition;
         if (IsLockingPoker) // lock poker to slot by default
         {

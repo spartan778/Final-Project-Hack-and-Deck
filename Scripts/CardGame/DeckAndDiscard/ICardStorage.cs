@@ -228,7 +228,7 @@ public partial class ICardStorage : Node
         }
         var poker = StoredPokers[0];
         StoredPokers.RemoveAt(0);
-        GD.Print($"Remaining cards: {StoredPokers.Count}");
+        // GD.Print($"Remaining cards: {StoredPokers.Count}");
         UpdateCardCountDisplay();
         return poker;
     }

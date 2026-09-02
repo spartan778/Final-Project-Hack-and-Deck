@@ -18,6 +18,8 @@ public partial class CardSlots : Node2D
     [Export] public float SwipeCoolDownTime { get; private set; }
     [Export] private TextureProgressBar coolDownProgressBar, swipeProgressBar;
     public Action SwipeSuccess;
+    public Action<PokerHandBase, ReleaseMode> ScanningPokerHand;
+    public Action<PokerBase> SlottingPoker;
     public bool IsInCoolDown { get; private set; }
     private RpcManager rpcManagerRef;
     public Array<PokerBase> SlottedPokerArray {get; private set;}
@@ -38,12 +40,28 @@ public partial class CardSlots : Node2D
                 CardSlotControls.Add(cardSlotControl);
             }
         }
+
+        foreach (var cardSlotControl in CardSlotControls)
+        {
+            cardSlotControl.CardSlotBase.CardSlotModule.PokerSlotted += OnPokerSlotted;
+        }
         // GD.Print("Slot Count: "+CardSlotControls.Count);
         IsInCoolDown = false;
         SlotCheckTimer.WaitTime = SlotCheckInterval;
         SlotCheckTimer.Start();
         ReleaseSlotsCoolDownTimer.WaitTime = SwipeCoolDownTime;
         ConnectSignals();
+        
+    }
+
+    private void OnPokerSlotted(PokerDragging draggedPoker)
+    {
+        if (!UpdatePokerSlots()) return;
+        // GD.Print("Action: Scanning Poker");
+        var scannedPokerHands = ScanPlayedPokerHands();
+        GD.Print(scannedPokerHands);
+        if(scannedPokerHands == null || scannedPokerHands.Count == 0) return;
+        ScanningPokerHand?.Invoke(scannedPokerHands[0], ReleaseMode.Charged);
         
     }
 
@@ -54,7 +72,21 @@ public partial class CardSlots : Node2D
         ReleaseSlotsCoolDownTimer.Timeout += OnCoolDownTimer_Timeout;
     }
     
-    public void ScanPokerSlots()
+    public void ReleasePokerSlots()
+    {
+        if (!UpdatePokerSlots()) return;
+        var playedPokerHands= ScanPlayedPokerHands();
+        Co.Run(ReleaseChargedSlotsCoroutine(playedPokerHands));
+        ReleaseSlotsCoolDownTimer.Start();
+        GD.Print("Swipe cooldown started");
+        swipeProgressBar.Value = 0;
+        coolDownProgressBar.Visible = true;
+        IsInCoolDown = true;
+        // GD.Print(playedPokerHands);
+        
+    }
+
+    private bool UpdatePokerSlots()
     {
         SlottedPokerArray.Clear();
         foreach (var cardSlot in CardSlotControls)
@@ -66,19 +98,12 @@ public partial class CardSlots : Node2D
         }
         if(SlottedPokerArray.Count == 0)
         {
-            GD.Print("No Poker in slots");
-            swipeProgressBar.Value = 0;
-            return;
+            // GD.Print("No Poker in slots");
+            
+            return false;
         }
-        var playedPokerHands= ScanPlayedPokerHands();
-        Co.Run(ReleaseChargedSlotsCoroutine(playedPokerHands));
-        ReleaseSlotsCoolDownTimer.Start();
-        GD.Print("Swipe cooldown started");
-        swipeProgressBar.Value = 0;
-        coolDownProgressBar.Visible = true;
-        IsInCoolDown = true;
-        GD.Print(playedPokerHands);
-        
+        // GD.Print(SlottedPokerArray);
+        return true;
     }
 
     private IEnumerator ReleaseChargedSlotsCoroutine(Array<PokerHandBase> pokerHands, float interval = 1f)
@@ -219,7 +244,7 @@ public partial class CardSlots : Node2D
                 redCount++;
             }
         }
-        GD.Print($"Black Count: {blackCount} \n Red Count: {redCount}");
+        // GD.Print($"Black Count: {blackCount} \n Red Count: {redCount}");
         rpcManagerRef.SendSlottedColorCountRpc(blackCount, redCount);
     }
     
@@ -234,7 +259,8 @@ public partial class CardSlots : Node2D
     }
     private void OnSwipeSuccess()
     {
-        ScanPokerSlots();
+        swipeProgressBar.Value = 0;
+        ReleasePokerSlots();
     }
 
     private void OnCoolDownTimer_Timeout()

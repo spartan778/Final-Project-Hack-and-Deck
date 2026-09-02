@@ -79,7 +79,7 @@ public partial class PokerGameManager : Node2D
         HoveredPoker = null;
     }
 
-    private void MouseTrackingProcess() // Testing RPC network strength with continuous calls
+    private void MouseTrackingProcess()
     {
         phyMousePos = GetGlobalMousePosition();
         RpcManager.Instance.MouseSyncTestRpc(phyMousePos);

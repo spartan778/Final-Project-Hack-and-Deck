@@ -9,6 +9,7 @@ public partial class CardSlotBase : Node2D, ICardSlotModule
     [Signal]
     public delegate void OnTriggerPokerEventHandler();
     public PokerBase SlottedPoker => CardSlotModule.SlottedPoker;
+    
     private PokerGameManager pokerGameManagerRef;
     private RpcManager rpcManager;
     private DiscardPile discardPileRef;
