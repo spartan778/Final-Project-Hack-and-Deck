@@ -197,9 +197,12 @@ public partial class NetworkManager_Singleton : Node
 		return testLocal ? localAddress : onlineAddress;
 	}
 
-	public void JoinGameRoom()
+	public void JoinGameRoom(string roomId)
 	{
-		
+		if (!string.IsNullOrEmpty(roomId))
+		{
+			roomName = roomId;
+		}
 		SendJoinMsg();
 		if (isHost) //switch ID to match on two peers
 		{

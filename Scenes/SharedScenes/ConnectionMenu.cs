@@ -7,6 +7,8 @@ public partial class ConnectionMenu : Control
     [Export] private CheckButton isHostButton;
     [Export] private Button joinRoomButton, startGameButton, testOfflineButton;
     [Export] private Label infoLabel,titleLabel;
+    [Export] private TextEdit roomIdField;
+    [Export] private Control roomIdModule;
 
     public override void _EnterTree()
     {
@@ -47,7 +49,7 @@ public partial class ConnectionMenu : Control
 
     private void OnJoinGameButtonPressed()
     {
-        networkManagerSingleton.JoinGameRoom();
+        networkManagerSingleton.JoinGameRoom(roomIdField.Text);
         joinRoomButton.Disabled = true;
         isHostButton.Disabled = true;
         infoLabel.Text = "Joining Room...";
@@ -80,6 +82,7 @@ public partial class ConnectionMenu : Control
             infoLabel.Text = "Player Matched, please wait for the Host to start the game";
             joinRoomButton.Disabled = true;
         }
+        roomIdModule.Visible = false;
         SceneManager.Instance.PrepareMainGameScene();
     }
 
@@ -96,5 +99,9 @@ public partial class ConnectionMenu : Control
     {
         GD.Print($"Current Player Count: {playerCount}");
         infoLabel.Text = $"Current Player Count: {playerCount}";
+        if (playerCount == 2)
+        {
+            
+        }
     }
 }
