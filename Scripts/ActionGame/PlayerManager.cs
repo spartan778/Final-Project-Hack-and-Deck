@@ -4,6 +4,7 @@ using System;
 public partial class PlayerManager : CharacterBody2D
 {
     [Export] public PlayerForm PlayerForm { get; private set; }
+    private EnemySystem enemySystemRef;
     public static PlayerManager Instance { get; private set; }
     private ActionGameBase actionGameBase;
     private BulletManager bulletManager;
@@ -26,6 +27,7 @@ public partial class PlayerManager : CharacterBody2D
         SetPlayerForm(PlayerForm); // set default mode for player
         actionGameBase = ActionGameBase.Instance;
         bulletManager = actionGameBase.BulletManagerRef;
+        enemySystemRef = EnemySystem.Instance;
     }
 
     public override void _UnhandledInput(InputEvent @event)

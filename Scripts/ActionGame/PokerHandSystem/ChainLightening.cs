@@ -28,6 +28,7 @@ public partial class ChainLightening : Node2D
     
     private void AttackTarget(EnemyBase target)
     {
+        if(target is null) return; // avoid case where target is deleted during attack
         target.HealthSystem.TakeDamage(DefaultDamage);
         pastTarget.Add(target);
         GlobalPosition = target.GetGlobalPosition();

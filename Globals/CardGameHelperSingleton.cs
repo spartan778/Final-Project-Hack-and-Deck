@@ -5,16 +5,22 @@ using Array = System.Array;
 
 public partial class CardGameHelperSingleton : Node
 {
+    
+    public static CardGameHelperSingleton Instance{get; private set;}
+    private RandomNumberGenerator rng;
     [Export] private Vector2 pokerBoundaries;
     [Export] public PokerArray StartingDeck { get; private set; }
     [Export] public PackedScene PokerPrefab { get; private set; }
-    public static CardGameHelperSingleton Instance{get; private set;}
+
+    [Export] public int DefaultRankLimit { get; private set; } = 9; // rank 1-10 (No face cards)
+    [Export] public int DefaultSuitLimit { get; private set; } = 1; // Diamond and Clubs
     
     public PokerGameManager PokerGameManager {get; private set;}
     public override void _EnterTree()
     {
         Instance = this;
-        
+        rng = new RandomNumberGenerator(); // create a godot built-in Random Number Generator 
+        rng.Randomize();
     }
 
     public void SetPokerGameManager(PokerGameManager pokerGameManager)
@@ -70,5 +76,19 @@ public partial class CardGameHelperSingleton : Node
         var vectorPos = new Vector2 (basePos.X/renderSize.X, basePos.Y/renderSize.Y);
         // GD.Print($"PosVector: {vectorPos}");
         return vectorPos;
+    }
+
+    public PokerInfo GenerateRandomPoker(bool isSpecial = false)
+    {
+        var rankLimit = DefaultRankLimit;
+        var suitLimit = DefaultSuitLimit;
+        if (isSpecial)
+        {
+            rankLimit = 12; // normal rank limit of a poker (13)
+            suitLimit = 3; // 4 suit for pokers
+        }
+        var finalRank = rng.RandiRange(0, rankLimit);
+        var finalSuit = rng.RandiRange(0, suitLimit);
+        return new PokerInfo((CardSuit)finalSuit, finalRank);
     }
 }

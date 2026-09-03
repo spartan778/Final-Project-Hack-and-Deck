@@ -5,6 +5,7 @@ public partial class CardRpcHandler : Node
 {
     public static CardRpcHandler Instance {get; private set;}
     public Action SummonPokerUsedUpAction;
+    public Action<PokerInfo> GeneratingNewPokerAction;
     
     public override void _EnterTree()
     {
@@ -15,5 +16,10 @@ public partial class CardRpcHandler : Node
     public void HandleSummonPokerUsedUp()
     {
         SummonPokerUsedUpAction?.Invoke();
+    }
+
+    public void HandleGeneratingNewPoker(PokerInfo pokerInfo)
+    {
+        GeneratingNewPokerAction?.Invoke(pokerInfo);
     }
 }

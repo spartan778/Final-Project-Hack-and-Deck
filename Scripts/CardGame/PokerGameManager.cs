@@ -13,7 +13,7 @@ public partial class PokerGameManager : Node2D
     [Export] public DiscardPile DiscardPile { get; private set; }
     
     public RpcManager RpcManager { get; private set; }
-    
+    private CardRpcHandler cardRpcHandler;
     
     public PokerBase HeldPoker {get; private set;}
     public PokerBase HoveredPoker {get; private set;}
@@ -34,8 +34,9 @@ public partial class PokerGameManager : Node2D
 
     public override void _Ready()
     {
+        
+        cardRpcHandler = CardRpcHandler.Instance;
         ConnectSignals();
-        GameStartSetup();
     }
 
     private void ConnectSignals()
@@ -44,13 +45,16 @@ public partial class PokerGameManager : Node2D
         ReleasingPoker += OnReleasingPoker;
         HoveringPoker += OnHoveringPoker;
         UnHoveringPoker += OnUnHoveringPoker;
+        cardRpcHandler.GeneratingNewPokerAction += OnGeneratingNewPokerAction;
         // CardGameBase.NetworkTickTimer.Timeout += MouseTrackingProcess;
     }
-    
-    private void GameStartSetup()
+
+    private void OnGeneratingNewPokerAction(PokerInfo pokerInfo)
     {
-        
+        DrawPile.CardStorage.InsertPoker(pokerInfo);
+        GD.Print("(Received) Adding New Poker");
     }
+
     private void OnHoldingPoker(PokerBase poker)
     {
         HeldPoker = poker;

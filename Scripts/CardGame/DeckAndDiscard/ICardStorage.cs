@@ -66,12 +66,7 @@ public partial class ICardStorage : Node
         IsMouseOverArea = false;
         interactionProgress = 0;
     }
-
-    public override void _Input(InputEvent @event)
-    {
-        
-    }
-
+    
     public override void _UnhandledInput(InputEvent @event)
     {
         if (@event is InputEventScreenTouch touch)
@@ -247,7 +242,10 @@ public partial class ICardStorage : Node
         UpdateCardCountDisplay();
         return true;
     }
-
+    
+    /// <param name="index">
+    /// if not given an index, will insert card at random
+    /// </param>
     public void InsertPoker(PokerInfo poker, int index = -1)
     {
         var count = StoredPokers.Count;

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dl4rvai7ihkn6"]
+[gd_scene load_steps=16 format=3 uid="uid://dl4rvai7ihkn6"]
 
 [ext_resource type="Script" uid="uid://bu2g4ba2ix2bl" path="res://Scenes/ActionGame/ActionGameUIManager.cs" id="1_01emv"]
 [ext_resource type="Script" uid="uid://cinsmbvs132yd" path="res://Scripts/ActionGame/ActionGameBase.cs" id="1_f66vs"]
@@ -9,10 +9,8 @@
 [ext_resource type="Script" uid="uid://gudl4abje0lu" path="res://Scripts/Networking/ActionRpcHandler.cs" id="6_okh2y"]
 [ext_resource type="Script" uid="uid://c1asrwg63i8k0" path="res://Scripts/ActionGame/EnemySystem/EnemySystem.cs" id="6_w8fwy"]
 [ext_resource type="Resource" uid="uid://cdtu8kqi0jj7g" path="res://Prefabs/ActionGame/Enemies/EnemyLists/BasicEnemyList.tres" id="7_2itc0"]
-[ext_resource type="PackedScene" uid="uid://o5hyydlqnbwk" path="res://Prefabs/ActionGame/Enemies/EnemyPrefabs/BasicRat/basic_rat.tscn" id="7_gmcek"]
 [ext_resource type="Script" uid="uid://bc5xunxtgt26s" path="res://Scripts/ActionGame/EnemySystem/WaveManager.cs" id="7_yco5m"]
 [ext_resource type="Script" uid="uid://fmk1hxisfhhd" path="res://Scripts/ActionGame/EnemySystem/DifficultyManager.cs" id="8_eoyb5"]
-[ext_resource type="PackedScene" uid="uid://dakvna1lwfsno" path="res://Prefabs/ActionGame/Enemies/EnemyPrefabs/RedSkull/red_skull.tscn" id="13_eoyb5"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_okh2y"]
 
@@ -31,7 +29,7 @@ TopLabel = NodePath("HUD/UI_Base/TopHUD/SubLabel")
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
-[node name="UI_Base" type="Control" parent="HUD" node_paths=PackedStringArray("testLabel", "mainLabel", "subLabel", "enemySystemRef")]
+[node name="UI_Base" type="Control" parent="HUD" node_paths=PackedStringArray("testLabel", "mainLabel", "subLabel", "defeatCountLabel", "enemySystemRef")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -44,6 +42,7 @@ script = ExtResource("1_01emv")
 testLabel = NodePath("TopHUD/SubLabel")
 mainLabel = NodePath("TopHUD")
 subLabel = NodePath("TopHUD/SubLabel")
+defeatCountLabel = NodePath("TopHUD/DefeatedCount")
 enemySystemRef = NodePath("../../2DGameBase/EnemySystem")
 
 [node name="TopHUD" type="Label" parent="HUD/UI_Base"]
@@ -67,6 +66,14 @@ theme_override_font_sizes/font_size = 20
 text = "Action Game
 "
 horizontal_alignment = 1
+
+[node name="DefeatedCount" type="Label" parent="HUD/UI_Base/TopHUD"]
+layout_mode = 0
+offset_left = 547.0
+offset_top = 602.0
+offset_right = 700.0
+offset_bottom = 625.0
+text = "Defeated Count: 0"
 
 [node name="2DGameBase" type="Node2D" parent="."]
 
@@ -141,22 +148,3 @@ WaveInterval = 20.0
 
 [node name="ActionRpcHandler" type="Node" parent="."]
 script = ExtResource("6_okh2y")
-
-[node name="BasicRat" parent="." instance=ExtResource("7_gmcek")]
-position = Vector2(275, 445)
-
-[node name="BasicRat2" parent="." instance=ExtResource("7_gmcek")]
-position = Vector2(486, 439)
-
-[node name="RedSkull" parent="." instance=ExtResource("13_eoyb5")]
-position = Vector2(723, 302)
-
-[node name="RedSkull2" parent="." instance=ExtResource("13_eoyb5")]
-position = Vector2(166, 604)
-
-[editable path="BasicRat"]
-[editable path="BasicRat/EnemyHitbox"]
-[editable path="BasicRat/BumpAttackModule"]
-[editable path="BasicRat2"]
-[editable path="BasicRat2/EnemyHitbox"]
-[editable path="BasicRat2/BumpAttackModule"]

@@ -65,7 +65,7 @@ public partial class HealthSystem : Node
         if (CurrentHealth <= 0)
         {
             Dying?.Invoke();
-            GD.Print($"Dying");
+            // GD.Print($"Dying");
         }
     }
     public void Heal(float amount)

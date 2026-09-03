@@ -192,6 +192,26 @@ public partial class RpcManager : Node
         actionRpcHandler.HandleReleasedPokerHand((PokerHandBase)packedVector.X,(ReleaseMode)packedVector.Y);
     }
     #endregion
+
+    #region GenerateNewPoker
+
+    public void GenerateNewPoker_Send(PokerInfo pokerInfo)
+    {
+        Vector2 packedPokerInfo = new Vector2((int)pokerInfo.Suit, pokerInfo.Rank);
+        Rpc(nameof(GenerateNewPoker_Receive), packedPokerInfo);
+    }
+
+    [Rpc(RpcMode.AnyPeer)]
+    private void GenerateNewPoker_Receive(Vector2 packedPokerInfo)
+    {
+        var suit = (CardSuit)packedPokerInfo.X;
+        var rank = (int)packedPokerInfo.Y;
+        var newPoker = new PokerInfo(suit, rank);
+        cardRpcHandler.HandleGeneratingNewPoker(newPoker);
+    }
+    
+
+    #endregion
     public override void _Input(InputEvent @event)
     {
         if (@event.IsActionPressed("menu_confirm"))
