@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bcm0cjq03sytx"]
+[gd_scene load_steps=9 format=3 uid="uid://bcm0cjq03sytx"]
 
 [ext_resource type="Script" uid="uid://cslkqx04wp673" path="res://Scenes/SharedScenes/ConnectionMenu.cs" id="1_tspjj"]
 [ext_resource type="Theme" uid="uid://c2vahx613qbmy" path="res://UI_Themes/BasicColorTheme.tres" id="2_7yh3l"]
 [ext_resource type="PackedScene" uid="uid://dxqfaobmpf55w" path="res://Prefabs/Shared/touch_screen_button_module.tscn" id="3_607fs"]
+[ext_resource type="Script" uid="uid://bs0ti3flq4whm" path="res://Scripts/mobileTextField.cs" id="4_do6jh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7yh3l"]
 bg_color = Color(0.151276, 0.151276, 0.151276, 1)
@@ -42,6 +43,7 @@ roomIdModule = NodePath("MainPanel/RoomIdModule")
 layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
+mouse_filter = 2
 theme = ExtResource("2_7yh3l")
 
 [node name="Title" type="Label" parent="MainPanel"]
@@ -70,9 +72,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -229.5
-offset_top = -132.0
+offset_top = -154.0
 offset_right = 229.5
-offset_bottom = -50.0
+offset_bottom = -72.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 40
@@ -88,9 +90,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -119.0
-offset_top = 110.0
+offset_top = 152.0
 offset_right = -75.0
-offset_bottom = 134.0
+offset_bottom = 176.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(5, 5)
@@ -162,14 +164,15 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="RoomIdField" type="TextEdit" parent="MainPanel/RoomIdModule"]
+[node name="RoomIdField" type="LineEdit" parent="MainPanel/RoomIdModule"]
 texture_filter = 2
 layout_mode = 0
 offset_left = 503.0
-offset_top = 296.0
+offset_top = 288.0
 offset_right = 802.0
-offset_bottom = 334.0
+offset_bottom = 326.0
 placeholder_text = "Enter Room ID here"
+script = ExtResource("4_do6jh")
 
 [node name="Tips" type="Label" parent="MainPanel/RoomIdModule"]
 layout_mode = 1

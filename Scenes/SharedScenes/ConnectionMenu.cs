@@ -7,7 +7,7 @@ public partial class ConnectionMenu : Control
     [Export] private CheckButton isHostButton;
     [Export] private Button joinRoomButton, startGameButton, testOfflineButton;
     [Export] private Label infoLabel,titleLabel;
-    [Export] private TextEdit roomIdField;
+    [Export] private LineEdit roomIdField;
     [Export] private Control roomIdModule;
 
     public override void _EnterTree()
