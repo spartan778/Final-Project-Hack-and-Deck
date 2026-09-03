@@ -27,11 +27,11 @@ distance = -183.0
 script = ExtResource("1_f66vs")
 PlayerManagerRef = NodePath("2DGameBase/Player")
 BulletManagerRef = NodePath("2DGameBase/BulletManager")
-TopLabel = NodePath("HUD/UI_Base/TopHUD/Label")
+TopLabel = NodePath("HUD/UI_Base/TopHUD/SubLabel")
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
-[node name="UI_Base" type="Control" parent="HUD" node_paths=PackedStringArray("testLabel")]
+[node name="UI_Base" type="Control" parent="HUD" node_paths=PackedStringArray("testLabel", "mainLabel", "subLabel", "enemySystemRef")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -41,7 +41,10 @@ offset_bottom = -720.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_01emv")
-testLabel = NodePath("TopHUD/Label")
+testLabel = NodePath("TopHUD/SubLabel")
+mainLabel = NodePath("TopHUD")
+subLabel = NodePath("TopHUD/SubLabel")
+enemySystemRef = NodePath("../../2DGameBase/EnemySystem")
 
 [node name="TopHUD" type="Label" parent="HUD/UI_Base"]
 layout_mode = 0
@@ -54,7 +57,7 @@ text = "Action Game
 "
 horizontal_alignment = 1
 
-[node name="Label" type="Label" parent="HUD/UI_Base/TopHUD"]
+[node name="SubLabel" type="Label" parent="HUD/UI_Base/TopHUD"]
 layout_mode = 0
 offset_left = 106.0
 offset_top = 49.0
@@ -123,9 +126,10 @@ DifficultyValue = 30.0
 DifficultyIncreaseInterval = 3
 DifficultyIncreaseValue = 5
 
-[node name="EnemySpawner" type="Node" parent="2DGameBase/EnemySystem" node_paths=PackedStringArray("playerManager")]
+[node name="EnemySpawner" type="Node" parent="2DGameBase/EnemySystem" node_paths=PackedStringArray("playerManager", "enemySystemRef")]
 script = ExtResource("6_8kvql")
 playerManager = NodePath("../../Player")
+enemySystemRef = NodePath("..")
 
 [node name="WaveManager" type="Node" parent="2DGameBase/EnemySystem" node_paths=PackedStringArray("enemySpawnerRef", "WaveTimer")]
 script = ExtResource("7_yco5m")

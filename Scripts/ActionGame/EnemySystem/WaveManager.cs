@@ -8,6 +8,7 @@ public partial class WaveManager : Node
     [Export] public Timer WaveTimer{ get; private set; }
     [Export] public float WaveInterval;
     public int WaveNumber;
+    
 
     public override void _Ready()
     {

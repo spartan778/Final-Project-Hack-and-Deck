@@ -4,6 +4,7 @@ using System;
 public partial class EnemySpawner : Node
 {
     [Export] private PlayerManager playerManager;
+    [Export] private EnemySystem enemySystemRef;
     private Vector2 PlayerPosition => playerManager.GlobalPosition;
 
     public void SpawnEnemy(EnemyInfo info, out EnemyBase enemy)

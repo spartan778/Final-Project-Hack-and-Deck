@@ -9,10 +9,16 @@ public partial class EnemySystem : Node
     [Export] public DifficultyManager DifficultyManagerRef{ get; private set; }
     [Export] public WaveManager WaveManagerRef{ get; private set; }
     [Export] public EnemySpawner EnemySpawnerRef{ get; private set; }
-    
-    private Array<EnemyBase> spawnedEnemies;
-    
+    private Array<EnemyBase> spawnedEnemies; 
     public PlayerManager PlayerManagerRef { get; private set; }
+    
+    public Action WaveChanged;
+    
+    public int WaveNumber => WaveManagerRef.WaveNumber;
+    public int DifficultyLevel => DifficultyManagerRef.DifficultyLevel;
+    public int EnemyDefeatedCount { get; private set; } = 0;
+    
+    
 
     public override void _Ready()
     {
@@ -25,6 +31,7 @@ public partial class EnemySystem : Node
     {
         SpawnRoutineEnemy();
         var waveNumber= WaveManagerRef.WaveNumber++;
+        WaveChanged?.Invoke();
         if (waveNumber % DifficultyManagerRef.DifficultyIncreaseInterval == 0) // increase difficulty per interval
         {
             DifficultyManagerRef.IncreaseDifficulty();
@@ -71,5 +78,11 @@ public partial class EnemySystem : Node
         }
         var pickedEnemy= enemyInfos[Random.Shared.Next(enemyInfos.Count)];
         return pickedEnemy;
+    }
+
+    public void OnEnemyDefeated(EnemyBase enemy, Vector2 position)
+    {
+        GD.Print($"{enemy} is defeated at {position}");
+        EnemyDefeatedCount++;
     }
 }

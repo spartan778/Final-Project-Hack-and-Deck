@@ -13,6 +13,8 @@ public partial class EnemyBase : CharacterBody2D
     [Export] public int[] DefaultCollisionLayers;
     
     [Signal] public delegate void HealthChangedEventHandler(float oldHealth, float newHealth);
+
+    public Action<EnemyBase, Vector2> EnemyDefeated;
     
     protected PlayerManager PlayerManagerRef;
     
@@ -53,6 +55,7 @@ public partial class EnemyBase : CharacterBody2D
     protected virtual void OnDying()
     {
         // GD.Print($"Deleting: {Name}");
+        EnemyDefeated?.Invoke(this, GetGlobalPosition());
         QueueFree();
     }
     protected virtual void OnTakingDamage(float damage)
