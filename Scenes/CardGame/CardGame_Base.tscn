@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://b18mj00imbv7"]
+[gd_scene load_steps=42 format=3 uid="uid://b18mj00imbv7"]
 
 [ext_resource type="Script" uid="uid://fkcmkhn8mgr2" path="res://Scripts/CardGame/CardGameBase.cs" id="1_64jno"]
 [ext_resource type="Script" uid="uid://ds5ea665i8jo4" path="res://Scripts/CardGame/CardGameUIManager.cs" id="1_y7kd2"]
@@ -26,6 +26,7 @@
 [ext_resource type="Script" uid="uid://3sl7mi21gfwc" path="res://Scripts/CardGame/CardSlots/SummonSystem.cs" id="22_ib4bk"]
 [ext_resource type="Texture2D" uid="uid://c11xbtfrdgjkn" path="res://Assets/CardGame/Card-FX/SummonEffect.png" id="23_fl3cp"]
 [ext_resource type="PackedScene" uid="uid://3km5mref7efe" path="res://Prefabs/CardGame/card_slot_module.tscn" id="23_y2t1j"]
+[ext_resource type="Script" uid="uid://ocrk1q7on42n" path="res://Scripts/CardGame/CardGameSoundManager.cs" id="27_s0l6r"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8hseb"]
 atlas = ExtResource("7_0n1s0")
@@ -465,3 +466,6 @@ one_shot = true
 
 [node name="NetworkTickTimer" type="Timer" parent="GameTimers"]
 wait_time = 0.05
+
+[node name="CardGameSoundManager" type="Node" parent="."]
+script = ExtResource("27_s0l6r")

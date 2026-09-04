@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dl4rvai7ihkn6"]
+[gd_scene load_steps=18 format=3 uid="uid://dl4rvai7ihkn6"]
 
 [ext_resource type="Script" uid="uid://bu2g4ba2ix2bl" path="res://Scenes/ActionGame/ActionGameUIManager.cs" id="1_01emv"]
 [ext_resource type="Script" uid="uid://cinsmbvs132yd" path="res://Scripts/ActionGame/ActionGameBase.cs" id="1_f66vs"]
@@ -11,6 +11,8 @@
 [ext_resource type="Resource" uid="uid://cdtu8kqi0jj7g" path="res://Prefabs/ActionGame/Enemies/EnemyLists/BasicEnemyList.tres" id="7_2itc0"]
 [ext_resource type="Script" uid="uid://bc5xunxtgt26s" path="res://Scripts/ActionGame/EnemySystem/WaveManager.cs" id="7_yco5m"]
 [ext_resource type="Script" uid="uid://fmk1hxisfhhd" path="res://Scripts/ActionGame/EnemySystem/DifficultyManager.cs" id="8_eoyb5"]
+[ext_resource type="Script" uid="uid://bn6oidnibnjqi" path="res://Scripts/ActionGame/ActionGameSoundManager.cs" id="12_eoyb5"]
+[ext_resource type="AudioStream" uid="uid://c3mm170jdhx27" path="res://Assets/Sounds/Music/MainTheme.ogg" id="13_5ui3f"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_okh2y"]
 
@@ -74,6 +76,15 @@ offset_top = 602.0
 offset_right = 700.0
 offset_bottom = 625.0
 text = "Defeated Count: 0"
+
+[node name="ActionGameSoundManager" type="Node" parent="HUD" node_paths=PackedStringArray("BGMPlayer")]
+script = ExtResource("12_eoyb5")
+BGMPlayer = NodePath("BGM")
+
+[node name="BGM" type="AudioStreamPlayer" parent="HUD/ActionGameSoundManager"]
+stream = ExtResource("13_5ui3f")
+volume_db = -8.0
+parameters/looping = true
 
 [node name="2DGameBase" type="Node2D" parent="."]
 

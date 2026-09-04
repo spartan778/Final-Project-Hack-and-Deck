@@ -10,6 +10,7 @@ public partial class CardSlotModule : Node
 {
     [Export] private Node2D parentNode2D;
     [Export] public Area2D SlotArea { get; private set;}
+    [Export] private AudioStreamPlayer slotSoundPlayer;
     public PokerBase SlottedPoker {get; set;}
     public bool IsLockingPoker{get; set;}
     public bool IsSlotOpen;
@@ -70,6 +71,7 @@ public partial class CardSlotModule : Node
         {
             poker.PokerBaseRef.SetPokerLock(IsLockingPoker);
         }
+        slotSoundPlayer.Play();
         PokerSlotted?.Invoke(poker);
     }
 

@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://3km5mref7efe"]
+[gd_scene load_steps=3 format=3 uid="uid://3km5mref7efe"]
 
 [ext_resource type="Script" uid="uid://dfvdlo7h04itv" path="res://Prefabs/CardGame/CardSlotModule.cs" id="1_g3tqd"]
+[ext_resource type="AudioStream" uid="uid://du5d1kj0fp168" path="res://Assets/Sounds/SFX/PlayingCard.mp3" id="2_iwyar"]
 
-[node name="CardSlotModule" type="Node"]
+[node name="CardSlotModule" type="Node" node_paths=PackedStringArray("slotSoundPlayer")]
 script = ExtResource("1_g3tqd")
+slotSoundPlayer = NodePath("AudioStreamPlayer")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_iwyar")
