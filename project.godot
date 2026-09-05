@@ -14,8 +14,8 @@ config/name="Hack and Deck"
 run/main_scene="uid://bcm0cjq03sytx"
 config/features=PackedStringArray("4.4", "C#", "GL Compatibility")
 run/max_fps=60
-config/icon="uid://cuxeie36cc21j"
-config/windows_native_icon="res://Assets/ActionGame/BulletSprite/Kinetic_Bullet_V2.ico"
+config/icon="uid://upped8j0hkf6"
+config/windows_native_icon="res://Assets/ActionGame/PlayerAssets/Projectiles/BigKunaiIcon.ico"
 
 [autoload]
 
