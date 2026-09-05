@@ -36,6 +36,8 @@ public partial class ChainLightening : Node2D
     }
     private void ShowLighteningEffect(Node2D source ,Node2D target)
     {
+        if(source is null) return;
+        if(target is null) return;
         var tempEffect = (AnimatedSprite2D)lightningSprite.Duplicate();
         tempEffect.AnimationFinished += tempEffect.QueueFree;
         GetTree().Root.AddChild(tempEffect);

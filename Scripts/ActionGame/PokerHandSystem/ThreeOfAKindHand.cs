@@ -44,7 +44,7 @@ public partial class ThreeOfAKindHand : Node2D
 
     private void MakeShockWave()
     {
-        GD.Print("MakeShockWave");
+        // GD.Print("MakeShockWave");
         var area2Ds = shockWaveArea.GetOverlappingAreas();
         if (area2Ds.Count <= 0) return;
         Array<EnemyHitbox> enemyHitboxes = new Array<EnemyHitbox>();
@@ -56,7 +56,7 @@ public partial class ThreeOfAKindHand : Node2D
             }
         }
         if(enemyHitboxes.Count <= 0) return;
-        GD.Print(enemyHitboxes);
+        // GD.Print(enemyHitboxes);
         foreach (var enemyHitbox in enemyHitboxes)
         {
             enemyHitbox.KnockBack(ShockWaveStrength);
@@ -74,12 +74,12 @@ public partial class ThreeOfAKindHand : Node2D
         }
     }
     
-    /*public override void _Input(InputEvent @event)
+    public override void _Input(InputEvent @event)
     {
-        if (@event.IsActionPressed("test_make_handAttack"))
+        if (@event.IsActionPressed("test_make_handAttack4"))
         {
             GD.Print("ThreeOfAKindHand: Debug trigger");
             OnReleasedPokerHandAction(PokerHandBase.ThreeOfAKind, ReleaseMode.Charged);
         };
-    }*/
+    }
 }

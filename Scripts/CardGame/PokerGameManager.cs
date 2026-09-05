@@ -52,7 +52,7 @@ public partial class PokerGameManager : Node2D
     private void OnGeneratingNewPokerAction(PokerInfo pokerInfo)
     {
         DrawPile.CardStorage.InsertPoker(pokerInfo);
-        GD.Print("(Received) Adding New Poker");
+        // GD.Print("(Received) Adding New Poker");
     }
 
     private void OnHoldingPoker(PokerBase poker)
@@ -133,7 +133,7 @@ public partial class PokerGameManager : Node2D
 
     public PokerBase DetectPokerRayCast() // referenced from Godot official document 4.4 - Ray casting
     {
-        GD.Print("Detecting poker ray cast");
+        // GD.Print("Detecting poker ray cast");
         var spaceState = GetWorld2D().DirectSpaceState;
         var parameters = new PhysicsPointQueryParameters2D(); // setup detection parameters
         parameters.Position = GetGlobalMousePosition(); // using mouse position as raycast source

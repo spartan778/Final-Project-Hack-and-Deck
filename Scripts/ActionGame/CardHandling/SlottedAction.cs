@@ -31,7 +31,7 @@ public partial class SlottedAction : Node
         {
             case CardSuit.Hearts or CardSuit.Diamonds:
             {
-                GD.Print($"Slotted support Poker, Strength {pokerInfo.Rank + 1}");
+                // GD.Print($"Slotted support Poker, Strength {pokerInfo.Rank + 1}");
                 healthSystemRef.Heal(pokerInfo.Rank + 1);
                 if (PlayerManagerRef.PlayerForm is PlayerForm.Defensive) // heals again after short delay if in Defensive mode
                 {

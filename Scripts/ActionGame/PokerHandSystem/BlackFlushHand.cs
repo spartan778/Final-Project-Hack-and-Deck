@@ -74,12 +74,12 @@ public partial class BlackFlushHand : Node2D
             
         }
     }
-    /*public override void _Input(InputEvent @event) 
+    public override void _Input(InputEvent @event) 
     {
-        if (@event.IsActionPressed("test_make_handAttack"))
+        if (@event.IsActionPressed("test_make_handAttack3"))
         {
             GD.Print("BlackFlushHand: Debug trigger");
             OnReleasedPokerHandAction(PokerHandBase.BlackFlush, ReleaseMode.Charged);
         };
-    }*/
+    }
 }

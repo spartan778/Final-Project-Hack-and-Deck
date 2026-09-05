@@ -80,12 +80,12 @@ public partial class StraightHand : Node2D
         return closestEnemy;
     }
     
-    /*public override void _Input(InputEvent @event)
+    public override void _Input(InputEvent @event)
     {
-        if (@event.IsActionPressed("test_make_handAttack"))
+        if (@event.IsActionPressed("test_make_handAttack1"))
         {
             GD.Print("StraightHand: Debug trigger");
             OnReleasedPokerHandAction(PokerHandBase.Straight, ReleaseMode.Charged);
         };
-    }*/
+    }
 }

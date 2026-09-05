@@ -68,7 +68,7 @@ public partial class EnemySystem : Node
         var availableValue = DifficultyManagerRef.DifficultyValue;
         var thresholdValue = StandardEnemies.DefaultEnemy.SpawnValue;
         var validEnemies = new List<EnemyInfo>();
-        GD.Print("Current Value: " +availableValue);
+        // GD.Print("Current Value: " +availableValue);
         while (availableValue >= thresholdValue)
         {
             validEnemies.Clear();

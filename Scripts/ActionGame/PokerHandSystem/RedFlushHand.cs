@@ -36,12 +36,12 @@ public partial class RedFlushHand : Node2D
         }
     }
     
-    /*public override void _Input(InputEvent @event)
+    public override void _Input(InputEvent @event)
     {
-        if (@event.IsActionPressed("test_make_handAttack"))
+        if (@event.IsActionPressed("test_make_handAttack2"))
         {
             GD.Print("RedFlushHand: Debug trigger");
             OnReleasedPokerHandAction(PokerHandBase.RedFlush, ReleaseMode.Charged);
         };
-    }*/
+    }
 }
