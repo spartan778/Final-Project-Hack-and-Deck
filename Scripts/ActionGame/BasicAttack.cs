@@ -10,6 +10,7 @@ public partial class BasicAttack : Node
     [Export] public int BulletCount;
     [Export] public float BasicAttackFrequency, TimeBetweenShots;
     [Export] private Timer basicAttackTimer;
+    [Export] private AudioStreamPlayer basicAttackAudio;
     private BulletManager bulletManagerRef;
     private ActionRpcHandler actionRpcHandler;
     
@@ -47,6 +48,7 @@ public partial class BasicAttack : Node
         for (var i = 0; i < count; i++)
         {
             ShootBasicBullet();
+            basicAttackAudio.Play();
             yield return Co.Wait(TimeBetweenShots);
         }
     }

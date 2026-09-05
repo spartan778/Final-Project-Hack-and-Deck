@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://brun683rcn1vl"]
+[gd_scene load_steps=5 format=3 uid="uid://brun683rcn1vl"]
 
 [ext_resource type="PackedScene" uid="uid://dgtk07vj6rjv2" path="res://Prefabs/ActionGame/health_system.tscn" id="2_0vn52"]
+[ext_resource type="AudioStream" uid="uid://g7wh5r5kpiwh" path="res://Assets/Sounds/SFX/EnemyHit.wav" id="3_4w4rn"]
 [ext_resource type="PackedScene" uid="uid://bljnuqqs8wwst" path="res://Prefabs/ActionGame/Enemies/enemy_hitbox.tscn" id="4_augvu"]
+[ext_resource type="AudioStream" uid="uid://c5jaylaodjcbb" path="res://Assets/Sounds/SFX/EnemyDying.wav" id="4_pmsab"]
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 collision_layer = 4
@@ -22,5 +24,13 @@ offset = Vector2(0, -10)
 
 [node name="HitBoxShape" type="CollisionShape2D" parent="EnemyHitbox"]
 position = Vector2(0, -2)
+
+[node name="SoundEffects" type="Node" parent="."]
+
+[node name="HitSound" type="AudioStreamPlayer" parent="SoundEffects"]
+stream = ExtResource("3_4w4rn")
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="SoundEffects"]
+stream = ExtResource("4_pmsab")
 
 [editable path="EnemyHitbox"]

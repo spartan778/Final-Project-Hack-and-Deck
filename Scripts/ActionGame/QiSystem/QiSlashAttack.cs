@@ -6,6 +6,7 @@ public partial class QiSlashAttack : Node2D
     [Export] private PlayerManager playerManagerRef;
     [Export] private AnimatedSprite2D slashAnimation;
     [Export] private Area2D hitArea;
+    [Export] private AudioStreamPlayer qiSlashSound;
     [Export] private float detectDuration = 0.5f;
     [Export] private float defaultDamage = 20f;
     public float CurrentDamage;
@@ -37,6 +38,7 @@ public partial class QiSlashAttack : Node2D
         hitArea.Monitoring = true;
         
         slashAnimation.Play();
+        qiSlashSound.Play();
         await ToSignal(GetTree().CreateTimer(CurrentAttackCooldown), SceneTreeTimer.SignalName.Timeout);
         IsAttackReady = true;
         slashAnimation.Visible = false;

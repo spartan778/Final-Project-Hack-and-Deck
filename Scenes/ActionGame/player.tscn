@@ -1,4 +1,4 @@
-[gd_scene load_steps=118 format=3 uid="uid://0s7odp1g51tv"]
+[gd_scene load_steps=122 format=3 uid="uid://0s7odp1g51tv"]
 
 [ext_resource type="Script" uid="uid://cv62dao6bnc30" path="res://Scripts/ActionGame/PlayerManager.cs" id="1_mhocx"]
 [ext_resource type="Script" uid="uid://bhm867opqujus" path="res://Scripts/ActionGame/PlayerHitbox.cs" id="2_g7csx"]
@@ -41,6 +41,10 @@
 [ext_resource type="Script" uid="uid://dqn5vucxxjuic" path="res://Scripts/ActionGame/PokerHandSystem/BlackFlushHand.cs" id="19_6yul7"]
 [ext_resource type="Script" uid="uid://ct4fqywl5gnpc" path="res://Scripts/ActionGame/PokerHandSystem/ThreeOfAKindHand.cs" id="21_0qjkg"]
 [ext_resource type="Texture2D" uid="uid://xcxslrq84ehn" path="res://Assets/ActionGame/PlayerAssets/Ninja/WaterWave.png" id="22_uc4tf"]
+[ext_resource type="AudioStream" uid="uid://dyaljqu0mptti" path="res://Assets/Sounds/SFX/Whoosh.wav" id="27_wa3gp"]
+[ext_resource type="AudioStream" uid="uid://ekj6tlqb3by3" path="res://Assets/Sounds/SFX/KunaiThrow.wav" id="29_rs0fq"]
+[ext_resource type="AudioStream" uid="uid://bk5bhghe6nm3n" path="res://Assets/Sounds/SFX/QiBlast.wav" id="35_gvist"]
+[ext_resource type="AudioStream" uid="uid://bqjq2u0s2njeo" path="res://Assets/Sounds/SFX/QiSlash.wav" id="38_v4emu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0mflq"]
 size = Vector2(40, 40)
@@ -830,7 +834,7 @@ DashSpeed = 300.0
 
 [node name="AttackSystem_Offensive" type="Node2D" parent="PlayerSystems"]
 
-[node name="BasicAttack" type="Node" parent="PlayerSystems/AttackSystem_Offensive" node_paths=PackedStringArray("PlayerManagerRef", "basicAttackTimer")]
+[node name="BasicAttack" type="Node" parent="PlayerSystems/AttackSystem_Offensive" node_paths=PackedStringArray("PlayerManagerRef", "basicAttackTimer", "basicAttackAudio")]
 script = ExtResource("3_25hhx")
 PlayerManagerRef = NodePath("../../..")
 basicBulletPrefab = ExtResource("6_rq88u")
@@ -838,14 +842,22 @@ BulletCount = 3
 BasicAttackFrequency = 3.0
 TimeBetweenShots = 0.33
 basicAttackTimer = NodePath("BasicAttackTimer")
+basicAttackAudio = NodePath("BasicAttackAudio")
 
 [node name="BasicAttackTimer" type="Timer" parent="PlayerSystems/AttackSystem_Offensive/BasicAttack"]
 
-[node name="MagicBulletAttack" type="Node" parent="PlayerSystems/AttackSystem_Offensive" node_paths=PackedStringArray("playerManagerRef")]
+[node name="BasicAttackAudio" type="AudioStreamPlayer" parent="PlayerSystems/AttackSystem_Offensive/BasicAttack"]
+stream = ExtResource("27_wa3gp")
+
+[node name="MagicBulletAttack" type="Node" parent="PlayerSystems/AttackSystem_Offensive" node_paths=PackedStringArray("playerManagerRef", "magicBulletSound")]
 script = ExtResource("7_e6f3n")
 magicBulletPrefab = ExtResource("8_um666")
 playerManagerRef = NodePath("../../..")
+magicBulletSound = NodePath("KunaiThrowAudio")
 AttackArc = 30.0
+
+[node name="KunaiThrowAudio" type="AudioStreamPlayer" parent="PlayerSystems/AttackSystem_Offensive/MagicBulletAttack"]
+stream = ExtResource("29_rs0fq")
 
 [node name="AttackSystem_Defensive" type="Node2D" parent="PlayerSystems"]
 
@@ -866,16 +878,21 @@ playerManagerRef = NodePath("../..")
 qiBlastAttack = NodePath("QiBlastAttack")
 qiSlashAttack = NodePath("QiSlashAttack")
 
-[node name="QiBlastAttack" type="Node2D" parent="PlayerSystems/QiSystem" node_paths=PackedStringArray("playerManagerRef")]
+[node name="QiBlastAttack" type="Node2D" parent="PlayerSystems/QiSystem" node_paths=PackedStringArray("playerManagerRef", "qiBlastSound")]
 script = ExtResource("14_4itpj")
 qiBlastPrefab = ExtResource("15_a274y")
 playerManagerRef = NodePath("../../..")
+qiBlastSound = NodePath("QiBlastSound")
 
-[node name="QiSlashAttack" type="Node2D" parent="PlayerSystems/QiSystem" node_paths=PackedStringArray("playerManagerRef", "slashAnimation", "hitArea")]
+[node name="QiBlastSound" type="AudioStreamPlayer" parent="PlayerSystems/QiSystem/QiBlastAttack"]
+stream = ExtResource("35_gvist")
+
+[node name="QiSlashAttack" type="Node2D" parent="PlayerSystems/QiSystem" node_paths=PackedStringArray("playerManagerRef", "slashAnimation", "hitArea", "qiSlashSound")]
 script = ExtResource("16_1xckp")
 playerManagerRef = NodePath("../../..")
 slashAnimation = NodePath("HitArea/SlashAnimation")
 hitArea = NodePath("HitArea")
+qiSlashSound = NodePath("QiSlashSound")
 
 [node name="HitArea" type="Area2D" parent="PlayerSystems/QiSystem/QiSlashAttack"]
 collision_layer = 3
@@ -897,6 +914,9 @@ animation = &"SlashAnimation"
 autoplay = "SlashAnimation"
 frame = 2
 flip_h = true
+
+[node name="QiSlashSound" type="AudioStreamPlayer" parent="PlayerSystems/QiSystem/QiSlashAttack"]
+stream = ExtResource("38_v4emu")
 
 [node name="CardSummonSystem" type="Node2D" parent="." node_paths=PackedStringArray("playerManagerRef")]
 script = ExtResource("9_i4xmh")

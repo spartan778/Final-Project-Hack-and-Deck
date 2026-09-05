@@ -5,7 +5,9 @@ public partial class MagicBulletAttack : Node
 {
     [Export] private PackedScene magicBulletPrefab;
     [Export] private PlayerManager playerManagerRef;
+    [Export] private AudioStreamPlayer magicBulletSound;
     [Export] public float AttackArc;
+    
     private BulletManager bulletManagerRef;
 
 
@@ -48,6 +50,7 @@ public partial class MagicBulletAttack : Node
             // AddChild(bullet);
             bulletManagerRef.BulletSpawned?.Invoke(bullet);
         }
+        magicBulletSound.Play();
         GD.Print($"MagicAttack (Directional) with {bulletAmount} bullet");
     }
 }

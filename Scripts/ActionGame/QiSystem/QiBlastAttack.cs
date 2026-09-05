@@ -5,6 +5,7 @@ public partial class QiBlastAttack : Node2D
 {
     [Export] private PackedScene qiBlastPrefab;
     [Export] private PlayerManager playerManagerRef;
+    [Export] private AudioStreamPlayer qiBlastSound;
     private BulletManager bulletManagerRef;
     
     public override void _Ready()
@@ -19,6 +20,7 @@ public partial class QiBlastAttack : Node2D
         var finalVector = playerManagerRef.GetMouseToPlayerVector();
         projectile.InitBullet(finalVector);
         bulletManagerRef.BulletSpawned?.Invoke(projectile);
+        qiBlastSound.Play();
     }
     
     public void MakeQiBlast(Vector2 finalVector)
@@ -27,5 +29,6 @@ public partial class QiBlastAttack : Node2D
         projectile.GlobalPosition = playerManagerRef.GetGlobalPosition();
         projectile.InitBullet(finalVector);
         bulletManagerRef.BulletSpawned?.Invoke(projectile);
+        qiBlastSound.Play();
     }
 }

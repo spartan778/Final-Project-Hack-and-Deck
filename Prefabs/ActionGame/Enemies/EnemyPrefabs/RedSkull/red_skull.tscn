@@ -50,7 +50,7 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_m8o07"]
 radius = 25.0
 
-[node name="RedSkull" node_paths=PackedStringArray("RangeAttackModule", "AttackTimer", "HealthSystem", "enemySpriteBase", "Hitbox") instance=ExtResource("1_ynetm")]
+[node name="RedSkull" node_paths=PackedStringArray("RangeAttackModule", "AttackTimer", "HealthSystem", "enemySpriteBase", "Hitbox", "EnemyHitSound", "EnemyDeathSound") instance=ExtResource("1_ynetm")]
 script = ExtResource("2_dj7qp")
 RangeAttackModule = NodePath("RangeAttackModule")
 TimeBetweenAttacks = 5.0
@@ -61,6 +61,8 @@ HealthSystem = NodePath("HealthSystem")
 MovementBehaviour = 2
 enemySpriteBase = NodePath("EnemyAnimation")
 Hitbox = NodePath("EnemyHitbox")
+EnemyHitSound = NodePath("SoundEffects/HitSound")
+EnemyDeathSound = NodePath("SoundEffects/DeathSound")
 
 [node name="HealthSystem" parent="." index="0"]
 MaxHealth = 30.0

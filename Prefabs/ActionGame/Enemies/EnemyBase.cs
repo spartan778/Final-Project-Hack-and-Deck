@@ -10,6 +10,7 @@ public partial class EnemyBase : CharacterBody2D
     [Export] public MovementBehaviour MovementBehaviour{ get; private set; }
     [Export] private Node2D enemySpriteBase;
     [Export] protected EnemyHitbox Hitbox;
+    [Export] protected AudioStreamPlayer EnemyHitSound ,EnemyDeathSound;
     [Export] public int[] DefaultCollisionLayers;
     
     [Signal] public delegate void HealthChangedEventHandler(float oldHealth, float newHealth);
@@ -55,12 +56,16 @@ public partial class EnemyBase : CharacterBody2D
     protected virtual void OnDying()
     {
         // GD.Print($"Deleting: {Name}");
+        EnemyDeathSound.GetParent().RemoveChild(EnemyDeathSound); // detach node from dirent parent
+        GetTree().Root.AddChild(EnemyDeathSound); // add note to scene root (this node will be deleted at end of frame)
+        EnemyDeathSound.Finished += EnemyDeathSound.QueueFree;
+        EnemyDeathSound.Play();
         EnemyDefeated?.Invoke(this, GetGlobalPosition());
         QueueFree();
     }
     protected virtual void OnTakingDamage(float damage)
     {
-        
+        EnemyHitSound.Play();
     }
 
     protected virtual void OnHealing(float health)
